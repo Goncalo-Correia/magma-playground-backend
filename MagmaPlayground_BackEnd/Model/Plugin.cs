@@ -9,7 +9,7 @@ namespace MagmaPlayground_BackEnd.Model
     {
         private int Id;
         private int order;
-        private Plugintype pluginType;
+        private PluginType pluginType;
 
         public Plugin()
         {

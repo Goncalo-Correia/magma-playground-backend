@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Model
 {
-    public enum Plugintype
+    public class Sampler
     {
-        SAMPLE,
-        INSTRUMENT,
-        AUDIO_EFFECT
+        private int Id;
+
+        public Sampler()
+        {
+
+        }
     }
 }
