@@ -7,9 +7,12 @@ namespace MagmaPlayground_BackEnd.Model
 {
     public class Plugin
     {
-        private int Id;
-        private int order;
-        private PluginType pluginType;
+        public int Id { get; set; }
+        public int order { get; set; }
+        public PluginType pluginType { get; set; }
+        public Sampler sampler { get; set; }
+        public Synthesizer synthesizer { get; set; }
+        public List<AudioEffect> AudioEffects { get; set; }
 
         public Plugin()
         {

@@ -8,9 +8,9 @@ namespace MagmaPlayground_BackEnd.Model
 {
     public class AudioEffect
     {
-        private int Id;
-        private string name;
-        private AudioEffectType audioEffectType;
+        public int Id { get; set; }
+        public string name { get; set; }
+        public AudioEffectType audioEffectType { get; set; }
 
         public AudioEffect()
         {

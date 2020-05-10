@@ -7,7 +7,7 @@ namespace MagmaPlayground_BackEnd.Model
 {
     public class Sampler
     {
-        private int Id;
+        public int Id { get; set; }
 
         public Sampler()
         {

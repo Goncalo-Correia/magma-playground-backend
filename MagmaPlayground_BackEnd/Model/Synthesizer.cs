@@ -8,9 +8,9 @@ namespace MagmaPlayground_BackEnd.Model
 {
     public class Synthesizer
     {
-        private int Id;
-        private string name;
-        private SynthesizerType synthesizerType;
+        public int Id { get; set; }
+        public string name { get; set; }
+        public SynthesizerType synthesizerType { get; set; }
 
         public Synthesizer()
         {
