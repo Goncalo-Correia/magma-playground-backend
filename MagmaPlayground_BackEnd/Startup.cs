@@ -20,12 +20,19 @@ namespace MagmaPlayground_BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
             services.AddDbContext<MagmaDbContext>(
-                options => options.UseNpgsql("Server=localhost; Port=5432; Database=magma_db; Username=postgres; Password=ginasio1")
+                options => options.UseNpgsql(Configuration.GetConnectionString())
             );
         }
 
@@ -37,14 +44,13 @@ namespace MagmaPlayground_BackEnd
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            app.UseStaticFiles();
 
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
             });
         }
     }
