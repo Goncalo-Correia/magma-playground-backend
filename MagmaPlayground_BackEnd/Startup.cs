@@ -25,7 +25,7 @@ namespace MagmaPlayground_BackEnd
             services.AddMvc();
 
             services.AddDbContext<MagmaDbContext>(
-                options => options.UseNpgsql("Server=localhost; Port=5432; Database=MagmaDb; Username=magma")
+                options => options.UseNpgsql("Server=localhost; Port=5432; Database=magma_db; Username=postgres; Password=ginasio1")
             );
         }
 
