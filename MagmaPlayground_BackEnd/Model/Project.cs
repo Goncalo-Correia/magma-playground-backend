@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace MagmaPlayground_BackEnd.Model
         public DateTime createdOn { get; set; }
         public DateTime updateOn { get; set; }
 
-        public User projectUser { get; set; }
+        public User user { get; set; }
 
         public List<Track> Tracks { get; set; }
 
