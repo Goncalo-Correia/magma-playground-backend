@@ -13,6 +13,7 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
 
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Rack> Racks { get; set; }
