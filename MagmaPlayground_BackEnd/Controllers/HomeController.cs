@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
+    [Route("magma_api/{controller}")]
     public class HomeController : Controller
     {
-        // GET: /<controller>/
+        [HttpPost]
         public IActionResult Index()
         {
             return Ok("Home controller: OK");
