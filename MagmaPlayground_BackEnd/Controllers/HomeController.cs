@@ -15,7 +15,7 @@ namespace MagmaPlayground_BackEnd.Controllers
 
         public HomeController(MagmaDbContext magmaDbContext)
             => this.magmaDbContext = magmaDbContext;
-
+        
         [HttpGet]
         public IActionResult GetHome()
         {
@@ -27,30 +27,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             return Ok("Home controller: POST Ok");
         }
-
-        [HttpGet]
-        public IActionResult GetUsers()
-        {
-            var users = magmaDbContext.Users.ToList();
-
-            return Ok(users);
-        }
-
-        [HttpPost]
-        public IActionResult createUser()
-        {
-            var user = new User()
-            {
-                name = "joao",
-                lastName = "rocha",
-                email = "joao@email.com",
-                password = "joaopassword",
-            };
-
-            magmaDbContext.Add(user);
-            magmaDbContext.SaveChanges();
-
-            return Ok("Created User");
-        }
+        
     }
 }
