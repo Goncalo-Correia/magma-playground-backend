@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
-    [Route("magma_api/{controller}")]
+    [Route("magma_api/[controller]")]
     public class HomeController : Controller
     {
         [HttpGet]
