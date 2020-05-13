@@ -19,7 +19,7 @@ namespace MagmaPlayground_BackEnd.Model
         public DateTime createdOn { get; set; }
         public DateTime updateOn { get; set; }
 
-        public User user { get; set; }
+        public User User { get; set; }
 
         public List<Track> Tracks { get; set; }
 

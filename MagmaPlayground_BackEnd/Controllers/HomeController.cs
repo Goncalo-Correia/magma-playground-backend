@@ -7,26 +7,25 @@ using System.Linq;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
+    [ApiController]
     [Route("magma_api/[controller]")]
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
-
         public MagmaDbContext magmaDbContext;
 
         public HomeController(MagmaDbContext magmaDbContext)
             => this.magmaDbContext = magmaDbContext;
         
         [HttpGet]
-        public IActionResult GetHome()
+        public ActionResult GetHome()
         {
-            return Ok("Home controller: GET OK");
+            return Ok("Success: get request");
         }
         
         [HttpPost]
-        public IActionResult PostHome()
+        public ActionResult PostHome()
         {
-            return Ok("Home controller: POST Ok");
+            return Ok("Success: post request");
         }
-        
     }
 }
