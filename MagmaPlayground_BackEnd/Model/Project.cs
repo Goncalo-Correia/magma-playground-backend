@@ -11,7 +11,7 @@ namespace MagmaPlayground_BackEnd.Model
     public class Project
     {
         [Key]
-        public int Id;
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Project name is required")]
         [MaxLength(30)]

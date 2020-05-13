@@ -17,6 +17,8 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ProjectConfiguration());
         }
 
         public DbSet<User> Users { get; set; }
