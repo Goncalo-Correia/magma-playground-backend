@@ -11,23 +11,27 @@ namespace MagmaPlayground_BackEnd.Model
     public class Project
     {
         [Key]
+        [Column("id")]
         public int id { get; set; }
 
         [Required(ErrorMessage = "Project name is required")]
         [MaxLength(30)]
+        [Column("name")]
         public string projectName { get; set; }
 
+        [Column("created_on")]
         public DateTime createdOn { get; set; }
+
+        [Column("updated_on")]
         public DateTime updateOn { get; set; }
 
+        [Column("user_id")]
         public User User { get; set; }
 
         public List<Track> Tracks { get; set; }
 
         public Project()
         {
-            createdOn = DateTime.UtcNow;
-            updateOn = DateTime.UtcNow;
         }
     }
 }

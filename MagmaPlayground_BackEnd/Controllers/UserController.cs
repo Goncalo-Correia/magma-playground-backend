@@ -13,7 +13,9 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class UserController : ControllerBase
     {
         public MagmaDbContext magmaDbContext;
-        public ActionResult<IEnumerable<User>> usersList;
+
+        private ActionResult<IEnumerable<User>> usersList;
+        private ActionResult<User> user;
 
         public UserController(MagmaDbContext magmaDbContext)
         {
@@ -21,11 +23,19 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> GetAllUsers()
+        public ActionResult<IEnumerable<User>> getAllUsers()
         {
             usersList = magmaDbContext.Users.ToList();
 
             return usersList;
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<User> GetUser(int id)
+        {
+            user = magmaDbContext.Users.Find(id);
+
+            return user;
         }
 
         [HttpPost]
@@ -34,7 +44,16 @@ namespace MagmaPlayground_BackEnd.Controllers
             magmaDbContext.Add<User>(user);
             magmaDbContext.SaveChanges();
 
-            return Accepted();
+            return Ok("Success: created user");
+        }
+
+        [HttpPost("update")]
+        public ActionResult<User> UpdateUser(User user)
+        {
+            magmaDbContext.Users.Update(user);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: updated user");
         }
     }
 }
