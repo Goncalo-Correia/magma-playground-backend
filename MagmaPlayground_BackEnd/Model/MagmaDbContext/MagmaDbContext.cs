@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MagmaPlayground_BackEnd.Model.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
@@ -11,6 +12,11 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
         public MagmaDbContext(DbContextOptions<MagmaDbContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
 
         public DbSet<User> Users { get; set; }
