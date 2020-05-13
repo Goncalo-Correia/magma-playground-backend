@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Model
 {
+    [Table("project")]
     public class Project
     {
         [Key]

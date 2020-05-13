@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Model
 {
+    [Table("magma_user")]
     public class User
     {
         [Key]
