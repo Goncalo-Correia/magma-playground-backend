@@ -12,7 +12,7 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class UserController : ControllerBase
     {
-        public MagmaDbContext magmaDbContext;
+        private MagmaDbContext magmaDbContext;
 
         private ActionResult<IEnumerable<User>> usersList;
         private ActionResult<User> user;
