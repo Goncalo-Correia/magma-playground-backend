@@ -17,13 +17,13 @@ namespace MagmaPlayground_BackEnd.Controllers
             => this.magmaDbContext = magmaDbContext;
         
         [HttpGet]
-        public ActionResult GetHome()
+        public ActionResult Login()
         {
             return Ok("Success: get request");
         }
         
         [HttpPost]
-        public ActionResult PostHome()
+        public ActionResult Register()
         {
             return Ok("Success: post request");
         }

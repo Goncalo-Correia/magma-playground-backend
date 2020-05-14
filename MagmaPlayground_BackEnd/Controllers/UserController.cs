@@ -15,6 +15,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private MagmaDbContext magmaDbContext;
 
         private ActionResult<IEnumerable<User>> usersList;
+        private User singleUser;
         private ActionResult<User> user;
 
         public UserController(MagmaDbContext magmaDbContext)
@@ -36,6 +37,25 @@ namespace MagmaPlayground_BackEnd.Controllers
             user = magmaDbContext.Users.Find(id);
 
             return user;
+        }
+
+        [HttpGet("email/{email}")]
+        public ActionResult<User> GetUserByEmail(string email)
+        {
+            try
+            {
+                singleUser = magmaDbContext.Users.Single<User>(prop => prop.email == email);
+
+                return singleUser;
+            } 
+            catch (ArgumentNullException ex) {
+                return NotFound(ex.Message);
+
+            } 
+            catch (InvalidOperationException ex) {
+                return BadRequest(ex.Message);
+
+            }
         }
 
         [HttpPost]
