@@ -19,6 +19,8 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
             modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+
+            modelBuilder.ApplyConfiguration(new TrackConfiguration());
         }
 
         public DbSet<User> Users { get; set; }

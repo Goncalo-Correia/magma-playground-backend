@@ -11,24 +11,38 @@ namespace MagmaPlayground_BackEnd.Model
     public class Track
     {
         [Key]
-        public int Id { get; set; }
+        [Column("id")]
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Order is required")]
+        [MaxLength(30)]
+        [Column("order")]
         public int order { get; set; }
 
         [Required(ErrorMessage = "Track name is required")]
-        public string trackName { get; set; }
+        [Column("name")]
+        public string name { get; set; }
 
+        [Column("volume")]
         public decimal volume { get; set; }
+
+        [Column("pan")]
         public decimal pan { get; set; }
 
+        [Required]
+        [Column("tracktype")]
         public TrackType trackType { get; set; }
+
+        [Required]
+        [Column("project_id")]
+        public Project project { get; set; }
+
+        [Column("rack_id")]
         public Rack rack { get; set; }
 
         public Track()
         {
-            volume = 0;
-            pan = 0;
+
         }
     }
 }
