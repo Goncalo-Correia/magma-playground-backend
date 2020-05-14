@@ -37,5 +37,36 @@ namespace MagmaPlayground_BackEnd.Controllers
 
             return projects;
         }
+
+        [HttpPost]
+        public ActionResult CreateProject(Project project)
+        {
+            magmaDbContext.Add<Project>(project);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: created project");
+        }
+
+        [HttpPost("update")]
+        public ActionResult UpdateProject(Project project)
+        {
+            if (project.id == 0)
+            {
+                return NotFound("Error: project not found");
+            }
+
+            magmaDbContext.Update<Project>(project);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: updated project");
+        }
+
+        [HttpDelete]
+        public ActionResult RemoveProject(Project project)
+        {
+            magmaDbContext.Remove<Project>(project);
+
+            return Ok("Success: removed user");
+        }
     }
 }

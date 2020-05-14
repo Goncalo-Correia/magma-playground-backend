@@ -23,7 +23,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> getAllUsers()
+        public ActionResult<IEnumerable<User>> GetAllUsers()
         {
             usersList = magmaDbContext.Users.ToList();
 
@@ -50,10 +50,23 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost("update")]
         public ActionResult<User> UpdateUser(User user)
         {
-            magmaDbContext.Users.Update(user);
+            if (user.id == 0)
+            {
+                return NotFound("Error: user not found");
+            }
+
+            magmaDbContext.Update<User>(user);
             magmaDbContext.SaveChanges();
 
             return Ok("Success: updated user");
+        }
+
+        [HttpDelete]
+        public ActionResult RemoveUser(User user)
+        {
+            magmaDbContext.Remove<User>(user);
+
+            return Ok("Success: removed user");
         }
     }
 }
