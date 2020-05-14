@@ -23,7 +23,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Project> GetProject(int id)
+        public ActionResult<Project> GetProjectById(int id)
         {
             project = magmaDbContext.Projects.Find(id);
 
@@ -31,9 +31,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("user/{id}")]
-        public ActionResult<IEnumerable<Project>> GetProjectsByUser(int id)
+        public ActionResult<IEnumerable<Project>> GetProjectsByUserId(int userId)
         {
-            projects = magmaDbContext.Projects.Where<Project>(prop => prop.User.id == id).ToList<Project>();
+            projects = magmaDbContext.Projects.Where<Project>(prop => prop.User.id == userId).ToList<Project>();
 
             return projects;
         }
@@ -52,7 +52,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             if (project.id == 0)
             {
-                return NotFound("Error: project not found");
+                return BadRequest("Error: invalid data");
             }
 
             magmaDbContext.Update<Project>(project);
@@ -65,6 +65,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult RemoveProject(Project project)
         {
             magmaDbContext.Remove<Project>(project);
+            magmaDbContext.SaveChanges();
 
             return Ok("Success: removed user");
         }

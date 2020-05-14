@@ -72,7 +72,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             if (user.id == 0)
             {
-                return NotFound("Error: user not found");
+                return BadRequest("Error: invalid data");
             }
 
             magmaDbContext.Update<User>(user);
@@ -85,6 +85,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult RemoveUser(User user)
         {
             magmaDbContext.Remove<User>(user);
+            magmaDbContext.SaveChanges();
 
             return Ok("Success: removed user");
         }
