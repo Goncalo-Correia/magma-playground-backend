@@ -14,39 +14,55 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private MagmaDbContext magmaDbContext;
 
+        private ActionResult<Plugin> plugin;
+        private IQueryable<Plugin> queryablePlugin;
+
         public PluginController(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetPluginById(int  id)
+        public ActionResult<Plugin> GetPluginById(int  id)
         {
-            return null;
+            plugin = magmaDbContext.Find<Plugin>(id);
+
+            return plugin;
         }
 
         [HttpGet("rack/{id}")]
-        public ActionResult GetPluginsByRackId(int rackId)
+        public IQueryable<Plugin> GetPluginsByRackId(int rackId)
         {
-            return null;
+            queryablePlugin = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId);
+
+            return queryablePlugin;
         }
 
         [HttpPost]
         public ActionResult CreatePlugin(Plugin plugin)
         {
-            return null;
+            magmaDbContext.Add<Plugin>(plugin);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: created plugin");
         }
 
         [HttpPost("update")]
         public ActionResult UpdatePlugin(Plugin plugin)
         {
-            return null;
+            magmaDbContext.Update<Plugin>(plugin);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: updated plugin");
         }
 
         [HttpDelete]
         public ActionResult RemovePlugin(Plugin plugin)
         {
-            return null;
+            magmaDbContext.Remove<Plugin>(plugin);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: removed plugin");
         }
     }
 }
