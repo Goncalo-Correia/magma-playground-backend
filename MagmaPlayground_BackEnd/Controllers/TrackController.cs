@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.Model;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
@@ -17,6 +18,7 @@ namespace MagmaPlayground_BackEnd.Controllers
 
         private ActionResult<IEnumerable<Track>> tracks;
         private ActionResult<Track> track;
+        private IQueryable<Track> queryableTrack;
 
         public TrackController(MagmaDbContext magmaDbContext)
         {
