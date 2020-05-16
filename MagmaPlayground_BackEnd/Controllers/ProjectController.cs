@@ -33,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("user/{id}")]
         public ActionResult<IEnumerable<Project>> GetProjectsByUserId(int userId)
         {
-            projects = magmaDbContext.Projects.Where<Project>(prop => prop.User.id == userId).ToList<Project>();
+            projects = magmaDbContext.Projects.Where<Project>(prop => prop.user.id == userId).ToList<Project>();
 
             return projects;
         }
