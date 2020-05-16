@@ -13,7 +13,7 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
         {
             builder.HasKey(prop => prop.id);
 
-            builder.Property(prop => prop.projectName)
+            builder.Property(prop => prop.Name)
                 .HasMaxLength(30)
                 .IsRequired();
 

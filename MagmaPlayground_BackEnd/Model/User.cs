@@ -24,7 +24,7 @@ namespace MagmaPlayground_BackEnd.Model
         [Column("last_name")]
         public string lastName { get; set; }
         
-        [Required(ErrorMessage = "Email is requires")]
+        [Required(ErrorMessage = "Email is required")]
         [MaxLength(100)]
         [Column("email")]
         public string email { get; set; }

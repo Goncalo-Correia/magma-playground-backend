@@ -11,10 +11,17 @@ namespace MagmaPlayground_BackEnd.Model
     public class Sampler
     {
         [Key]
-        public int Id { get; set; }
+        [Column("id")]
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Sampler name is required")]
+        [MaxLength(30)]
+        [Column("name")]
         public string name { get; set; }
+
+        [Required(ErrorMessage = "Plugin is required")]
+        [Column("plugin_id")]
+        public Plugin plugin { get; set; }
 
         public Sampler()
         {

@@ -12,12 +12,21 @@ namespace MagmaPlayground_BackEnd.Model
     public class Synthesizer
     {
         [Key]
-        public int Id { get; set; }
+        [Column("id")]
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Plugin name is required")]
+        [MaxLength(30)]
+        [Column("name")]
         public string name { get; set; }
 
+        [Required(ErrorMessage = "Synthesizer type is required")]
+        [Column("synthesizertype")]
         public SynthesizerType synthesizerType { get; set; }
+
+        [Required(ErrorMessage = "Plugin is required")]
+        [Column("plugin_id")]
+        public Plugin plugin { get; set; }
 
         public Synthesizer()
         {

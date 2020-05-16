@@ -17,7 +17,7 @@ namespace MagmaPlayground_BackEnd.Model
         [Required(ErrorMessage = "Project name is required")]
         [MaxLength(30)]
         [Column("name")]
-        public string projectName { get; set; }
+        public string name { get; set; }
 
         [Column("created_on")]
         public DateTime createdOn { get; set; }

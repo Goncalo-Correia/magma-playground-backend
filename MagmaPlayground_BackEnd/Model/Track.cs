@@ -24,10 +24,10 @@ namespace MagmaPlayground_BackEnd.Model
         public string name { get; set; }
 
         [Column("volume")]
-        public decimal volume { get; set; }
+        public float volume { get; set; }
 
         [Column("pan")]
-        public decimal pan { get; set; }
+        public float pan { get; set; }
 
         [Required]
         [Column("tracktype")]
