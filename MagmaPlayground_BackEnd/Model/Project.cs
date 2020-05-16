@@ -26,9 +26,9 @@ namespace MagmaPlayground_BackEnd.Model
         public DateTime updateOn { get; set; }
 
         [Column("user_id")]
-        public User User { get; set; }
+        public User user { get; set; }
 
-        public List<Track> Tracks { get; set; }
+        public List<Track> tracks { get; set; }
 
         public Project()
         {

@@ -11,12 +11,18 @@ namespace MagmaPlayground_BackEnd.Model
     public class Rack
     {
         [Key]
-        public int Id { get; set; }
+        [Column("id")]
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Plugin name is required")]
+        [MaxLength(30)]
+        [Column("plugin_name")]
         public string pluginName { get; set; }
 
-        public List<Plugin> Plugins { get; set; }
+        [Column("track_id")]
+        public Track track { get; set; }
+
+        public List<Plugin> plugins { get; set; }
 
         public Rack()
         {
