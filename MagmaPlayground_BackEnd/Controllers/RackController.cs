@@ -15,6 +15,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private MagmaDbContext magmaDbContext;
 
         private ActionResult<IEnumerable<Rack>> racks;
+        private IQueryable<Rack> queryableRack;
         private ActionResult<Rack> rack;
 
         public RackController(MagmaDbContext magmaDbContext)
@@ -22,12 +23,21 @@ namespace MagmaPlayground_BackEnd.Controllers
             this.magmaDbContext = magmaDbContext;
         }
         
-        [HttpGet]
+        [HttpGet("{id}")]
         public ActionResult<Rack> GetRackById(int id)
         {
             rack = magmaDbContext.Find<Rack>(id);
 
             return rack;
+        }
+
+        [HttpGet("track/{id}")]
+        public IQueryable<Rack> GetRackByTrackId(int trackId)
+        {
+            queryableRack = magmaDbContext.Racks.Where<Rack>(prop => prop.track.id == trackId);
+
+            return queryableRack;
+
         }
 
         [HttpPost]
