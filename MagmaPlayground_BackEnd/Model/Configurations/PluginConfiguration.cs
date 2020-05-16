@@ -14,9 +14,12 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
             builder.HasKey(prop => prop.id);
 
             builder.Property(prop => prop.order)
+                .HasColumnType("int")
                 .IsRequired();
 
-            builder.Property(prop => prop.)
+            builder.Property(prop => prop.pluginType)
+                .HasColumnType("int")
+                .IsRequired();
         }
     }
 }

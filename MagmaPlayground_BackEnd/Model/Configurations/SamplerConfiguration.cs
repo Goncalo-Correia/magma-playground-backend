@@ -7,21 +7,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MagmaPlayground_BackEnd.Model.Configurations
 {
-    public class ProjectConfiguration : IEntityTypeConfiguration<Project>
+    public class SamplerConfiguration : IEntityTypeConfiguration<Sampler>
     {
-        public void Configure(EntityTypeBuilder<Project> builder)
+        public void Configure(EntityTypeBuilder<Sampler> builder)
         {
             builder.HasKey(prop => prop.id);
 
             builder.Property(prop => prop.name)
                 .HasMaxLength(30)
                 .IsRequired();
-
-            builder.Property(prop => prop.createdOn)
-                .HasColumnType("datetime");
-
-            builder.Property(prop => prop.updateOn)
-                .HasColumnType("datetime");
         }
     }
 }

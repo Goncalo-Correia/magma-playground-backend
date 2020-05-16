@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MagmaPlayground_BackEnd.Model.Configurations
 {
-    public class ProjectConfiguration : IEntityTypeConfiguration<Project>
+    public class SynthesizerConfiguration : IEntityTypeConfiguration<Synthesizer>
     {
-        public void Configure(EntityTypeBuilder<Project> builder)
+        public void Configure(EntityTypeBuilder<Synthesizer> builder)
         {
             builder.HasKey(prop => prop.id);
 
@@ -17,11 +17,8 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
                 .HasMaxLength(30)
                 .IsRequired();
 
-            builder.Property(prop => prop.createdOn)
-                .HasColumnType("datetime");
-
-            builder.Property(prop => prop.updateOn)
-                .HasColumnType("datetime");
+            builder.Property(prop => prop.synthesizerType)
+                .IsRequired();
         }
     }
 }

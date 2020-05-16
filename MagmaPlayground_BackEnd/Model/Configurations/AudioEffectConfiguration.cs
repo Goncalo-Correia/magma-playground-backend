@@ -7,21 +7,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MagmaPlayground_BackEnd.Model.Configurations
 {
-    public class ProjectConfiguration : IEntityTypeConfiguration<Project>
+    public class AudioEffectConfiguration : IEntityTypeConfiguration<AudioEffect>
     {
-        public void Configure(EntityTypeBuilder<Project> builder)
+        public void Configure(EntityTypeBuilder<AudioEffect> builder)
         {
             builder.HasKey(prop => prop.id);
+
+            builder.Property(prop => prop.order)
+                .HasColumnType("int")
+                .IsRequired();
 
             builder.Property(prop => prop.name)
                 .HasMaxLength(30)
                 .IsRequired();
 
-            builder.Property(prop => prop.createdOn)
-                .HasColumnType("datetime");
-
-            builder.Property(prop => prop.updateOn)
-                .HasColumnType("datetime");
+            builder.Property(prop => prop.audioEffectType)
+                .HasColumnType("int")
+                .IsRequired();
         }
     }
 }
