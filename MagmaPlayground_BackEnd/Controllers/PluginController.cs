@@ -15,7 +15,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private MagmaDbContext magmaDbContext;
 
         private ActionResult<Plugin> plugin;
-        private IQueryable<Plugin> queryablePlugin;
+        private IEnumerable<Plugin> enumerablePlugin;
 
         public PluginController(MagmaDbContext magmaDbContext)
         {
@@ -31,11 +31,11 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("rack/{id}")]
-        public IQueryable<Plugin> GetPluginsByRackId(int rackId)
+        public IEnumerable<Plugin> GetPluginsByRackId(int rackId)
         {
-            queryablePlugin = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId);
+            enumerablePlugin = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
 
-            return queryablePlugin;
+            return enumerablePlugin;
         }
 
         [HttpPost]

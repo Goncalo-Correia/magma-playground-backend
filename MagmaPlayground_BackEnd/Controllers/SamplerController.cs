@@ -15,39 +15,55 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private MagmaDbContext magmaDbContext;
 
+        private ActionResult<Sampler> sampler;
+        private IQueryable<Sampler> queryableSampler;
+
         public SamplerController(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetSamplerById(int id)
+        public ActionResult<Sampler> GetSamplerById(int id)
         {
-            return null;
+            sampler = magmaDbContext.Find<Sampler>(id);
+
+            return sampler;
         }
 
         [HttpGet("plugin/{id}")]
-        public ActionResult GetSamplerByPluginId(int pluginId)
+        public IQueryable<Sampler> GetSamplerByPluginId(int pluginId)
         {
-            return null;
+            queryableSampler = magmaDbContext.Samplers.Where(prop => prop.plugin.id == pluginId);
+
+            return queryableSampler;
         }
 
         [HttpPost]
         public ActionResult CreateSampler(Sampler sampler)
         {
-            return null;
+            magmaDbContext.Add<Sampler>(sampler);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: created sampler");
         }
 
         [HttpPost("update")]
         public ActionResult UpdateSampler(Sampler sampler)
         {
-            return null;
+            magmaDbContext.Update<Sampler>(sampler);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: updated sampler");
         }
 
         [HttpDelete]
         public ActionResult RemoveSampler(Sampler sampler)
         {
-            return null;
+            magmaDbContext.Remove<Sampler>(sampler);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: removed sampler");
         }
     }
 }
