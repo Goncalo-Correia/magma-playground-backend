@@ -14,39 +14,55 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private MagmaDbContext magmaDbContext;
 
+        private ActionResult<AudioEffect> audioEffect;
+        private IEnumerable<AudioEffect> audioEffects;
+
         public AudioEffectController(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetAudioEffectById(int id)
+        public ActionResult<AudioEffect> GetAudioEffectById(int id)
         {
-            return null;
+            audioEffect = magmaDbContext.Find<AudioEffect>(id);
+            
+            return audioEffect;
         }
 
         [HttpGet("plugin/{id}")]
-        public ActionResult GetAudioEffectByPluginId(int pluginId)
+        public IEnumerable<AudioEffect> GetAudioEffectByPluginId(int pluginId)
         {
-            return null;
+            audioEffects = magmaDbContext.AudioEffects.Where<AudioEffect>(prop => prop.plugin.id == pluginId).ToList();
+
+            return audioEffects;
         }
 
         [HttpPost]
         public ActionResult CreateAudioEffect(AudioEffect audioEffect)
         {
-            return null;
+            magmaDbContext.Add<AudioEffect>(audioEffect);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: created audio effect");
         }
 
         [HttpPost("update")]
         public ActionResult UpdateAudioEffect(AudioEffect audioEffect)
         {
-            return null;
+            magmaDbContext.Update<AudioEffect>(audioEffect);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: updated audio effect");
         }
 
         [HttpDelete]
         public ActionResult RemoveAudioEffect(AudioEffect audioEffect)
         {
-            return null;
+            magmaDbContext.Remove<AudioEffect>(audioEffect);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: removed audio effect");
         }
     }
 }
