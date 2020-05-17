@@ -14,39 +14,55 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private MagmaDbContext magmaDbContext;
 
+        private ActionResult<Synthesizer> synthesizer;
+        private IQueryable<Synthesizer> queryableSynthesizer;
+
         public SynthesizerController(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetSynthesizerById(int id)
+        public ActionResult<Synthesizer> GetSynthesizerById(int id)
         {
-            return null;
+            synthesizer = magmaDbContext.Find<Synthesizer>(id);
+
+            return synthesizer;
         }
 
         [HttpGet("plugin/{id}")]
-        public ActionResult GetSynthesizerByPluginId(int pluginId)
+        public IQueryable<Synthesizer> GetSynthesizerByPluginId(int pluginId)
         {
-            return null;
+            queryableSynthesizer = magmaDbContext.Synthesizers.Where<Synthesizer>(prop => prop.plugin.id == pluginId);
+
+            return queryableSynthesizer;
         }
 
         [HttpPost]
         public ActionResult CreateSynthesizer(Synthesizer synthesizer)
         {
-            return null;
+            magmaDbContext.Add<Synthesizer>(synthesizer);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: created synthesizer");
         }
 
         [HttpPost("update")]
         public ActionResult UpdateSynthesizer(Synthesizer synthesizer)
         {
-            return null;
+            magmaDbContext.Update<Synthesizer>(synthesizer);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: updated synthesizer");
         }
 
         [HttpDelete]
         public ActionResult RemoveSynthesizer(Synthesizer synthesizer)
         {
-            return null;
+            magmaDbContext.Remove<Synthesizer>(synthesizer);
+            magmaDbContext.SaveChanges();
+
+            return Ok("Success: removed synthesizer");
         }
     }
 }
