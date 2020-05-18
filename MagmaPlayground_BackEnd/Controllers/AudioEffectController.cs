@@ -25,17 +25,51 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<AudioEffect> GetAudioEffectById(int id)
         {
-            audioEffect = magmaDbContext.Find<AudioEffect>(id);
-            
-            return audioEffect;
+            if (id == 0)
+            {
+                return BadRequest("Error: id cannot be null");
+            }
+
+            try
+            {
+                audioEffect = magmaDbContext.Find<AudioEffect>(id);
+
+                if (audioEffect == null)
+                {
+                    return NotFound("Error: Audio effect not found");
+                }
+
+                return Ok(audioEffect);
+            }
+            catch(InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("plugin/{id}")]
-        public IEnumerable<AudioEffect> GetAudioEffectByPluginId(int pluginId)
+        public ActionResult<IEnumerable<AudioEffect>> GetAudioEffectByPluginId(int pluginId)
         {
-            audioEffects = magmaDbContext.AudioEffects.Where<AudioEffect>(prop => prop.plugin.id == pluginId).ToList();
+            if (pluginId == 0)
+            {
+                return BadRequest("Error: id cannot be null");
+            }
 
-            return audioEffects;
+            try
+            {
+                audioEffects = magmaDbContext.AudioEffects.Where<AudioEffect>(prop => prop.plugin.id == pluginId).ToList();
+
+                if (audioEffects == null)
+                {
+                    return NotFound("Error: Audio effects not found");
+                }
+
+                return Ok(audioEffects);
+            }
+            catch(ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }            
         }
 
         [HttpPost]

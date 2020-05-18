@@ -37,7 +37,6 @@ namespace MagmaPlayground_BackEnd.Model
         [Column("project_id")]
         public Project project { get; set; }
 
-        [Column("rack_id")]
         public Rack rack { get; set; }
 
         public Track()

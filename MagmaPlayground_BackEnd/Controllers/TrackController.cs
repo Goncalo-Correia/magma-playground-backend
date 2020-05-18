@@ -18,7 +18,6 @@ namespace MagmaPlayground_BackEnd.Controllers
 
         private ActionResult<IEnumerable<Track>> tracks;
         private ActionResult<Track> track;
-        private IQueryable<Track> queryableTrack;
 
         public TrackController(MagmaDbContext magmaDbContext)
         {

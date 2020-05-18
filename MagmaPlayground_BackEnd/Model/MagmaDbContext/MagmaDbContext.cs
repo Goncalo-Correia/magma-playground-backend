@@ -23,6 +23,42 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
             modelBuilder.ApplyConfiguration(new TrackConfiguration());
 
             modelBuilder.ApplyConfiguration(new RackConfiguration());
+
+            modelBuilder.ApplyConfiguration(new PluginConfiguration());
+
+            modelBuilder.ApplyConfiguration(new SamplerConfiguration());
+
+            modelBuilder.ApplyConfiguration(new SynthesizerConfiguration());
+
+            modelBuilder.ApplyConfiguration(new AudioEffectConfiguration());
+
+            modelBuilder.Entity<Project>()
+                .HasOne(prop => prop.user)
+                .WithMany(prop => prop.projects);
+
+            modelBuilder.Entity<Track>()
+                .HasOne(prop => prop.project)
+                .WithMany(prop => prop.tracks);
+
+            modelBuilder.Entity<Rack>()
+                .HasOne(prop => prop.track)
+                .WithOne(prop => prop.rack);
+
+            modelBuilder.Entity<Plugin>()
+                .HasOne(prop => prop.rack)
+                .WithMany(prop => prop.plugins);
+
+            modelBuilder.Entity<Sampler>()
+                .HasOne(prop => prop.plugin)
+                .WithOne(prop => prop.sampler);
+
+            modelBuilder.Entity<Synthesizer>()
+                .HasOne(prop => prop.plugin)
+                .WithOne(prop => prop.synthesizer);
+
+            modelBuilder.Entity<AudioEffect>()
+                .HasOne(prop => prop.plugin)
+                .WithMany(prop => prop.audioEffects);
         }
 
         public DbSet<User> Users { get; set; }
