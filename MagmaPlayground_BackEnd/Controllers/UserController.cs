@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
@@ -26,9 +27,21 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAllUsers()
         {
-            usersList = magmaDbContext.Users.ToList();
+            try
+            {
+                usersList = magmaDbContext.Users.ToList();
 
-            return usersList;
+                if (usersList == null)
+                {
+                    return NotFound("Error: users list is empty");
+                }
+            }
+            catch(ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+            return Ok(usersList);
         }
 
         [HttpGet("{id}")]
@@ -36,7 +49,12 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             user = magmaDbContext.Users.Find(id);
 
-            return user;
+            if (user == null)
+            {
+                return NotFound("Error: user not found");
+            }
+
+            return Ok(user);
         }
 
         [HttpGet("email/{email}")]
@@ -46,7 +64,10 @@ namespace MagmaPlayground_BackEnd.Controllers
             {
                 singleUser = magmaDbContext.Users.Single<User>(prop => prop.email == email);
 
-                return singleUser;
+                if (singleUser == null)
+                {
+                    return NotFound("Error: user not found");
+                }
             } 
             catch (ArgumentNullException ex) {
                 return NotFound(ex.Message);
@@ -56,13 +77,31 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return BadRequest(ex.Message);
 
             }
+
+            return singleUser;
         }
 
         [HttpPost]
         public ActionResult<User> CreateUser(User user)
         {
-            magmaDbContext.Add<User>(user);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (user.id != null)
+                {
+                    return BadRequest("Error: user already exists, id must be null");
+                }
+
+                magmaDbContext.Add<User>(user);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: created user");
         }
@@ -70,13 +109,24 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost("update")]
         public ActionResult<User> UpdateUser(User user)
         {
-            if (user.id == 0)
+            try
             {
-                return BadRequest("Error: invalid data");
-            }
+                if (user.id == null)
+                {
+                    return BadRequest("Error: user id is null");
+                }
 
-            magmaDbContext.Update<User>(user);
-            magmaDbContext.SaveChanges();
+                magmaDbContext.Update<User>(user);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: updated user");
         }
@@ -84,8 +134,24 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpDelete]
         public ActionResult RemoveUser(User user)
         {
-            magmaDbContext.Remove<User>(user);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (user.id == null)
+                {
+                    return BadRequest("Error: user id is null");
+                }
+
+                magmaDbContext.Remove<User>(user);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: removed user");
         }

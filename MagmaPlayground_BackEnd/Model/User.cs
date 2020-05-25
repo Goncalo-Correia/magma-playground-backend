@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,7 +13,7 @@ namespace MagmaPlayground_BackEnd.Model
     {
         [Key]
         [Column("id")]
-        public int id { get; set; }
+        public IntegerType id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [MaxLength(30)]
