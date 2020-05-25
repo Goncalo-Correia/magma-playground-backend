@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Model
@@ -25,17 +27,14 @@ namespace MagmaPlayground_BackEnd.Model
         [Required(ErrorMessage = "Rack is required")]
         [Column("rack_id")]
         public int rackId { get; set; }
+        public Rack rack { get; set; }
 
         [Column("sampler_id")]
         public int samplerId { get; set; }
+        public Sampler sampler { get; set; }
 
         [Column("synthesizer_id")]
         public int synthesizerId { get; set; }
-
-        public Rack rack { get; set; }
-
-        public Sampler sampler { get; set; }
-
         public Synthesizer synthesizer { get; set; }
 
         public List<AudioEffect> audioEffects { get; set; }

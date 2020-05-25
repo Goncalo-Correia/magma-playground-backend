@@ -27,7 +27,6 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Column("user_id")]
         public int userId { get; set; }
-
         public User user { get; set; }
 
         public List<Track> tracks { get; set; }

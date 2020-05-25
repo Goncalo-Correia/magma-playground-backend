@@ -40,7 +40,6 @@ namespace MagmaPlayground_BackEnd.Model
         [Required(ErrorMessage = "Rack id is required")]
         [Column("rack_id")]
         public int rackId { get; set; }
-
         public Rack rack { get; set; }
 
         public Project project { get; set; }
