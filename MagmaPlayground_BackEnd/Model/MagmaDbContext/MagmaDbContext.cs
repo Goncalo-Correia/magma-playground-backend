@@ -40,6 +40,10 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
                 .HasOne(prop => prop.project)
                 .WithMany(prop => prop.tracks);
 
+            modelBuilder.Entity<Track>()
+                .HasOne(prop => prop.rack)
+                .WithOne(prop => prop.track);
+
             modelBuilder.Entity<Rack>()
                 .HasOne(prop => prop.track)
                 .WithOne(prop => prop.rack);

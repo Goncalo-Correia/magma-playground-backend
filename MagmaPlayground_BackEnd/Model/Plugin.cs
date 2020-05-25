@@ -24,12 +24,18 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Required(ErrorMessage = "Rack is required")]
         [Column("rack_id")]
-        public Rack rack { get; set; }
+        public int rackId { get; set; }
 
         [Column("sampler_id")]
-        public Sampler sampler { get; set; }
+        public int samplerId { get; set; }
 
         [Column("synthesizer_id")]
+        public int synthesizerId { get; set; }
+
+        public Rack rack { get; set; }
+
+        public Sampler sampler { get; set; }
+
         public Synthesizer synthesizer { get; set; }
 
         public List<AudioEffect> audioEffects { get; set; }
