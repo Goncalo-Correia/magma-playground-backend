@@ -13,7 +13,7 @@ namespace MagmaPlayground_BackEnd.Model
     {
         [Key]
         [Column("id")]
-        public IntegerType id { get; set; }
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [MaxLength(30)]

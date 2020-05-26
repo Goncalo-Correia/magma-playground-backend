@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
@@ -25,7 +27,17 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Project> GetProjectById(int id)
         {
+            if (id == 0)
+            {
+                return BadRequest("Error: input parameter id is null");
+            }
+
             project = magmaDbContext.Projects.Find(id);
+
+            if (project == null)
+            {
+                return NotFound("Error: project not found");
+            }
 
             return project;
         }
@@ -33,7 +45,24 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("user/{id}")]
         public ActionResult<IEnumerable<Project>> GetProjectsByUserId(int userId)
         {
-            projects = magmaDbContext.Projects.Where<Project>(prop => prop.user.id == userId).ToList<Project>();
+            try
+            {
+                if (userId == 0)
+                {
+                    return BadRequest("Error: input parameter userId is null");
+                }
+
+                projects = magmaDbContext.Projects.Where<Project>(prop => prop.userId == userId).ToList<Project>();
+
+                if (projects == null)
+                {
+                    return NotFound("Error: projects not found for this user");
+                }
+            }
+            catch(ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return projects;
         }
@@ -41,8 +70,29 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost]
         public ActionResult CreateProject(Project project)
         {
-            magmaDbContext.Add<Project>(project);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (project == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+
+                if (project.id != 0)
+                {
+                    return BadRequest("Error: project already exists, id must be null");
+                }
+
+                magmaDbContext.Add<Project>(project);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: created project");
         }
@@ -50,13 +100,29 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost("update")]
         public ActionResult UpdateProject(Project project)
         {
-            if (project.id == 0)
+            try
             {
-                return BadRequest("Error: invalid data");
-            }
+                if (project == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
 
-            magmaDbContext.Update<Project>(project);
-            magmaDbContext.SaveChanges();
+                if (project.id == 0)
+                {
+                    return BadRequest("Error: invalid data");
+                }
+
+                magmaDbContext.Update<Project>(project);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: updated project");
         }
@@ -64,8 +130,29 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpDelete]
         public ActionResult RemoveProject(Project project)
         {
-            magmaDbContext.Remove<Project>(project);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (project == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+
+                if (project.id == 0)
+                {
+                    return BadRequest("Error: invalid data");
+                }
+
+                magmaDbContext.Remove<Project>(project);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: removed user");
         }

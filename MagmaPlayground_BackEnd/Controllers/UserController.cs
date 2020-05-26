@@ -47,6 +47,11 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
+            if (id == 0)
+            {
+                return BadRequest("Error: input parameter id is null");
+            }
+
             user = magmaDbContext.Users.Find(id);
 
             if (user == null)
@@ -62,6 +67,11 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             try
             {
+                if (email == null)
+                {
+                    return BadRequest("Error: input parameter email is null");
+                }
+
                 singleUser = magmaDbContext.Users.Single<User>(prop => prop.email == email);
 
                 if (singleUser == null)
@@ -86,7 +96,12 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             try
             {
-                if (user.id != null)
+                if (user == null)
+                {
+                    return BadRequest("Error: input parameter user is null");
+                }
+
+                if (user.id != 0)
                 {
                     return BadRequest("Error: user already exists, id must be null");
                 }
@@ -111,7 +126,12 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             try
             {
-                if (user.id == null)
+                if (user == null)
+                {
+                    return BadRequest("Error: input parameter user is null");
+                }
+
+                if (user.id == 0)
                 {
                     return BadRequest("Error: user id is null");
                 }
@@ -136,7 +156,12 @@ namespace MagmaPlayground_BackEnd.Controllers
         {
             try
             {
-                if (user.id == null)
+                if (user == null)
+                {
+                    return BadRequest("Error: input parameter user is null");
+                }
+
+                if (user.id == 0)
                 {
                     return BadRequest("Error: user id is null");
                 }
