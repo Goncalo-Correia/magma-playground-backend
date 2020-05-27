@@ -46,13 +46,11 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
 
             modelBuilder.Entity<Track>()
                 .HasOne(prop => prop.Rack)
-                .WithOne(prop => prop.track);
+                .WithOne(prop => prop.Track);
 
             modelBuilder.Entity<Rack>()
-                .HasOne(prop => prop.track)
-                .WithOne(prop => prop.Rack)
-                .HasForeignKey<Rack>(prop => prop.trackId)
-                .HasConstraintName("track_id");
+                .HasOne(prop => prop.Track)
+                .WithOne(prop => prop.Rack);
 
             modelBuilder.Entity<Plugin>()
                 .HasOne(prop => prop.rack)

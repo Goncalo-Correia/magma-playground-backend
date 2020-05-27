@@ -24,6 +24,10 @@ namespace MagmaPlayground_BackEnd.Model
         [Column("plugintype")]
         public PluginType pluginType { get; set; }
 
+        [Required(ErrorMessage = "Plugin name is required")]
+        [Column("plugin_name")]
+        public string pluginName { get; set; }
+
         [Required(ErrorMessage = "Rack is required")]
         [Column("rack_id")]
         public int rackId { get; set; }

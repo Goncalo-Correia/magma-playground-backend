@@ -30,8 +30,7 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Required(ErrorMessage = "Tracktype is required")]
         [Column("tracktype")]
-        public int trackTypeId { get; set; }
-        public TrackType TrackType { get; set; }
+        public TrackType trackType { get; set; }
 
         [Required(ErrorMessage = "Project id is required")]
         [Column("project_id")]

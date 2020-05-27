@@ -26,8 +26,8 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
 
             builder.Property(prop => prop.pan)
                 .HasColumnType("decimal");
-
-            builder.Property(prop => prop.trackTypeId)
+            
+            builder.Property(prop => prop.trackType)
                 .HasColumnType("int")
                 .IsRequired();
         }
