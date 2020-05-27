@@ -23,7 +23,7 @@ namespace MagmaPlayground_BackEnd.Model
         public DateTime createdOn { get; set; }
 
         [Column("updated_on")]
-        public DateTime updateOn { get; set; }
+        public DateTime updatedOn { get; set; }
 
         [Column("user_id")]
         public int userId { get; set; }

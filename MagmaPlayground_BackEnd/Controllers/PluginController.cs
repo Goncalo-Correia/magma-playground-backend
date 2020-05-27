@@ -60,7 +60,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return plugins;
@@ -86,11 +86,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: created plugin");
@@ -116,11 +116,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: updated plugin");
@@ -146,11 +146,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: removed plugin");

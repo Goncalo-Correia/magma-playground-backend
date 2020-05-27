@@ -15,7 +15,6 @@ namespace MagmaPlayground_BackEnd.Model
         public int id { get; set; }
 
         [Required(ErrorMessage = "Order is required")]
-        [MaxLength(30)]
         [Column("order")]
         public int order { get; set; }
 
@@ -31,18 +30,17 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Required(ErrorMessage = "Tracktype is required")]
         [Column("tracktype")]
-        public TrackType trackType { get; set; }
+        public int trackTypeId { get; set; }
+        public TrackType TrackType { get; set; }
 
         [Required(ErrorMessage = "Project id is required")]
         [Column("project_id")]
         public int projectId { get; set; }
+        public Project Project { get; set; }
 
-        [Required(ErrorMessage = "Rack id is required")]
         [Column("rack_id")]
         public int rackId { get; set; }
-        public Rack rack { get; set; }
-
-        public Project project { get; set; }
+        public Rack Rack { get; set; }
 
         public Track()
         {

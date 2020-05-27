@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.Model;
 using Microsoft.EntityFrameworkCore.Internal;
+using Npgsql;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
@@ -27,16 +28,23 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Track> GetTrackById(int id)
         {
-            if (id == 0)
+            try
             {
-                return BadRequest("Error: input parameter id is null");
-            } 
+                if (id == 0)
+                {
+                    return BadRequest("Error: input parameter id is null");
+                } 
 
-            track = magmaDbContext.Find<Track>(id);
+                track = magmaDbContext.Find<Track>(id);
 
-            if (track == null)
+                if (track == null)
+                {
+                    return NotFound("Error: track not found");
+                }
+            }
+            catch (PostgresException ex)
             {
-                return NotFound("Error: track not found");
+                return BadRequest(ex.InnerException.Message);
             }
 
             return track;
@@ -61,7 +69,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch(ArgumentNullException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return tracks;
@@ -87,11 +95,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: created track");
@@ -118,11 +126,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: updated track");
@@ -148,11 +156,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: removed track");

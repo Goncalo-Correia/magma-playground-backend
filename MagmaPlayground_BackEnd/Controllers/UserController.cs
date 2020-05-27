@@ -38,7 +38,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch(ArgumentNullException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             
             return usersList;
@@ -80,11 +80,11 @@ namespace MagmaPlayground_BackEnd.Controllers
                 }
             } 
             catch (ArgumentNullException ex) {
-                return NotFound(ex.Message);
+                return NotFound(ex.InnerException.Message);
 
             } 
             catch (InvalidOperationException ex) {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
 
             }
 
@@ -111,11 +111,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: created user");
@@ -141,11 +141,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: updated user");
@@ -171,11 +171,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: removed user");

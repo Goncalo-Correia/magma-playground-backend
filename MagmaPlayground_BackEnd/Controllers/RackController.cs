@@ -59,11 +59,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (InvalidOperationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return rack;
@@ -90,11 +90,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: created rack");
@@ -120,11 +120,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: updated rack");
@@ -150,11 +150,11 @@ namespace MagmaPlayground_BackEnd.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException.Message);
             }
 
             return Ok("Success: removed rack");

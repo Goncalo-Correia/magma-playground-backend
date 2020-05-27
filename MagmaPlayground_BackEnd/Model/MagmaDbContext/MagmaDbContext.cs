@@ -39,18 +39,18 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
                 .HasConstraintName("user_fkey");
 
             modelBuilder.Entity<Track>()
-                .HasOne(prop => prop.project)
+                .HasOne(prop => prop.Project)
                 .WithMany(prop => prop.tracks)
                 .HasForeignKey(prop => prop.projectId)
                 .HasConstraintName("project_fkey");
 
             modelBuilder.Entity<Track>()
-                .HasOne(prop => prop.rack)
+                .HasOne(prop => prop.Rack)
                 .WithOne(prop => prop.track);
 
             modelBuilder.Entity<Rack>()
                 .HasOne(prop => prop.track)
-                .WithOne(prop => prop.rack)
+                .WithOne(prop => prop.Rack)
                 .HasForeignKey<Rack>(prop => prop.trackId)
                 .HasConstraintName("track_id");
 
@@ -99,6 +99,5 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
         public DbSet<Sampler> Samplers { get; set; }
         public DbSet<Synthesizer> Synthesizers { get; set; }
         public DbSet<AudioEffect> AudioEffects { get; set; }
-
     }
 }
