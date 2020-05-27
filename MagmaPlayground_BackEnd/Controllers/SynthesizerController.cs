@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
@@ -15,7 +16,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         private MagmaDbContext magmaDbContext;
 
         private ActionResult<Synthesizer> synthesizer;
-        private IQueryable<Synthesizer> queryableSynthesizer;
 
         public SynthesizerController(MagmaDbContext magmaDbContext)
         {
@@ -25,24 +25,76 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Synthesizer> GetSynthesizerById(int id)
         {
+            if (id == 0)
+            {
+                return BadRequest("Error: input parameter is null");
+            }
+
             synthesizer = magmaDbContext.Find<Synthesizer>(id);
 
-            return synthesizer;
+            if (synthesizer == null)
+            {
+                return NotFound("Error: synthesizer not found");
+            }
+
+            return Ok(synthesizer);
         }
 
         [HttpGet("plugin/{id}")]
-        public IQueryable<Synthesizer> GetSynthesizerByPluginId(int pluginId)
+        public ActionResult<Synthesizer> GetSynthesizerByPluginId(int pluginId)
         {
-            queryableSynthesizer = magmaDbContext.Synthesizers.Where<Synthesizer>(prop => prop.plugin.id == pluginId);
+            try
+            {
+                if (pluginId == 0)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
 
-            return queryableSynthesizer;
+                synthesizer = magmaDbContext.Synthesizers.Single<Synthesizer>(prop => prop.plugin.id == pluginId);
+
+                if (synthesizer == null)
+                {
+                    return NotFound("Error: synthesizer not found for this plugin");
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(synthesizer);
         }
 
         [HttpPost]
         public ActionResult CreateSynthesizer(Synthesizer synthesizer)
         {
-            magmaDbContext.Add<Synthesizer>(synthesizer);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (synthesizer == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+
+                if (synthesizer.id != 0)
+                {
+                    return BadRequest("Error: synthesizer already exists, id must be null");
+                }
+
+                magmaDbContext.Add<Synthesizer>(synthesizer);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: created synthesizer");
         }
@@ -50,8 +102,29 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost("update")]
         public ActionResult UpdateSynthesizer(Synthesizer synthesizer)
         {
-            magmaDbContext.Update<Synthesizer>(synthesizer);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (synthesizer == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+
+                if (synthesizer.id == 0)
+                {
+                    return BadRequest("Error: synthesizer id is null");
+                }
+
+                magmaDbContext.Update<Synthesizer>(synthesizer);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: updated synthesizer");
         }
@@ -59,8 +132,29 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpDelete]
         public ActionResult RemoveSynthesizer(Synthesizer synthesizer)
         {
-            magmaDbContext.Remove<Synthesizer>(synthesizer);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (synthesizer == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+
+                if (synthesizer.id == 0)
+                {
+                    return BadRequest("Error: synthesizer id is null");
+                }
+
+                magmaDbContext.Remove<Synthesizer>(synthesizer);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: removed synthesizer");
         }
