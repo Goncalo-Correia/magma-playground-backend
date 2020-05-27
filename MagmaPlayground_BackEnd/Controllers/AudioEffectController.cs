@@ -16,7 +16,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private MagmaDbContext magmaDbContext;
 
         private ActionResult<AudioEffect> audioEffect;
-        private IEnumerable<AudioEffect> audioEffects;
+        private ActionResult<IEnumerable<AudioEffect>> audioEffects;
 
         public AudioEffectController(MagmaDbContext magmaDbContext)
         {
@@ -38,7 +38,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return NotFound("Error: audio effect not found");
             }
 
-            return Ok(audioEffect);
+            return audioEffect;
         }
 
         [HttpGet("plugin/{id}")]
@@ -64,7 +64,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok(audioEffects);
+            return audioEffects;
         }
 
         [HttpPost]

@@ -37,7 +37,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return NotFound("Error: track not found");
             }
 
-            return Ok(sampler);
+            return sampler;
         }
 
         [HttpGet("plugin/{id}")]
@@ -66,7 +66,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok(sampler);
+            return sampler;
         }
 
         [HttpPost]

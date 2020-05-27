@@ -37,7 +37,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return NotFound("Error: synthesizer not found");
             }
 
-            return Ok(synthesizer);
+            return synthesizer;
         }
 
         [HttpGet("plugin/{id}")]
@@ -66,7 +66,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok(synthesizer);
+            return synthesizer;
         }
 
         [HttpPost]
