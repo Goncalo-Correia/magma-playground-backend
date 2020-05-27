@@ -12,10 +12,6 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
         public void Configure(EntityTypeBuilder<Rack> builder)
         {
             builder.HasKey(prop => prop.id);
-
-            builder.Property(prop => prop.pluginName)
-                .HasMaxLength(30)
-                .IsRequired();
         }
     }
 }
