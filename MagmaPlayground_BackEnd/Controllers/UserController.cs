@@ -41,7 +41,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return BadRequest(ex.Message);
             }
             
-            return Ok(usersList);
+            return usersList;
         }
 
         [HttpGet("{id}")]
@@ -59,7 +59,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return NotFound("Error: user not found");
             }
 
-            return Ok(user);
+            return user;
         }
 
         [HttpGet("email/{email}")]

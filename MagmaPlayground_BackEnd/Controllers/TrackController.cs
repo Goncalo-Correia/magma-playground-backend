@@ -109,7 +109,7 @@ namespace MagmaPlayground_BackEnd.Controllers
 
                 if (track.id == 0)
                 {
-                    return BadRequest("Error: invalid data");
+                    return BadRequest("Error: track id is null");
                 }
 
                 magmaDbContext.Update<Track>(track);
@@ -140,7 +140,7 @@ namespace MagmaPlayground_BackEnd.Controllers
 
                 if (track.id == 0)
                 {
-                    return BadRequest("Error: invalid data");
+                    return BadRequest("Error: track id is null");
                 }
 
                 magmaDbContext.Remove<Track>(track);

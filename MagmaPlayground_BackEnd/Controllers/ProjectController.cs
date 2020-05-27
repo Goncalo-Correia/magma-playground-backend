@@ -109,7 +109,7 @@ namespace MagmaPlayground_BackEnd.Controllers
 
                 if (project.id == 0)
                 {
-                    return BadRequest("Error: invalid data");
+                    return BadRequest("Error: project id is null");
                 }
 
                 magmaDbContext.Update<Project>(project);
@@ -139,7 +139,7 @@ namespace MagmaPlayground_BackEnd.Controllers
 
                 if (project.id == 0)
                 {
-                    return BadRequest("Error: invalid data");
+                    return BadRequest("Error: project id is null");
                 }
 
                 magmaDbContext.Remove<Project>(project);
