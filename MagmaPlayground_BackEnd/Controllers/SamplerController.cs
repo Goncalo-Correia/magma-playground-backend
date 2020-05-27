@@ -16,7 +16,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         private MagmaDbContext magmaDbContext;
 
         private ActionResult<Sampler> sampler;
-        private IQueryable<Sampler> queryableSampler;
 
         public SamplerController(MagmaDbContext magmaDbContext)
         {
@@ -26,24 +25,75 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Sampler> GetSamplerById(int id)
         {
+            if (id == 0)
+            {
+                return BadRequest("Error: input parameter id is null");
+            }
+
             sampler = magmaDbContext.Find<Sampler>(id);
 
-            return sampler;
+            if (sampler == null)
+            {
+                return NotFound("Error: track not found");
+            }
+
+            return Ok(sampler);
         }
 
         [HttpGet("plugin/{id}")]
-        public IQueryable<Sampler> GetSamplerByPluginId(int pluginId)
+        public ActionResult<Sampler> GetSamplerByPluginId(int pluginId)
         {
-            queryableSampler = magmaDbContext.Samplers.Where(prop => prop.plugin.id == pluginId);
+            try
+            {
+                if (pluginId == 0)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
 
-            return queryableSampler;
+                sampler = magmaDbContext.Samplers.Single<Sampler>(prop => prop.plugin.id == pluginId);
+
+                if (sampler == null)
+                {
+                    return NotFound("Error: sampler not found for this plugin");
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(sampler);
         }
 
         [HttpPost]
         public ActionResult CreateSampler(Sampler sampler)
         {
-            magmaDbContext.Add<Sampler>(sampler);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (sampler == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+                if (sampler.id != 0)
+                {
+                    return BadRequest("Error: sampler already exists, id must be null");
+                }
+
+                magmaDbContext.Add<Sampler>(sampler);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: created sampler");
         }
@@ -51,8 +101,28 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost("update")]
         public ActionResult UpdateSampler(Sampler sampler)
         {
-            magmaDbContext.Update<Sampler>(sampler);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (sampler == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+                if (sampler.id == 0)
+                {
+                    return BadRequest("Error: sampler id is null");
+                }
+
+                magmaDbContext.Update<Sampler>(sampler);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: updated sampler");
         }
@@ -60,8 +130,28 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpDelete]
         public ActionResult RemoveSampler(Sampler sampler)
         {
-            magmaDbContext.Remove<Sampler>(sampler);
-            magmaDbContext.SaveChanges();
+            try
+            {
+                if (sampler == null)
+                {
+                    return BadRequest("Error: input parameter is null");
+                }
+                if (sampler.id == 0)
+                {
+                    return BadRequest("Error: sampler id is null");
+                }
+
+                magmaDbContext.Remove<Sampler>(sampler);
+                magmaDbContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok("Success: removed sampler");
         }

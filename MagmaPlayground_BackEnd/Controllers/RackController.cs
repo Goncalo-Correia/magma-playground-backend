@@ -37,7 +37,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return NotFound("Error: rack not found");
             }
 
-            return rack;
+            return Ok(rack);
         }
 
         [HttpGet("track/{id}")]
@@ -66,8 +66,7 @@ namespace MagmaPlayground_BackEnd.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return rack;
-
+            return Ok(rack);
         }
 
         [HttpPost]
