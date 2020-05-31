@@ -36,13 +36,13 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
                 .HasOne(prop => prop.user)
                 .WithMany(prop => prop.projects)
                 .HasForeignKey(prop => prop.userId)
-                .HasConstraintName("user_fkey");
+                .HasConstraintName("project_user_fkey");
 
             modelBuilder.Entity<Track>()
                 .HasOne(prop => prop.Project)
                 .WithMany(prop => prop.tracks)
                 .HasForeignKey(prop => prop.projectId)
-                .HasConstraintName("project_fkey");
+                .HasConstraintName("track_project_fkey");
 
             modelBuilder.Entity<Track>()
                 .HasOne(prop => prop.Rack)
@@ -50,43 +50,45 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
 
             modelBuilder.Entity<Rack>()
                 .HasOne(prop => prop.Track)
-                .WithOne(prop => prop.Rack);
+                .WithOne(prop => prop.Rack)
+                .HasForeignKey<Track>(prop => prop.rackId)
+                .HasConstraintName("rack_track_fkey");
 
             modelBuilder.Entity<Plugin>()
                 .HasOne(prop => prop.rack)
                 .WithMany(prop => prop.plugins)
                 .HasForeignKey(prop => prop.rackId)
-                .HasConstraintName("rack_fkey");
+                .HasConstraintName("plugin_rack_fkey");
 
             modelBuilder.Entity<Plugin>()
                 .HasOne(prop => prop.sampler)
-                .WithOne(prop => prop.plugin)
-                .HasForeignKey<Plugin>(prop => prop.samplerId)
-                .HasConstraintName("sampler_id");
+                .WithOne(prop => prop.plugin);
 
             modelBuilder.Entity<Plugin>()
                 .HasOne(prop => prop.synthesizer)
-                .WithOne(prop => prop.plugin)
-                .HasForeignKey<Plugin>(prop => prop.synthesizerId)
-                .HasConstraintName("synthesizer_id");
+                .WithOne(prop => prop.plugin);
+
+            modelBuilder.Entity<Plugin>()
+                .HasMany(prop => prop.audioEffects)
+                .WithOne(prop => prop.plugin);
 
             modelBuilder.Entity<Sampler>()
                 .HasOne(prop => prop.plugin)
                 .WithOne(prop => prop.sampler)
-                .HasForeignKey<Sampler>(prop => prop.pluginId)
-                .HasConstraintName("plugin_id");
+                .HasForeignKey<Plugin>(prop => prop.samplerId)
+                .HasConstraintName("sampler_plugin_id");
 
             modelBuilder.Entity<Synthesizer>()
                 .HasOne(prop => prop.plugin)
                 .WithOne(prop => prop.synthesizer)
-                .HasForeignKey<Synthesizer>(prop => prop.pluginId)
-                .HasConstraintName("plugin_id");
+                .HasForeignKey<Plugin>(prop => prop.synthesizerId)
+                .HasConstraintName("synthesizer_plugin_id");
 
             modelBuilder.Entity<AudioEffect>()
                 .HasOne(prop => prop.plugin)
                 .WithMany(prop => prop.audioEffects)
                 .HasForeignKey(prop => prop.pluginId)
-                .HasConstraintName("plugin_audioeffect_fkey");
+                .HasConstraintName("audioeffect_plugin_fkey");
         }
 
         public DbSet<User> Users { get; set; }
