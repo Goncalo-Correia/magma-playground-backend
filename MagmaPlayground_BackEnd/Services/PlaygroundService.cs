@@ -1,7 +1,9 @@
 ﻿using MagmaPlayground_BackEnd.Controllers;
 using MagmaPlayground_BackEnd.Model;
+using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +11,8 @@ namespace MagmaPlayground_BackEnd.Services
 {
     public class PlaygroundService
     {
+        private MagmaDbContext magmaDbContext;
+
         private UserController userController;
         private ProjectController projectController;
         private TrackController trackController;
@@ -17,5 +21,24 @@ namespace MagmaPlayground_BackEnd.Services
         private SamplerController samplerController;
         private SynthesizerController synthesizerController;
         private AudioEffectController audioEffectController;
+
+        public PlaygroundService (MagmaDbContext magmaDbContext)
+        {
+            this.magmaDbContext = magmaDbContext;
+
+            this.userController = new UserController(magmaDbContext);
+            this.projectController = new ProjectController(magmaDbContext);
+            this.trackController = new TrackController(magmaDbContext);
+            this.rackController = new RackController(magmaDbContext);
+            this.pluginController = new PluginController(magmaDbContext);
+            this.samplerController = new SamplerController(magmaDbContext);
+            this.synthesizerController = new SynthesizerController(magmaDbContext);
+            this.audioEffectController = new AudioEffectController(magmaDbContext);
+        }
+
+        public Project CreateDefaultProject(int userId)
+        {
+
+        }
     }
 }
