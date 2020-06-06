@@ -1,4 +1,5 @@
 ﻿using MagmaPlayground_BackEnd.Controllers;
+using MagmaPlayground_BackEnd.Factories;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using System;
@@ -22,6 +23,8 @@ namespace MagmaPlayground_BackEnd.Services
         private SynthesizerController synthesizerController;
         private AudioEffectController audioEffectController;
 
+        private TrackFactory trackFactory;
+
         public PlaygroundService (MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
@@ -34,9 +37,11 @@ namespace MagmaPlayground_BackEnd.Services
             this.samplerController = new SamplerController(magmaDbContext);
             this.synthesizerController = new SynthesizerController(magmaDbContext);
             this.audioEffectController = new AudioEffectController(magmaDbContext);
+
+            this.trackFactory = new TrackFactory(projectController, trackController, rackController);
         }
 
-        public Project CreateDefaultProject(int userId)
+        public void CreateDefaultProject(int userId)
         {
 
         }

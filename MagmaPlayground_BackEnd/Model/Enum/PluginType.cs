@@ -7,8 +7,8 @@ namespace MagmaPlayground_BackEnd.Model
 {
     public enum PluginType
     {
-        SAMPLE,
-        INSTRUMENT,
-        AUDIO_EFFECT
+        SAMPLER,
+        SYNTHESIZER,
+        AUDIOEFFECT
     }
 }

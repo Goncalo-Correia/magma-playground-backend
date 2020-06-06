@@ -23,7 +23,6 @@ namespace MagmaPlayground_BackEnd.Factories
         private Rack rack;
 
         private int tracksCount;
-        private int startingOrder;
         private int order;
 
         public TrackFactory (ProjectController projectController, TrackController trackController, RackController rackController)
@@ -34,28 +33,16 @@ namespace MagmaPlayground_BackEnd.Factories
             this.tracks = new List<Track>();
         }
 
-        public Track GetTrackForProject (int projectId, TrackType trackType)
+        public Track BuildTrackForProject (int projectId, TrackType trackType)
         {
-            project = projectController.GetProjectById(projectId).Value;
-
-            tracksCount = trackController.GetTracksByProjectId(projectId).Value.ToList().Count;
-            startingOrder = tracksCount + 1;
-            order = startingOrder;
-
             return BuildTrack(projectId, trackType);
         }
 
-        public List<Track> GetTracksForProject(int projectId, TrackType trackType, int numberOfTracks)
+        public List<Track> BuildTracksForProject(int projectId, List<TrackType> trackTypes, int numberOfTracks)
         {
-            project = projectController.GetProjectById(projectId).Value;
-
-            tracksCount = trackController.GetTracksByProjectId(projectId).Value.ToList().Count;
-            startingOrder = tracksCount + 1;
-            order = startingOrder;
-
             for (int i = 0; i < numberOfTracks; i++)
             {
-                tracks.Add(BuildTrack(projectId, trackType));
+                tracks.Add(BuildTrack(projectId, trackTypes[i]));
             }
 
             return tracks;
@@ -63,11 +50,17 @@ namespace MagmaPlayground_BackEnd.Factories
 
         private Track BuildTrack (int projectId, TrackType trackType)
         {
+            project = projectController.GetProjectById(projectId).Value;
+
+            tracksCount = trackController.GetTracksByProjectId(projectId).Value.ToList().Count;
+            order = tracksCount + 1;
+
             track = new Track();
             track.name = trackType.ToString() + " " + order;
             track.order = order;
             track.pan = 0;
             track.volume = 0;
+            track.trackType = trackType;
 
             track.Project = project;
             track.projectId = projectId;
