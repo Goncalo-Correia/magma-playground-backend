@@ -68,15 +68,17 @@ namespace MagmaPlayground_BackEnd.Factories
 
             if (pluginType == PluginType.SAMPLER)
             {
-
+                plugin.sampler = samplerFactory.BuildSampler();
+                plugin.samplerId = plugin.sampler.id;
             }
             if (pluginType == PluginType.SYNTHESIZER)
             {
-
+                plugin.synthesizer = synthesizerFactory.BuildSynthesizer();
+                plugin.synthesizerId = plugin.synthesizer.id;
             }
             if (pluginType == PluginType.AUDIOEFFECT)
             {
-
+                plugin.audioEffects.Add(audioEffectFactory.BuildAudioEffect());
             }
 
             return plugin;

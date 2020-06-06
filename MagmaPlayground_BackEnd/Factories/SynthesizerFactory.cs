@@ -20,7 +20,7 @@ namespace MagmaPlayground_BackEnd.Factories
             this.synthesizerController = synthesizerController;
         }
 
-        public Synthesizer BuildSynthesizer(int pluginId)
+        public Synthesizer BuildSynthesizer()
         {
             return synthesizer;
         }

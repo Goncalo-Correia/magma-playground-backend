@@ -20,7 +20,7 @@ namespace MagmaPlayground_BackEnd.Factories
             this.samplerController = samplerController;
         }
 
-        public Sampler BuildSampler(int pluginId)
+        public Sampler BuildSampler()
         {
             return sampler;
         }

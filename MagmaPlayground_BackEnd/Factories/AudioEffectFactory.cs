@@ -23,12 +23,12 @@ namespace MagmaPlayground_BackEnd.Factories
             this.audioEffects = new List<AudioEffect>();
         }
 
-        public AudioEffect BuildAudioEffect(int pluginId)
+        public AudioEffect BuildAudioEffect()
         {
             return audioEffect;
         }
 
-        public List<AudioEffect> BuildAudioEffects(int pluginId)
+        public List<AudioEffect> BuildAudioEffects()
         {
             return audioEffects;
         }
