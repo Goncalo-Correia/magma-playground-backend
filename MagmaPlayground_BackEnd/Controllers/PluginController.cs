@@ -26,19 +26,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Plugin> GetPluginById(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest("Error: input parameter is null");
-            }
 
-            plugin = magmaDbContext.Find<Plugin>(id);
-
-            if (plugin == null)
-            {
-                return NotFound("Error: plugin not found");
-            }
-
-            return plugin;
         }
 
         [HttpGet("rack/{id}")]
@@ -69,91 +57,19 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost]
         public ActionResult CreatePlugin(Plugin plugin)
         {
-            try
-            {
-                if (plugin == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (plugin.id != 0)
-                {
-                    return BadRequest("Error: plugin already exists, id must be null");
-                }
-
-                magmaDbContext.Add<Plugin>(plugin);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
-            return Ok("Success: created plugin");
+            
         }
 
         [HttpPost("update")]
         public ActionResult UpdatePlugin(Plugin plugin)
         {
-            try
-            {
-                if (plugin == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
 
-                if (plugin.id == 0)
-                {
-                    return BadRequest("Error: plugin id is null");
-                }
-
-                magmaDbContext.Update<Plugin>(plugin);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
-            return Ok("Success: updated plugin");
         }
 
         [HttpDelete]
         public ActionResult RemovePlugin(Plugin plugin)
         {
-            try
-            {
-                if (plugin == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (plugin.id == 0)
-                {
-                    return BadRequest("Error: track id is null");
-                }
-
-                magmaDbContext.Remove<Plugin>(plugin);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
-            return Ok("Success: removed plugin");
+            
         }
     }
 }
