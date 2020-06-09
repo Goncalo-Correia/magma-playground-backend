@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
-using System.Data.Entity.Infrastructure;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagmaPlayground_BackEnd.Daos
 {

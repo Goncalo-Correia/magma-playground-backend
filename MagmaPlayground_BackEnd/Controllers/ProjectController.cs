@@ -27,18 +27,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Project> GetProjectById(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest("Error: input parameter id is null");
-            }
-
-            project = magmaDbContext.Projects.Find(id);
-
-            if (project == null)
-            {
-                return NotFound("Error: project not found");
-            }
-
             return project;
         }
 
@@ -70,90 +58,18 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost]
         public ActionResult CreateProject(Project project)
         {
-            try
-            {
-                if (project == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (project.id != 0)
-                {
-                    return BadRequest("Error: project already exists, id must be null");
-                }
-
-                magmaDbContext.Add<Project>(project);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: created project");
         }
 
         [HttpPost("update")]
         public ActionResult UpdateProject(Project project)
         {
-            try
-            {
-                if (project == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (project.id == 0)
-                {
-                    return BadRequest("Error: project id is null");
-                }
-
-                magmaDbContext.Update<Project>(project);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: updated project");
         }
 
         [HttpDelete]
         public ActionResult RemoveProject(Project project)
         {
-            try
-            {
-                if (project == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (project.id == 0)
-                {
-                    return BadRequest("Error: project id is null");
-                }
-
-                magmaDbContext.Remove<Project>(project);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: removed user");
         }
     }

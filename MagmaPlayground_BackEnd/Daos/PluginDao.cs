@@ -1,7 +1,7 @@
 ﻿using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.Daos.Utilities;
-using System.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagmaPlayground_BackEnd.Daos
 {
