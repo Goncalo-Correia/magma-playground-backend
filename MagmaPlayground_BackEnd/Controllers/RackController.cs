@@ -25,18 +25,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Rack> GetRackById(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest("Error: input parameter is null");
-            }
-
-            rack = magmaDbContext.Find<Rack>(id);
-            
-            if (rack == null)
-            {
-                return NotFound("Error: rack not found");
-            }
-
             return rack;
         }
 
@@ -72,91 +60,18 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost]
         public ActionResult CreateRack(Rack rack)
         {
-            try
-            {
-                if (rack == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (rack.id != 0)
-                {
-                    return BadRequest("Error: rack already exists, id must be null");
-                }
-
-                magmaDbContext.Add<Rack>(rack);
-                magmaDbContext.SaveChanges();
-
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: created rack");
         }
 
         [HttpPost("update")]
         public ActionResult UpdateRack(Rack rack)
         {
-            try
-            {
-                if (rack == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (rack.id == 0)
-                {
-                    return BadRequest("Error: rack id is null");
-                }
-
-                magmaDbContext.Update<Rack>(rack);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: updated rack");
         }
 
         [HttpDelete]
         public ActionResult RemoveRack(Rack rack)
         {
-            try
-            {
-                if (rack == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (rack.id == 0)
-                {
-                    return BadRequest("Error: rack id is null");
-                }
-
-                magmaDbContext.Remove<Rack>(rack);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: removed rack");
         }
     }

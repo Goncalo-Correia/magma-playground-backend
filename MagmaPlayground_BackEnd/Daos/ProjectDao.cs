@@ -60,11 +60,11 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
 
             return daoResponseFactory.BuildDaoResponse("Success: created project", true);
@@ -89,11 +89,11 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
 
             return daoResponseFactory.BuildDaoResponse("Success: updated project", true);
@@ -118,11 +118,11 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
 
             return daoResponseFactory.BuildDaoResponse("Success: removed user", true);

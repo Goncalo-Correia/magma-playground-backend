@@ -43,7 +43,7 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (Npgsql.PostgresException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
 
             return daoResponse;
@@ -68,11 +68,11 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
 
             return daoResponseFactory.BuildDaoResponse("Success: created track", true);
@@ -98,11 +98,11 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
 
             return daoResponseFactory.BuildDaoResponse("Success: updated track", true);
@@ -127,11 +127,11 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse(ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
             }
 
             return daoResponseFactory.BuildDaoResponse("Success: removed track", true);
