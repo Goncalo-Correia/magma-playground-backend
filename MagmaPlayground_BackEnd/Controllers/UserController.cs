@@ -47,18 +47,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest("Error: input parameter id is null");
-            }
-
-            user = magmaDbContext.Users.Find(id);
-
-            if (user == null)
-            {
-                return NotFound("Error: user not found");
-            }
-
             return user;
         }
 
@@ -94,90 +82,18 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost]
         public ActionResult<User> CreateUser(User user)
         {
-            try
-            {
-                if (user == null)
-                {
-                    return BadRequest("Error: input parameter user is null");
-                }
-
-                if (user.id != 0)
-                {
-                    return BadRequest("Error: user already exists, id must be null");
-                }
-
-                magmaDbContext.Add<User>(user);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: created user");
         }
 
         [HttpPost("update")]
         public ActionResult<User> UpdateUser(User user)
         {
-            try
-            {
-                if (user == null)
-                {
-                    return BadRequest("Error: input parameter user is null");
-                }
-
-                if (user.id == 0)
-                {
-                    return BadRequest("Error: user id is null");
-                }
-
-                magmaDbContext.Update<User>(user);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: updated user");
         }
 
         [HttpDelete]
         public ActionResult RemoveUser(User user)
         {
-            try
-            {
-                if (user == null)
-                {
-                    return BadRequest("Error: input parameter user is null");
-                }
-
-                if (user.id == 0)
-                {
-                    return BadRequest("Error: user id is null");
-                }
-
-                magmaDbContext.Remove<User>(user);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: removed user");
         }
     }

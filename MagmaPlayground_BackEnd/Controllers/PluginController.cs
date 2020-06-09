@@ -15,6 +15,7 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private MagmaDbContext magmaDbContext;
 
+        private ActionResult response;
         private ActionResult<Plugin> plugin;
         private ActionResult<IEnumerable<Plugin>> plugins;
 
@@ -26,50 +27,31 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Plugin> GetPluginById(int id)
         {
-
+            return plugin;
         }
 
         [HttpGet("rack/{id}")]
         public ActionResult<IEnumerable<Plugin>> GetPluginsByRackId(int rackId)
         {
-            try
-            {
-                if (rackId == 0)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                plugins = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
-
-                if (plugins == null)
-                {
-                    return NotFound("Error: plugins not found for this rack");
-                }
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return plugins;
         }
 
         [HttpPost]
         public ActionResult CreatePlugin(Plugin plugin)
         {
-            
+            return response;
         }
 
         [HttpPost("update")]
         public ActionResult UpdatePlugin(Plugin plugin)
         {
-
+            return response;
         }
 
         [HttpDelete]
         public ActionResult RemovePlugin(Plugin plugin)
         {
-            
+            return response;
         }
     }
 }
