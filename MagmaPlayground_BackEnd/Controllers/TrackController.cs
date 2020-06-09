@@ -28,25 +28,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<Track> GetTrackById(int id)
         {
-            try
-            {
-                if (id == 0)
-                {
-                    return BadRequest("Error: input parameter id is null");
-                } 
-
-                track = magmaDbContext.Find<Track>(id);
-
-                if (track == null)
-                {
-                    return NotFound("Error: track not found");
-                }
-            }
-            catch (PostgresException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return track;
         }
 
@@ -78,91 +59,18 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost]
         public ActionResult CreateTrack(Track track)
         {
-            try
-            {
-                if (track == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (track.id != 0)
-                {
-                    return BadRequest("Error: track already exists, id must be null");
-                }
-
-                magmaDbContext.Add<Track>(track);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: created track");
         }
 
         [HttpPost("update")]
         public ActionResult UpdateTrack(Track track)
         {
-            try
-            {
-                if (track == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (track.id == 0)
-                {
-                    return BadRequest("Error: track id is null");
-                }
-
-                magmaDbContext.Update<Track>(track);
-                magmaDbContext.SaveChanges();
-
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: updated track");
         }
 
         [HttpDelete]
         public ActionResult RemoveTrack(Track track)
         {
-            try
-            {
-                if (track == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                if (track.id == 0)
-                {
-                    return BadRequest("Error: track id is null");
-                }
-
-                magmaDbContext.Remove<Track>(track);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: removed track");
         }
     }
