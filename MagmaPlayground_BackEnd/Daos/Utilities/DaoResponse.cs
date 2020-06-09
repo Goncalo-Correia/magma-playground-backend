@@ -17,9 +17,9 @@ namespace MagmaPlayground_BackEnd.Daos.Utilities
         public Track track { get; set; }
         public Rack rack { get; set; }
         public Plugin plugin { get; set; }
-        private Sampler sampler { get; set; }
-        private Synthesizer synthesizer { get; set; }
-        private AudioEffect audioEffect { get; set; }
+        public Sampler sampler { get; set; }
+        public Synthesizer synthesizer { get; set; }
+        public AudioEffect audioEffect { get; set; }
 
         public DaoResponse()
         {
