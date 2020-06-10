@@ -26,18 +26,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("{id}")]
         public ActionResult<AudioEffect> GetAudioEffectById(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest("Error: input parameter is null");
-            }
-
-            audioEffect = magmaDbContext.Find<AudioEffect>(id);
-
-            if (audioEffect == null)
-            {
-                return NotFound("Error: audio effect not found");
-            }
-
             return audioEffect;
         }
 
@@ -70,87 +58,18 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpPost]
         public ActionResult CreateAudioEffect(AudioEffect audioEffect)
         {
-            try
-            {
-                if (audioEffect == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-                if (audioEffect.id != 0)
-                {
-                    return BadRequest("Error: audio effect already exists, id must be null");
-                }
-
-                magmaDbContext.Add<AudioEffect>(audioEffect);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: created audio effect");
         }
 
         [HttpPost("update")]
         public ActionResult UpdateAudioEffect(AudioEffect audioEffect)
         {
-            try
-            {
-                if (audioEffect == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-                if (audioEffect.id == 0)
-                {
-                    return BadRequest("Error: audio effect id is null");
-                }
-
-                magmaDbContext.Update<AudioEffect>(audioEffect);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: updated audio effect");
         }
 
         [HttpDelete]
         public ActionResult RemoveAudioEffect(AudioEffect audioEffect)
         {
-            try
-            {
-                if (audioEffect == null)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-                if (audioEffect.id == 0)
-                {
-                    return BadRequest("Error: audio effect id is null");
-                }
-
-                magmaDbContext.Remove<AudioEffect>(audioEffect);
-                magmaDbContext.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (DbUpdateException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return Ok("Success: removed audio effect");
         }
     }
