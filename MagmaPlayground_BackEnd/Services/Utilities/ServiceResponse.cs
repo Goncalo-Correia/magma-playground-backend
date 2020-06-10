@@ -1,13 +1,12 @@
 ﻿using MagmaPlayground_BackEnd.Model;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MagmaPlayground_BackEnd.Daos.Utilities
+namespace MagmaPlayground_BackEnd.Services.Utilities
 {
-    public class DaoResponse
+    public class ServiceResponse
     {
         public string message { get; set; }
         public bool isValid { get; set; }
@@ -21,7 +20,16 @@ namespace MagmaPlayground_BackEnd.Daos.Utilities
         public Synthesizer synthesizer { get; set; }
         public AudioEffect audioEffect { get; set; }
 
-        public DaoResponse()
+        public List<User> users { get; set; }
+        public List<Project> projects { get; set; }
+        public List<Track> tracks { get; set; }
+        public List<Rack> racks { get; set; }
+        public List<Plugin> plugins { get; set; }
+        public List<Sampler> samplers { get; set; }
+        public List<Synthesizer> synthesizers { get; set; }
+        public List<AudioEffect> audioEffects { get; set; }
+
+        public ServiceResponse()
         {
         }
     }
