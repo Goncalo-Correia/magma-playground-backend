@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MagmaPlayground_BackEnd.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +14,11 @@ namespace MagmaPlayground_BackEnd.Daos.Utilities
         {
         }
 
-        public DaoResponse BuildDaoResponse(string message, bool isValid)
+        public DaoResponse BuildDaoResponse(string message, ResponseStatus responseStatus)
         {
             daoResponse = new DaoResponse();
             daoResponse.message = message;
-            daoResponse.isValid = isValid;
+            daoResponse.responseStatus = responseStatus;
 
             return daoResponse;
         }

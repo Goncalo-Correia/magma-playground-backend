@@ -1,4 +1,5 @@
 ﻿using MagmaPlayground_BackEnd.Model;
+using MagmaPlayground_BackEnd.Utilities;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace MagmaPlayground_BackEnd.Daos.Utilities
     public class DaoResponse
     {
         public string message { get; set; }
-        public bool isValid { get; set; }
+        public ResponseStatus responseStatus { get; set; }
 
         public User user { get; set; }
         public Project project { get; set; }

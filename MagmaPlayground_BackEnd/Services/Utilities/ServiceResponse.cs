@@ -1,4 +1,5 @@
 ﻿using MagmaPlayground_BackEnd.Model;
+using MagmaPlayground_BackEnd.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace MagmaPlayground_BackEnd.Services.Utilities
     public class ServiceResponse
     {
         public string message { get; set; }
-        public bool isValid { get; set; }
+        public ResponseStatus responseStatus { get; set; }
 
         public User user { get; set; }
         public Project project { get; set; }
