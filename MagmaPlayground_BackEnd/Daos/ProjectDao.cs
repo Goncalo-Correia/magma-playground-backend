@@ -1,6 +1,7 @@
 ﻿using MagmaPlayground_BackEnd.Daos.Utilities;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,16 +27,16 @@ namespace MagmaPlayground_BackEnd.Daos
             daoResponse = new DaoResponse();
             if (id == 0)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: input parameter id is null", false);
+                return daoResponseFactory.BuildDaoResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
             daoResponse.project = magmaDbContext.Projects.Find(id);
             daoResponse.message = "Success: found project";
-            daoResponse.isValid = true;
+            daoResponse.responseStatus = ResponseStatus.OK;
 
             if (daoResponse.plugin == null)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: project not found", false);
+                return daoResponseFactory.BuildDaoResponse("Error: project not found", ResponseStatus.NOTFOUND);
             }
 
             return daoResponse;
@@ -47,12 +48,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (project == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", false);
+                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (project.id != 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: project already exists, id must be null", false);
+                    return daoResponseFactory.BuildDaoResponse("Error: project already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<Project>(project);
@@ -60,14 +61,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: created project", true);
+            return daoResponseFactory.BuildDaoResponse("Success: created project", ResponseStatus.OK);
         }
 
         public DaoResponse UpdateProject(Project project)
@@ -76,12 +77,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (project == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", false);
+                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (project.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: project id is null", false);
+                    return daoResponseFactory.BuildDaoResponse("Error: project id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<Project>(project);
@@ -89,14 +90,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: updated project", true);
+            return daoResponseFactory.BuildDaoResponse("Success: updated project", ResponseStatus.OK);
         }
 
         public DaoResponse DeleteProject(Project project)
@@ -105,12 +106,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (project == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", false);
+                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (project.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: project id is null", false);
+                    return daoResponseFactory.BuildDaoResponse("Error: project id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<Project>(project);
@@ -118,14 +119,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, false);
+                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: removed user", true);
+            return daoResponseFactory.BuildDaoResponse("Success: removed user", ResponseStatus.OK);
         }
     }
 }
