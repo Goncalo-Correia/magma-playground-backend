@@ -2,7 +2,7 @@
 using MagmaPlayground_BackEnd.Daos.Utilities;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
-using MagmaPlayground_BackEnd.Services.Utilities;
+using MagmaPlayground_BackEnd.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,59 +12,54 @@ namespace MagmaPlayground_BackEnd.Services
 {
     public class HomeService
     {
-        private ServiceResponseFactory serviceResponseFactory;
-        private Response daoResponse;
+        private ResponseFactory responseFactory;
+        private Response response;
         private UserDao userDao;
 
         public HomeService(MagmaDbContext magmaDbContext)
         {
-            this.daoResponse = new Response();
+            this.response = new Response();
             this.userDao = new UserDao(magmaDbContext);
         }
 
-        public ServiceResponse Login(string email, string password)
+        public Response Login(string email, string password)
         {
             if (email == null || password == null)
             {
-                return serviceResponseFactory.BuildServiceResponse("Error: invalid email or password", ServiceResponseStatus.BAD_REQUEST);
+                return responseFactory.BuildResponse("Error: invalid email or password", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse = userDao.GetUserByEmail(email);
+            response = userDao.GetUserByEmail(email);
 
-            if (!daoResponse.isValid)
+            if (response.responseStatus != ResponseStatus.OK)
             {
-                return serviceResponseFactory.BuildServiceResponseFromDaoResponse(daoResponse, ServiceResponseStatus.NOT_FOUND);
+                return responseFactory.BuildResponse(response.message, ResponseStatus.NOTFOUND);
             }
-            if (daoResponse.user.password != password)
+            if (response.user.password != password)
             {
-                return serviceResponseFactory.BuildServiceResponse("Error: password is invalid", ServiceResponseStatus.BAD_REQUEST);
+                return responseFactory.BuildResponse("Error: invalid password", ResponseStatus.BADREQUEST);
             }
 
-            return serviceResponseFactory.BuildServiceResponseUser(daoResponse.user, daoResponse.message, ServiceResponseStatus.OK);
+            return response;
         }
 
-        public ServiceResponse Register(User user)
+        public Response Register(User user)
         {
             if (user.name == null || user.lastName == null || user.password == null || user.email == null)
             {
-                return serviceResponseFactory.BuildServiceResponse("Error: missing data", ServiceResponseStatus.BAD_REQUEST);
+                return responseFactory.BuildResponse("Error: missing data", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse = userDao.GetUserByEmail(user.email);
+            response = userDao.GetUserByEmail(user.email);
 
-            if (daoResponse.user != null)
+            if (response.user != null)
             {
-                return serviceResponseFactory.BuildServiceResponse("Error: email alreay in use", ServiceResponseStatus.BAD_REQUEST);
+                return responseFactory.BuildResponse("Error: email alreay in use", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse = userDao.CreateUser(user);
+            response = userDao.CreateUser(user);
 
-            if (!daoResponse.isValid)
-            {
-                return serviceResponseFactory.BuildServiceResponseFromDaoResponse(daoResponse, ServiceResponseStatus.BAD_REQUEST);
-            }
-
-            return serviceResponseFactory.BuildServiceResponseFromDaoResponse(daoResponse, ServiceResponseStatus.OK);
+            return response;
         }
     }
 }

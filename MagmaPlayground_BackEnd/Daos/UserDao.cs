@@ -28,7 +28,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
             if (id == 0)
             {
-                return responseFactory.BuildDaoResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.BuildResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
             response.user = magmaDbContext.Users.Find(id);
@@ -37,7 +37,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
             if (response.user == null)
             {
-                return responseFactory.BuildDaoResponse("Error: user not found", ResponseStatus.NOTFOUND);
+                return responseFactory.BuildResponse("Error: user not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -51,7 +51,7 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (email == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter email is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter email is null", ResponseStatus.BADREQUEST);
                 }
 
                 response.user = magmaDbContext.Users.Single<User>(prop => prop.email == email);
@@ -60,17 +60,17 @@ namespace MagmaPlayground_BackEnd.Daos
 
                 if (response.user == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: user not found", ResponseStatus.NOTFOUND);
+                    return responseFactory.BuildResponse("Error: user not found", ResponseStatus.NOTFOUND);
                 }
             }
             catch (ArgumentNullException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
 
             }
             catch (InvalidOperationException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
 
             }
 
@@ -83,12 +83,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (user == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (user.id != 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: user already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: user already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<User>(user);
@@ -96,14 +96,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return responseFactory.BuildDaoResponse("Success: created user", ResponseStatus.OK);
+            return responseFactory.BuildResponse("Success: created user", ResponseStatus.OK);
         }
 
         public Response UpdateUser(User user)
@@ -112,12 +112,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (user == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (user.id == 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: user id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: user id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<User>(user);
@@ -125,14 +125,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return responseFactory.BuildDaoResponse("Success: updated user", ResponseStatus.OK);
+            return responseFactory.BuildResponse("Success: updated user", ResponseStatus.OK);
         }
 
         public Response DeleteUser(User user)
@@ -141,12 +141,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (user == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (user.id == 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: user id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: user id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<User>(user);
@@ -154,14 +154,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return responseFactory.BuildDaoResponse("Success: deleted user", ResponseStatus.OK);
+            return responseFactory.BuildResponse("Success: deleted user", ResponseStatus.OK);
         }
     }
 }

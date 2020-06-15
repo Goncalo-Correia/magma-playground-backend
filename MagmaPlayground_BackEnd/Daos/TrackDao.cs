@@ -30,7 +30,7 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (id == 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
                 }
 
                 response.track = magmaDbContext.Find<Track>(id);
@@ -39,12 +39,12 @@ namespace MagmaPlayground_BackEnd.Daos
 
                 if (response.track == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: track not found", ResponseStatus.NOTFOUND);
+                    return responseFactory.BuildResponse("Error: track not found", ResponseStatus.NOTFOUND);
                 }
             }
             catch (Npgsql.PostgresException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
             return response;
@@ -56,7 +56,7 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (projectId == 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input paramenter projectId is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input paramenter projectId is null", ResponseStatus.BADREQUEST);
                 }
 
                 response.tracks = magmaDbContext.Tracks.Where<Track>(prop => prop.projectId == projectId).ToList();
@@ -65,12 +65,12 @@ namespace MagmaPlayground_BackEnd.Daos
 
                 if (response.tracks == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: tracks not found for this project", ResponseStatus.NOTFOUND);
+                    return responseFactory.BuildResponse("Error: tracks not found for this project", ResponseStatus.NOTFOUND);
                 }
             }
             catch (ArgumentNullException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
             return response;
@@ -82,12 +82,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (track == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (track.id != 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: track already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: track already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<Track>(track);
@@ -95,14 +95,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return responseFactory.BuildDaoResponse("Success: created track", ResponseStatus.OK);
+            return responseFactory.BuildResponse("Success: created track", ResponseStatus.OK);
         }
 
         public Response UpdateTrack(Track track)
@@ -111,12 +111,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (track == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (track.id == 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: track id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: track id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<Track>(track);
@@ -125,14 +125,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return responseFactory.BuildDaoResponse("Success: updated track", ResponseStatus.OK);
+            return responseFactory.BuildResponse("Success: updated track", ResponseStatus.OK);
         }
 
         public Response DeleteTrack(Track track)
@@ -141,12 +141,12 @@ namespace MagmaPlayground_BackEnd.Daos
             {
                 if (track == null)
                 {
-                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (track.id == 0)
                 {
-                    return responseFactory.BuildDaoResponse("Error: track id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildResponse("Error: track id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<Track>(track);
@@ -154,14 +154,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return responseFactory.BuildDaoResponse("Success: removed track", ResponseStatus.OK);
+            return responseFactory.BuildResponse("Success: removed track", ResponseStatus.OK);
         }
     }
 }

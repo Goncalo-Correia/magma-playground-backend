@@ -1,4 +1,5 @@
-﻿using MagmaPlayground_BackEnd.Utilities;
+﻿using MagmaPlayground_BackEnd.Model;
+using MagmaPlayground_BackEnd.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +9,19 @@ namespace MagmaPlayground_BackEnd.Daos.Utilities
 {
     public class ResponseFactory
     {
-        public Response daoResponse { get; set; }
+        public Response response { get; set; }
 
         public ResponseFactory()
         {
         }
 
-        public Response BuildDaoResponse(string message, ResponseStatus responseStatus)
+        public Response BuildResponse(string message, ResponseStatus responseStatus)
         {
-            daoResponse = new Response();
-            daoResponse.message = message;
-            daoResponse.responseStatus = responseStatus;
+            response = new Response();
+            response.message = message;
+            response.responseStatus = responseStatus;
 
-            return daoResponse;
+            return response;
         }
     }
 }
