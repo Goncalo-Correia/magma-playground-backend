@@ -1,7 +1,6 @@
-﻿using MagmaPlayground_BackEnd.Daos.Utilities;
-using MagmaPlayground_BackEnd.Model;
+﻿using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
-using MagmaPlayground_BackEnd.Utilities;
+using MagmaPlayground_BackEnd.ResponseUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

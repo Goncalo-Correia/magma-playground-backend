@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MagmaPlayground_BackEnd.Utilities
+namespace MagmaPlayground_BackEnd.ResponseUtilities
 {
     public enum ResponseStatus
     {

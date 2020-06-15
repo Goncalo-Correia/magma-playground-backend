@@ -1,12 +1,11 @@
 ﻿ using MagmaPlayground_BackEnd.Model.MagmaDbContext;
-using MagmaPlayground_BackEnd.Daos.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using Microsoft.EntityFrameworkCore;
-using MagmaPlayground_BackEnd.Utilities;
+using MagmaPlayground_BackEnd.ResponseUtilities;
 
 namespace MagmaPlayground_BackEnd.Daos
 {

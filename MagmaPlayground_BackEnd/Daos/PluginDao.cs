@@ -1,8 +1,7 @@
 ﻿using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
-using MagmaPlayground_BackEnd.Daos.Utilities;
 using Microsoft.EntityFrameworkCore;
-using MagmaPlayground_BackEnd.Utilities;
+using MagmaPlayground_BackEnd.ResponseUtilities;
 using System.Linq;
 using System;
 

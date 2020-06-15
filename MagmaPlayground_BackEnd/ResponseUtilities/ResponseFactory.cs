@@ -1,11 +1,11 @@
 ﻿using MagmaPlayground_BackEnd.Model;
-using MagmaPlayground_BackEnd.Utilities;
+using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MagmaPlayground_BackEnd.Daos.Utilities
+namespace MagmaPlayground_BackEnd.ResponseUtilities
 {
     public class ResponseFactory
     {
