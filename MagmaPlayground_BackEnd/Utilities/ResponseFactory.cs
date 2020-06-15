@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Daos.Utilities
 {
-    public class DaoResponseFactory
+    public class ResponseFactory
     {
-        public DaoResponse daoResponse { get; set; }
+        public Response daoResponse { get; set; }
 
-        public DaoResponseFactory()
+        public ResponseFactory()
         {
         }
 
-        public DaoResponse BuildDaoResponse(string message, ResponseStatus responseStatus)
+        public Response BuildDaoResponse(string message, ResponseStatus responseStatus)
         {
-            daoResponse = new DaoResponse();
+            daoResponse = new Response();
             daoResponse.message = message;
             daoResponse.responseStatus = responseStatus;
 

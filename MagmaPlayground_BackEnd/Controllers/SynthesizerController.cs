@@ -31,29 +31,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("plugin/{id}")]
         public ActionResult<Synthesizer> GetSynthesizerByPluginId(int pluginId)
         {
-            try
-            {
-                if (pluginId == 0)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                synthesizer = magmaDbContext.Synthesizers.Single<Synthesizer>(prop => prop.plugin.id == pluginId);
-
-                if (synthesizer == null)
-                {
-                    return NotFound("Error: synthesizer not found for this plugin");
-                }
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return synthesizer;
         }
 

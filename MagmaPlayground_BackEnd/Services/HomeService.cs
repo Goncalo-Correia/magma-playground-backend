@@ -13,12 +13,12 @@ namespace MagmaPlayground_BackEnd.Services
     public class HomeService
     {
         private ServiceResponseFactory serviceResponseFactory;
-        private DaoResponse daoResponse;
+        private Response daoResponse;
         private UserDao userDao;
 
         public HomeService(MagmaDbContext magmaDbContext)
         {
-            this.daoResponse = new DaoResponse();
+            this.daoResponse = new Response();
             this.userDao = new UserDao(magmaDbContext);
         }
 

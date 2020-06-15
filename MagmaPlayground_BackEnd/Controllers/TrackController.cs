@@ -34,25 +34,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("project/{id}")]
         public ActionResult<IEnumerable<Track>> GetTracksByProjectId(int projectId)
         {
-            try
-            {
-                if (projectId == 0)
-                {
-                    return BadRequest("Error: input paramenter projectId is null");
-                }
-                
-                tracks = magmaDbContext.Tracks.Where<Track>(prop => prop.projectId == projectId).ToList();
-
-                if (tracks == null)
-                {
-                    return NotFound("Error: tracks not found for this project");
-                }
-            }
-            catch(ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return tracks;
         }
 

@@ -32,26 +32,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("plugin/{id}")]
         public ActionResult<IEnumerable<AudioEffect>> GetAudioEffectByPluginId(int pluginId)
         {
-            try
-            {
-                if (pluginId == 0)
-                {
-                    return BadRequest("Error: id cannot be null");
-                }
-
-                audioEffects = magmaDbContext.AudioEffects.Where<AudioEffect>(prop => prop.plugin.id == pluginId).ToList();
-
-                if (audioEffects == null)
-                {
-                    return NotFound("Error: audio effects not found for this plugin");
-                }
-
-            }
-            catch(ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return audioEffects;
         }
 

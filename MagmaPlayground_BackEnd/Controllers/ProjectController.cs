@@ -33,25 +33,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("user/{id}")]
         public ActionResult<IEnumerable<Project>> GetProjectsByUserId(int userId)
         {
-            try
-            {
-                if (userId == 0)
-                {
-                    return BadRequest("Error: input parameter userId is null");
-                }
-
-                projects = magmaDbContext.Projects.Where<Project>(prop => prop.userId == userId).ToList<Project>();
-
-                if (projects == null)
-                {
-                    return NotFound("Error: projects not found for this user");
-                }
-            }
-            catch(ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return projects;
         }
 

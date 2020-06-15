@@ -3,54 +3,82 @@ using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.Daos.Utilities;
 using Microsoft.EntityFrameworkCore;
 using MagmaPlayground_BackEnd.Utilities;
+using System.Linq;
+using System;
 
 namespace MagmaPlayground_BackEnd.Daos
 {
     public class PluginDao
     {
         private MagmaDbContext magmaDbContext;
-        private DaoResponseFactory daoResponseFactory;
-        private DaoResponse daoResponse;
+        private ResponseFactory responseFactory;
+        private Response response;
 
         public PluginDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            daoResponseFactory = new DaoResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
-        public DaoResponse GetPlugin(int id)
+        public Response GetPlugin(int id)
         {
-            daoResponse = new DaoResponse();
+            response = new Response();
 
             if (id == 0)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse.plugin = magmaDbContext.Find<Plugin>(id);
-            daoResponse.message = "Success: found plugin";
-            daoResponse.responseStatus = ResponseStatus.OK;
+            response.plugin = magmaDbContext.Find<Plugin>(id);
+            response.message = "Success: found plugin";
+            response.responseStatus = ResponseStatus.OK;
 
-            if (daoResponse.plugin == null)
+            if (response.plugin == null)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: plugin not found", ResponseStatus.NOTFOUND);
+                return responseFactory.BuildDaoResponse("Error: plugin not found", ResponseStatus.NOTFOUND);
             }
 
-            return daoResponse;
+            return response;
         }
 
-        public DaoResponse CreatePlugin(Plugin plugin)
+        public Response GetPluginsByRackId(int rackId)
+        {
+            try
+            {
+                if (rackId == 0)
+                {
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                }
+
+                response.plugins = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
+                response.message = "Success: plugins found";
+                response.responseStatus = ResponseStatus.OK;
+
+                if (response.plugins == null)
+                {
+                    return responseFactory.BuildDaoResponse("Error: plugins not found for this rack", ResponseStatus.NOTFOUND);
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+
+            return response;
+        }
+
+        public Response CreatePlugin(Plugin plugin)
         {
             try
             {
                 if (plugin == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (plugin.id != 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: plugin already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: plugin already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<Plugin>(plugin);
@@ -58,28 +86,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: created plugin", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: created plugin", ResponseStatus.OK);
         }
 
-        public DaoResponse UpdatePlugin(Plugin plugin)
+        public Response UpdatePlugin(Plugin plugin)
         {
             try
             {
                 if (plugin == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (plugin.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: plugin id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: plugin id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<Plugin>(plugin);
@@ -87,28 +115,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: updated plugin", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: updated plugin", ResponseStatus.OK);
         }
 
-        public DaoResponse DeletePlugin(Plugin plugin)
+        public Response DeletePlugin(Plugin plugin)
         {
             try
             {
                 if (plugin == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (plugin.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: track id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: track id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<Plugin>(plugin);
@@ -116,14 +144,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: deleted plugin", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: deleted plugin", ResponseStatus.OK);
         }
     }
 }

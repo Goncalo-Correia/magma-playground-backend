@@ -31,29 +31,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("track/{id}")]
         public ActionResult<Rack> GetRackByTrackId(int trackId)
         {
-            try
-            {
-                if (trackId == 0)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                rack = magmaDbContext.Racks.Single<Rack>(prop => prop.trackId == trackId);
-
-                if (rack == null)
-                {
-                    return NotFound("Error: rack not found for this track");
-                }
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return rack;
         }
 

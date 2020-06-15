@@ -31,29 +31,6 @@ namespace MagmaPlayground_BackEnd.Controllers
         [HttpGet("plugin/{id}")]
         public ActionResult<Sampler> GetSamplerByPluginId(int pluginId)
         {
-            try
-            {
-                if (pluginId == 0)
-                {
-                    return BadRequest("Error: input parameter is null");
-                }
-
-                sampler = magmaDbContext.Samplers.Single<Sampler>(prop => prop.plugin.id == pluginId);
-
-                if (sampler == null)
-                {
-                    return NotFound("Error: sampler not found for this plugin");
-                }
-            }
-            catch (ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-
             return sampler;
         }
 

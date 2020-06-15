@@ -13,47 +13,75 @@ namespace MagmaPlayground_BackEnd.Daos
     public class AudioEffectDao
     {
         private MagmaDbContext magmaDbContext;
-        private DaoResponseFactory daoResponseFactory;
-        private DaoResponse daoResponse;
+        private ResponseFactory responseFactory;
+        private Response response;
 
         public AudioEffectDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.daoResponseFactory = new DaoResponseFactory();
+            this.responseFactory = new ResponseFactory();
         }
 
-        public DaoResponse GetAudioEffect(int id)
+        public Response GetAudioEffect(int id)
         {
-            daoResponse = new DaoResponse();
+            response = new Response();
 
             if (id == 0)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse.audioEffect = magmaDbContext.Find<AudioEffect>(id);
-            daoResponse.message = "Success: audio effect found";
-            daoResponse.responseStatus = ResponseStatus.OK;
+            response.audioEffect = magmaDbContext.Find<AudioEffect>(id);
+            response.message = "Success: audio effect found";
+            response.responseStatus = ResponseStatus.OK;
 
-            if (daoResponse.audioEffect == null)
+            if (response.audioEffect == null)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: audio effect not found", ResponseStatus.NOTFOUND);
+                return responseFactory.BuildDaoResponse("Error: audio effect not found", ResponseStatus.NOTFOUND);
             }
 
-            return daoResponse;
+            return response;
         }
 
-        public DaoResponse CreateAudioEffect(AudioEffect audioEffect)
+        public Response GetAudioEffectsByPluginId(int pluginId)
+        {
+            try
+            {
+                if (pluginId == 0)
+                {
+                    return responseFactory.BuildDaoResponse("Error: id cannot be null", ResponseStatus.BADREQUEST);
+                }
+
+                response.audioEffects = magmaDbContext.AudioEffects.Where<AudioEffect>(prop => prop.plugin.id == pluginId).ToList();
+                response.message = "Success: audio effects found";
+                response.responseStatus = ResponseStatus.OK;
+
+                if (response.audioEffects == null)
+                {
+                    return responseFactory.BuildDaoResponse("Error: audio effects not found for this plugin", ResponseStatus.NOTFOUND);
+                }
+
+            }
+            catch (ArgumentNullException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+
+            return response;
+
+        }
+
+        public Response CreateAudioEffect(AudioEffect audioEffect)
         {
             try
             {
                 if (audioEffect == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
                 if (audioEffect.id != 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: audio effect already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: audio effect already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<AudioEffect>(audioEffect);
@@ -61,27 +89,27 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: created audio effect", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: created audio effect", ResponseStatus.OK);
         }
 
-        public DaoResponse UpdateAudioEffect(AudioEffect audioEffect)
+        public Response UpdateAudioEffect(AudioEffect audioEffect)
         {
             try
             {
                 if (audioEffect == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
                 if (audioEffect.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<AudioEffect>(audioEffect);
@@ -89,27 +117,27 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: updated audio effect", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: updated audio effect", ResponseStatus.OK);
         }
 
-        public DaoResponse DeleteAudioEffect(AudioEffect audioEffect)
+        public Response DeleteAudioEffect(AudioEffect audioEffect)
         {
             try
             {
                 if (audioEffect == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
                 if (audioEffect.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<AudioEffect>(audioEffect);
@@ -117,14 +145,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: removed audio effect", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: removed audio effect", ResponseStatus.OK);
         } 
     }
 }

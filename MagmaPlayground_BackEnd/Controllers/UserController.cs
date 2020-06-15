@@ -24,28 +24,6 @@ namespace MagmaPlayground_BackEnd.Controllers
             this.magmaDbContext = magmaDbContext;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<User>> GetAllUsers()
-        {
-            /*
-            try
-            {
-                usersList = magmaDbContext.Users.ToList();
-
-                if (usersList == null)
-                {
-                    return NotFound("Error: users list is empty");
-                }
-            }
-            catch(ArgumentNullException ex)
-            {
-                return BadRequest(ex.InnerException.Message);
-            }
-            */
-
-            return usersList;
-        }
-
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {

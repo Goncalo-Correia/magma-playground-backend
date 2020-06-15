@@ -13,48 +13,78 @@ namespace MagmaPlayground_BackEnd.Daos
     public class SynthesizerDao
     {
         private MagmaDbContext magmaDbContext;
-        private DaoResponseFactory daoResponseFactory;
-        private DaoResponse daoResponse;
+        private ResponseFactory responseFactory;
+        private Response response;
 
         public SynthesizerDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.daoResponseFactory = new DaoResponseFactory();
+            this.responseFactory = new ResponseFactory();
         }
 
-        public DaoResponse GetSynthesizer(int id)
+        public Response GetSynthesizer(int id)
         {
-            daoResponse = new DaoResponse();
+            response = new Response();
 
             if (id == 0)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse.synthesizer = magmaDbContext.Find<Synthesizer>(id);
-            daoResponse.message = "Success: synthesizer found";
-            daoResponse.responseStatus = ResponseStatus.OK;
+            response.synthesizer = magmaDbContext.Find<Synthesizer>(id);
+            response.message = "Success: synthesizer found";
+            response.responseStatus = ResponseStatus.OK;
 
-            if (daoResponse.synthesizer == null)
+            if (response.synthesizer == null)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: synthesizer not found", ResponseStatus.NOTFOUND);
+                return responseFactory.BuildDaoResponse("Error: synthesizer not found", ResponseStatus.NOTFOUND);
             }
 
-            return daoResponse;
+            return response;
         }
 
-        public DaoResponse CreateSynthesizer(Synthesizer synthesizer)
+        public Response GetSynthesizerByPluginId(int pluginId)
+        {
+            try
+            {
+                if (pluginId == 0)
+                {
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                }
+
+                response.synthesizer = magmaDbContext.Synthesizers.Single<Synthesizer>(prop => prop.plugin.id == pluginId);
+                response.message = "Success: synthesizer found";
+                response.responseStatus = ResponseStatus.OK;
+
+                if (response.synthesizer == null)
+                {
+                    return responseFactory.BuildDaoResponse("Error: synthesizer not found for this plugin", ResponseStatus.NOTFOUND);
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+
+            return response;
+        }
+
+        public Response CreateSynthesizer(Synthesizer synthesizer)
         {
             try
             {
                 if (synthesizer == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (synthesizer.id != 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: synthesizer already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: synthesizer already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<Synthesizer>(synthesizer);
@@ -62,28 +92,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: created synthesizer", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: created synthesizer", ResponseStatus.OK);
         }
 
-        public DaoResponse UpdateSynthesizer(Synthesizer synthesizer)
+        public Response UpdateSynthesizer(Synthesizer synthesizer)
         {
             try
             {
                 if (synthesizer == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (synthesizer.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<Synthesizer>(synthesizer);
@@ -91,28 +121,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: updated synthesizer", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: updated synthesizer", ResponseStatus.OK);
         }
 
-        public DaoResponse DeleteSynthesizer(Synthesizer synthesizer)
+        public Response DeleteSynthesizer(Synthesizer synthesizer)
         {
             try
             {
                 if (synthesizer == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (synthesizer.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<Synthesizer>(synthesizer);
@@ -120,14 +150,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: removed synthesizer", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: removed synthesizer", ResponseStatus.OK);
         }
     }
 }

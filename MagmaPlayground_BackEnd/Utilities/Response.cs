@@ -1,13 +1,14 @@
 ﻿using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Utilities;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MagmaPlayground_BackEnd.Services.Utilities
+namespace MagmaPlayground_BackEnd.Daos.Utilities
 {
-    public class ServiceResponse
+    public class Response
     {
         public string message { get; set; }
         public ResponseStatus responseStatus { get; set; }
@@ -30,7 +31,7 @@ namespace MagmaPlayground_BackEnd.Services.Utilities
         public List<Synthesizer> synthesizers { get; set; }
         public List<AudioEffect> audioEffects { get; set; }
 
-        public ServiceResponse()
+        public Response()
         {
         }
     }

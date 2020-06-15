@@ -13,82 +13,82 @@ namespace MagmaPlayground_BackEnd.Daos
     public class UserDao
     {
         private MagmaDbContext magmaDbContext;
-        private DaoResponseFactory daoResponseFactory;
-        private DaoResponse daoResponse;
+        private ResponseFactory responseFactory;
+        private Response response;
 
         public UserDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.daoResponseFactory = new DaoResponseFactory();
+            this.responseFactory = new ResponseFactory();
         }
 
-        public DaoResponse GetUser(int id)
+        public Response GetUser(int id)
         {
-            daoResponse = new DaoResponse();
+            response = new Response();
 
             if (id == 0)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.BuildDaoResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse.user = magmaDbContext.Users.Find(id);
-            daoResponse.message = "Success: found user";
-            daoResponse.responseStatus = ResponseStatus.OK;
+            response.user = magmaDbContext.Users.Find(id);
+            response.message = "Success: found user";
+            response.responseStatus = ResponseStatus.OK;
 
-            if (daoResponse.user == null)
+            if (response.user == null)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: user not found", ResponseStatus.NOTFOUND);
+                return responseFactory.BuildDaoResponse("Error: user not found", ResponseStatus.NOTFOUND);
             }
 
-            return daoResponse;
+            return response;
         }
 
-        public DaoResponse GetUserByEmail(string email)
+        public Response GetUserByEmail(string email)
         {
-            daoResponse = new DaoResponse();
+            response = new Response();
 
             try
             {
                 if (email == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter email is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter email is null", ResponseStatus.BADREQUEST);
                 }
 
-                daoResponse.user = magmaDbContext.Users.Single<User>(prop => prop.email == email);
-                daoResponse.message = "Success: user found";
-                daoResponse.responseStatus = ResponseStatus.OK;
+                response.user = magmaDbContext.Users.Single<User>(prop => prop.email == email);
+                response.message = "Success: user found";
+                response.responseStatus = ResponseStatus.OK;
 
-                if (daoResponse.user == null)
+                if (response.user == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: user not found", ResponseStatus.NOTFOUND);
+                    return responseFactory.BuildDaoResponse("Error: user not found", ResponseStatus.NOTFOUND);
                 }
             }
             catch (ArgumentNullException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
 
             }
             catch (InvalidOperationException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
 
             }
 
-            return daoResponse;
+            return response;
         }
 
-        public DaoResponse CreateUser(User user)
+        public Response CreateUser(User user)
         {
             try
             {
                 if (user == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (user.id != 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: user already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: user already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<User>(user);
@@ -96,28 +96,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: created user", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: created user", ResponseStatus.OK);
         }
 
-        public DaoResponse UpdateUser(User user)
+        public Response UpdateUser(User user)
         {
             try
             {
                 if (user == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (user.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: user id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: user id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<User>(user);
@@ -125,28 +125,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: updated user", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: updated user", ResponseStatus.OK);
         }
 
-        public DaoResponse DeleteUser(User user)
+        public Response DeleteUser(User user)
         {
             try
             {
                 if (user == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (user.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: user id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: user id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<User>(user);
@@ -154,14 +154,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: deleted user", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: deleted user", ResponseStatus.OK);
         }
     }
 }

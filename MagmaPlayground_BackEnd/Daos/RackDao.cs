@@ -13,48 +13,78 @@ namespace MagmaPlayground_BackEnd.Daos
     public class RackDao
     {
         private MagmaDbContext magmaDbContext;
-        private DaoResponseFactory daoResponseFactory;
-        private DaoResponse daoResponse;
+        private ResponseFactory responseFactory;
+        private Response response;
 
         public RackDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.daoResponseFactory = new DaoResponseFactory();
+            this.responseFactory = new ResponseFactory();
         }
 
-        public DaoResponse GetRack(int id)
+        public Response GetRack(int id)
         {
-            daoResponse = new DaoResponse();
+            response = new Response();
 
             if (id == 0)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse.rack = magmaDbContext.Find<Rack>(id);
-            daoResponse.message = "Success: found track";
-            daoResponse.responseStatus = ResponseStatus.OK;
+            response.rack = magmaDbContext.Find<Rack>(id);
+            response.message = "Success: found track";
+            response.responseStatus = ResponseStatus.OK;
 
-            if (daoResponse.rack == null)
+            if (response.rack == null)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: rack not found", ResponseStatus.NOTFOUND);
+                return responseFactory.BuildDaoResponse("Error: rack not found", ResponseStatus.NOTFOUND);
             }
 
-            return daoResponse;
+            return response;
         }
 
-        public DaoResponse CreateRack(Rack rack)
+        public Response GetRackByTrackId(int trackId)
+        {
+            try
+            {
+                if (trackId == 0)
+                {
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                }
+
+                response.rack = magmaDbContext.Racks.Single<Rack>(prop => prop.trackId == trackId);
+                response.message = "Success: rack found";
+                response.responseStatus = ResponseStatus.OK;
+
+                if (response.rack == null)
+                {
+                    return responseFactory.BuildDaoResponse("Error: rack not found for this track", ResponseStatus.NOTFOUND);
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+
+            return response;
+        }
+
+        public Response CreateRack(Rack rack)
         {
             try
             {
                 if (rack == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (rack.id != 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: rack already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: rack already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<Rack>(rack);
@@ -63,28 +93,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: created rack", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: created rack", ResponseStatus.OK);
         }
 
-        public DaoResponse UpdateRack(Rack rack)
+        public Response UpdateRack(Rack rack)
         {
             try
             {
                 if (rack == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (rack.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<Rack>(rack);
@@ -92,28 +122,28 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: updated rack", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: updated rack", ResponseStatus.OK);
         }
 
-        public DaoResponse DeleteRack(Rack rack)
+        public Response DeleteRack(Rack rack)
         {
             try
             {
                 if (rack == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
 
                 if (rack.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<Rack>(rack);
@@ -121,14 +151,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: removed rack", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: removed rack", ResponseStatus.OK);
         }
     }
 }

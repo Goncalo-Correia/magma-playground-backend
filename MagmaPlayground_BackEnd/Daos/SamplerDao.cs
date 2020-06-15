@@ -13,47 +13,77 @@ namespace MagmaPlayground_BackEnd.Daos
     public class SamplerDao
     {
         private MagmaDbContext magmaDbContext;
-        private DaoResponseFactory daoResponseFactory;
-        private DaoResponse daoResponse;
+        private ResponseFactory responseFactory;
+        private Response response;
 
         public SamplerDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            daoResponseFactory = new DaoResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
-        public DaoResponse GetSampler(int id)
+        public Response GetSampler(int id)
         {
-            daoResponse = new DaoResponse();
+            response = new Response();
             
             if (id == 0)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.BuildDaoResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
-            daoResponse.sampler = magmaDbContext.Find<Sampler>(id);
-            daoResponse.message = "Success: sampler found";
-            daoResponse.responseStatus = ResponseStatus.OK;
+            response.sampler = magmaDbContext.Find<Sampler>(id);
+            response.message = "Success: sampler found";
+            response.responseStatus = ResponseStatus.OK;
 
-            if (daoResponse.sampler == null)
+            if (response.sampler == null)
             {
-                return daoResponseFactory.BuildDaoResponse("Error: track not found", ResponseStatus.NOTFOUND);
+                return responseFactory.BuildDaoResponse("Error: track not found", ResponseStatus.NOTFOUND);
             }
 
-            return daoResponse;
+            return response;
         }
 
-        public DaoResponse CreateSampler(Sampler sampler)
+        public Response GetSamplerByPluginId(int pluginId)
+        {
+            try
+            {
+                if (pluginId == 0)
+                {
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                }
+
+                response.sampler = magmaDbContext.Samplers.Single<Sampler>(prop => prop.plugin.id == pluginId);
+                response.message = "Success: sampler found";
+                response.responseStatus = ResponseStatus.OK;
+
+                if (response.sampler == null)
+                {
+                    return responseFactory.BuildDaoResponse("Error: sampler not found for this plugin", ResponseStatus.NOTFOUND);
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+            }
+
+            return response;
+        }
+
+        public Response CreateSampler(Sampler sampler)
         {
             try
             {
                 if (sampler == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
                 if (sampler.id != 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: sampler already exists, id must be null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: sampler already exists, id must be null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Add<Sampler>(sampler);
@@ -61,27 +91,27 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: created sampler", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: created sampler", ResponseStatus.OK);
         }
 
-        public DaoResponse UpdateSampler(Sampler sampler)
+        public Response UpdateSampler(Sampler sampler)
         {
             try
             {
                 if (sampler == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
                 if (sampler.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Update<Sampler>(sampler);
@@ -89,27 +119,27 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: updated sampler", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: updated sampler", ResponseStatus.OK);
         }
 
-        public DaoResponse DeleteSampler(Sampler sampler)
+        public Response DeleteSampler(Sampler sampler)
         {
             try
             {
                 if (sampler == null)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
                 }
                 if (sampler.id == 0)
                 {
-                    return daoResponseFactory.BuildDaoResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
+                    return responseFactory.BuildDaoResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
                 }
 
                 magmaDbContext.Remove<Sampler>(sampler);
@@ -117,14 +147,14 @@ namespace MagmaPlayground_BackEnd.Daos
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
             catch (DbUpdateException ex)
             {
-                return daoResponseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.BuildDaoResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
             }
 
-            return daoResponseFactory.BuildDaoResponse("Success: removed sampler", ResponseStatus.OK);
+            return responseFactory.BuildDaoResponse("Success: removed sampler", ResponseStatus.OK);
         }
     }
 }
