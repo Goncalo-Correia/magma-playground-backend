@@ -19,6 +19,7 @@ namespace MagmaPlayground_BackEnd.Services
         public UserService(MagmaDbContext magmaDbContext)
         {
             userDao = new UserDao(magmaDbContext);
+            responseFactory = new ResponseFactory();
         }
 
         public Response GetUserById(int userId)
