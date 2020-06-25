@@ -1,5 +1,7 @@
 ﻿using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -10,42 +12,45 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class HomeController : ControllerBase
     {
-        public UserController userController;
-
-        public MagmaDbContext magmaDbContext;
+        private HomeService homeService;
+        private Response response;
         public ActionResult<User> user;
 
         public HomeController(MagmaDbContext magmaDbContext)
         {
-            userController = new UserController(magmaDbContext);
-            this.magmaDbContext = magmaDbContext;
+            homeService = new HomeService(magmaDbContext);
         }
-            
         
         [HttpGet]
-        public ActionResult Login(string email, string password)
+        public ActionResult<Response> Login(string email, string password)
         {
-            user = userController.GetUserByEmail(email);
-            if(user.Value.password == password)
+            response = new Response();
+            response = homeService.Login(email, password);
+
+            if(response.responseStatus == ResponseStatus.OK)
             {
-                return Ok("Success: login valid");
+                response.message = "Success: login valid";
+                return Ok(response);
             }
 
-            return NotFound("Error: user not found");
+            response.message = "Error: user not found";
+            return NotFound(response);
         }
         
         [HttpPost]
-        public ActionResult Register(User registerUser)
+        public ActionResult<Response> Register(User registerUser)
         {
-            user = userController.GetUserByEmail(registerUser.email);
-            if(user.Value.id == 0)
-            {
-                userController.CreateUser(registerUser);
+            response = new Response();
+            response = homeService.Register(registerUser);
 
-                return Ok("Success: register valid");
+            if(response.responseStatus == ResponseStatus.OK)
+            {
+                response.message = "Success: register valid";
+                return Ok(response);
             }
 
-            return BadRequest("Error: user already exists");
+            response.message = "Error: user already exists";
+            return BadRequest(response);
         }
     }
 }

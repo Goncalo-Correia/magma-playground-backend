@@ -44,6 +44,11 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response Register(User user)
         {
+            if (user.id != 0)
+            {
+                return responseFactory.BuildResponse("Error: invalid data", ResponseStatus.BADREQUEST);
+            }
+
             if (user.name == null || user.lastName == null || user.password == null || user.email == null)
             {
                 return responseFactory.BuildResponse("Error: missing data", ResponseStatus.BADREQUEST);
