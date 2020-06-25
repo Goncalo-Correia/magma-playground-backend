@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.CompilerServices;
@@ -14,44 +16,59 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class ProjectController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
-
-        private ActionResult<IEnumerable<Project>> projects;
-        private ActionResult<Project> project;
+        private ProjectService projectService;
+        private Response response;
+        private ControllerResponseFactory controllerResponseFactory;
 
         public ProjectController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            projectService = new ProjectService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Project> GetProjectById(int id)
+        public ActionResult<Response> GetProjectById(int id)
         {
-            return project;
+            response = new Response();
+            response = projectService.GetProjectById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("user/{id}")]
-        public ActionResult<IEnumerable<Project>> GetProjectsByUserId(int userId)
+        public ActionResult<Response> GetProjectsByUserId(int userId)
         {
-            return projects;
+            response = new Response();
+            response = projectService.GetProjectByUserId(userId);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult CreateProject(Project project)
+        public ActionResult<Response> CreateProject(Project project)
         {
-            return Ok("Success: created project");
+            response = new Response();
+            response = projectService.CreateProject(project);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateProject(Project project)
+        public ActionResult<Response> UpdateProject(Project project)
         {
-            return Ok("Success: updated project");
+            response = new Response();
+            response = projectService.UpdateProject(project);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemoveProject(Project project)
+        public ActionResult<Response> DeleteProject(Project project)
         {
-            return Ok("Success: removed user");
+            response = new Response();
+            response = projectService.DeleteProject(project);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
