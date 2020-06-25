@@ -14,11 +14,12 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private HomeService homeService;
         private Response response;
-        public ActionResult<User> user;
+        public ControllerResponseFactory controllerResponseFactory;
 
         public HomeController(MagmaDbContext magmaDbContext)
         {
             homeService = new HomeService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
         
         [HttpGet]
@@ -27,14 +28,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = homeService.Login(email, password);
 
-            if(response.responseStatus == ResponseStatus.OK)
-            {
-                response.message = "Success: login valid";
-                return Ok(response);
-            }
-
-            response.message = "Error: user not found";
-            return NotFound(response);
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
         
         [HttpPost]
@@ -43,14 +37,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = homeService.Register(registerUser);
 
-            if(response.responseStatus == ResponseStatus.OK)
-            {
-                response.message = "Success: register valid";
-                return Ok(response);
-            }
-
-            response.message = "Error: user already exists";
-            return BadRequest(response);
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,45 +15,58 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class UserController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
-
-        private ActionResult<IEnumerable<User>> usersList;
-        private User singleUser;
-        private ActionResult<User> user;
+        private UserService userService;
+        private Response response;
+        private ControllerResponseFactory controllerResponseFactory;
 
         public UserController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            userService = new UserService(magmaDbContext);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
+        public ActionResult<Response> GetUserById(int id)
         {
-            return user;
+            response = new Response();
+            response = userService.GetUserById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("email/{email}")]
-        public ActionResult<User> GetUserByEmail(string email)
+        public ActionResult<Response> GetUserByEmail(string email)
         {
-            return singleUser;
+            response = new Response();
+            response = userService.GetUserByEmail(email);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult<User> CreateUser(User user)
+        public ActionResult<Response> CreateUser(User user)
         {
-            return Ok("Success: created user");
+            response = new Response();
+            response = userService.CreateUser(user);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult<User> UpdateUser(User user)
+        public ActionResult<Response> UpdateUser(User user)
         {
-            return Ok("Success: updated user");
+            response = new Response();
+            response = userService.UpdateUser(user);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemoveUser(User user)
+        public ActionResult<Response> DeleteUser(User user)
         {
-            return Ok("Success: removed user");
+            response = new Response();
+            response = userService.DeleteUser(user);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
