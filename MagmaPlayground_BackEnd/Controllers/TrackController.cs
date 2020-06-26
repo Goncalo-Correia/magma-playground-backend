@@ -8,6 +8,8 @@ using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.Model;
 using Microsoft.EntityFrameworkCore.Internal;
 using Npgsql;
+using MagmaPlayground_BackEnd.Services;
+using MagmaPlayground_BackEnd.ResponseUtilities;
 
 namespace MagmaPlayground_BackEnd.Controllers
 {
@@ -15,44 +17,59 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class TrackController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
-
-        private ActionResult<IEnumerable<Track>> tracks;
-        private ActionResult<Track> track;
+        private TrackService trackService;
+        private ControllerResponseFactory controllerResponseFactory;
+        private Response response;
 
         public TrackController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            trackService = new TrackService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Track> GetTrackById(int id)
+        public ActionResult<Response> GetTrackById(int id)
         {
-            return track;
+            response = new Response();
+            response = trackService.GetTrackById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("project/{id}")]
-        public ActionResult<IEnumerable<Track>> GetTracksByProjectId(int projectId)
+        public ActionResult<Response> GetTracksByProjectId(int projectId)
         {
-            return tracks;
+            response = new Response();
+            response = trackService.GetTracksByProjectId(projectId);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult CreateTrack(Track track)
+        public ActionResult<Response> CreateTrack(Track track)
         {
-            return Ok("Success: created track");
+            response = new Response();
+            response = trackService.CreateTrack(track);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateTrack(Track track)
+        public ActionResult<Response> UpdateTrack(Track track)
         {
-            return Ok("Success: updated track");
+            response = new Response();
+            response = trackService.UpdateTrack(track);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemoveTrack(Track track)
+        public ActionResult<Response> DeleteTrack(Track track)
         {
-            return Ok("Success: removed track");
+            response = new Response();
+            response = trackService.DeleteTrack(track);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
