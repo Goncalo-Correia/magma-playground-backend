@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,43 +15,60 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class RackController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
+        private RackService rackService;
+        private ControllerResponseFactory controllerResponseFactory;
+        private Response response;
 
-        private ActionResult<Rack> rack;
 
         public RackController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            rackService = new RackService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
         
         [HttpGet("{id}")]
-        public ActionResult<Rack> GetRackById(int id)
+        public ActionResult<Response> GetRackById(int id)
         {
-            return rack;
+            response = new Response();
+            response = rackService.GetRackById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("track/{id}")]
-        public ActionResult<Rack> GetRackByTrackId(int trackId)
+        public ActionResult<Response> GetRackByTrackId(int trackId)
         {
-            return rack;
+            response = new Response();
+            response = rackService.GetRackByTrackId(trackId);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult CreateRack(Rack rack)
+        public ActionResult<Response> CreateRack(Rack rack)
         {
-            return Ok("Success: created rack");
+            response = new Response();
+            response = rackService.CreateRack(rack);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateRack(Rack rack)
+        public ActionResult<Response> UpdateRack(Rack rack)
         {
-            return Ok("Success: updated rack");
+            response = new Response();
+            response = rackService.UpdateRack(rack);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemoveRack(Rack rack)
+        public ActionResult<Response> DeleteRack(Rack rack)
         {
-            return Ok("Success: removed rack");
+            response = new Response();
+            response = rackService.DeleteRack(rack);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
