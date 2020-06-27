@@ -22,6 +22,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         public UserController(MagmaDbContext magmaDbContext)
         {
             userService = new UserService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
 
         [HttpGet("{id}")]
