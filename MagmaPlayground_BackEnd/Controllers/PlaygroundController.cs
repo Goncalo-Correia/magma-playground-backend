@@ -12,11 +12,10 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class PlaygroundController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
 
         public PlaygroundController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+
         }
 
     }
