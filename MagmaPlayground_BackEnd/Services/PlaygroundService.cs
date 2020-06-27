@@ -1,5 +1,4 @@
 ﻿using MagmaPlayground_BackEnd.Controllers;
-using MagmaPlayground_BackEnd.Factories;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using System;

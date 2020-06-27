@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MagmaPlayground_BackEnd.Factories;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using Microsoft.AspNetCore.Mvc;
 

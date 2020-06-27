@@ -34,7 +34,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             return controllerResponseFactory.BuildControllerResponse(response);
         }
 
-        [HttpGet("plugin/{id}")]
+        [HttpGet("plugin/{pluginId}")]
         public ActionResult<Response> GetSynthesizerByPluginId(int pluginId)
         {
             response = new Response();

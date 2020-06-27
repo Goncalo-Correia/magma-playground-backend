@@ -35,7 +35,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             return controllerResponseFactory.BuildControllerResponse(response);
         }
 
-        [HttpGet("user/{id}")]
+        [HttpGet("user/{userId}")]
         public ActionResult<Response> GetProjectsByUserId(int userId)
         {
             response = new Response();

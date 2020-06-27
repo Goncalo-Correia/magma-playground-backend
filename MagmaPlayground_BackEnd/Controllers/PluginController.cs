@@ -34,7 +34,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             return controllerResponseFactory.BuildControllerResponse(response);
         }
 
-        [HttpGet("rack/{id}")]
+        [HttpGet("rack/{rackId}")]
         public ActionResult<Response> GetPluginsByRackId(int rackId)
         {
             response = new Response();

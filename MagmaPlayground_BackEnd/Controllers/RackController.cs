@@ -35,7 +35,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             return controllerResponseFactory.BuildControllerResponse(response);
         }
 
-        [HttpGet("track/{id}")]
+        [HttpGet("track/{trackId}")]
         public ActionResult<Response> GetRackByTrackId(int trackId)
         {
             response = new Response();
