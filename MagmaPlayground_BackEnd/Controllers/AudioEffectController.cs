@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,44 +15,59 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class AudioEffectController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
-
-        private ActionResult<AudioEffect> audioEffect;
-        private ActionResult<IEnumerable<AudioEffect>> audioEffects;
+        private AudioEffectService audioEffectService;
+        private ControllerResponseFactory controllerResponseFactory;
+        private Response response;
 
         public AudioEffectController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            audioEffectService = new AudioEffectService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AudioEffect> GetAudioEffectById(int id)
+        public ActionResult<Response> GetAudioEffectById(int id)
         {
-            return audioEffect;
+            response = new Response();
+            response = audioEffectService.GetAudioEffectById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("plugin/{id}")]
-        public ActionResult<IEnumerable<AudioEffect>> GetAudioEffectByPluginId(int pluginId)
+        public ActionResult<Response> GetAudioEffectByPluginId(int pluginId)
         {
-            return audioEffects;
+            response = new Response();
+            response = audioEffectService.GetAudioEffectsByPluginId(pluginId);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult CreateAudioEffect(AudioEffect audioEffect)
+        public ActionResult<Response> CreateAudioEffect(AudioEffect audioEffect)
         {
-            return Ok("Success: created audio effect");
+            response = new Response();
+            response = audioEffectService.CreateAudioEffect(audioEffect);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateAudioEffect(AudioEffect audioEffect)
+        public ActionResult<Response> UpdateAudioEffect(AudioEffect audioEffect)
         {
-            return Ok("Success: updated audio effect");
+            response = new Response();
+            response = audioEffectService.UpdateAudioEffect(audioEffect);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemoveAudioEffect(AudioEffect audioEffect)
+        public ActionResult<Response> DeleteAudioEffect(AudioEffect audioEffect)
         {
-            return Ok("Success: removed audio effect");
+            response = new Response();
+            response = audioEffectService.DeleteAudioEffect(audioEffect);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
