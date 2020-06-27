@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,43 +15,59 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class SynthesizerController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
-
-        private ActionResult<Synthesizer> synthesizer;
+        private SynthesizerService synthesizerService;
+        private ControllerResponseFactory controllerResponseFactory;
+        private Response response;
 
         public SynthesizerController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            synthesizerService = new SynthesizerService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Synthesizer> GetSynthesizerById(int id)
+        public ActionResult<Response> GetSynthesizerById(int id)
         {
-            return synthesizer;
+            response = new Response();
+            response = synthesizerService.GetSynthesizerById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("plugin/{id}")]
-        public ActionResult<Synthesizer> GetSynthesizerByPluginId(int pluginId)
+        public ActionResult<Response> GetSynthesizerByPluginId(int pluginId)
         {
-            return synthesizer;
+            response = new Response();
+            response = synthesizerService.GetSynthesizerByPluginId(pluginId);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult CreateSynthesizer(Synthesizer synthesizer)
+        public ActionResult<Response> CreateSynthesizer(Synthesizer synthesizer)
         {
-            return Ok("Success: created synthesizer");
+            response = new Response();
+            response = synthesizerService.CreateSynthesizer(synthesizer);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateSynthesizer(Synthesizer synthesizer)
+        public ActionResult<Response> UpdateSynthesizer(Synthesizer synthesizer)
         {
-            return Ok("Success: updated synthesizer");
+            response = new Response();
+            response = synthesizerService.UpdateSynthesizer(synthesizer);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemoveSynthesizer(Synthesizer synthesizer)
+        public ActionResult<Response> DeleteSynthesizer(Synthesizer synthesizer)
         {
-            return Ok("Success: removed synthesizer");
+            response = new Response();
+            response = synthesizerService.DeleteSynthesizer(synthesizer);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
