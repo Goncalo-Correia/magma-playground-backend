@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,43 +15,59 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class SamplerController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
-
-        private ActionResult<Sampler> sampler;
+        private SamplerService samplerService;
+        private ControllerResponseFactory controllerResponseFactory;
+        private Response response;
 
         public SamplerController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            samplerService = new SamplerService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Sampler> GetSamplerById(int id)
+        public ActionResult<Response> GetSamplerById(int id)
         {
-            return sampler;
+            response = new Response();
+            response = samplerService.GetSamplerById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("plugin/{id}")]
-        public ActionResult<Sampler> GetSamplerByPluginId(int pluginId)
+        public ActionResult<Response> GetSamplerByPluginId(int pluginId)
         {
-            return sampler;
+            response = new Response();
+            response = samplerService.GetSamplerByPluginId(pluginId);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult CreateSampler(Sampler sampler)
+        public ActionResult<Response> CreateSampler(Sampler sampler)
         {
-            return Ok("Success: created sampler");
+            response = new Response();
+            response = samplerService.CreateSampler(sampler);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult UpdateSampler(Sampler sampler)
+        public ActionResult<Response> UpdateSampler(Sampler sampler)
         {
-            return Ok("Success: updated sampler");
+            response = new Response();
+            response = samplerService.UpdateSampler(sampler);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemoveSampler(Sampler sampler)
+        public ActionResult<Response> DeleteSampler(Sampler sampler)
         {
-            return Ok("Success: removed sampler");
+            response = new Response();
+            response = samplerService.DeleteSampler(sampler);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
