@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
+using MagmaPlayground_BackEnd.ResponseUtilities;
+using MagmaPlayground_BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,45 +15,59 @@ namespace MagmaPlayground_BackEnd.Controllers
     [Route("magma_api/[controller]")]
     public class PluginController : ControllerBase
     {
-        private MagmaDbContext magmaDbContext;
-
-        private ActionResult response;
-        private ActionResult<Plugin> plugin;
-        private ActionResult<IEnumerable<Plugin>> plugins;
+        private PluginService pluginService;
+        private ControllerResponseFactory controllerResponseFactory;
+        private Response response;
 
         public PluginController(MagmaDbContext magmaDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            pluginService = new PluginService(magmaDbContext);
+            controllerResponseFactory = new ControllerResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Plugin> GetPluginById(int id)
+        public ActionResult<Response> GetPluginById(int id)
         {
-            return plugin;
+            response = new Response();
+            response = pluginService.GetPluginById(id);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("rack/{id}")]
-        public ActionResult<IEnumerable<Plugin>> GetPluginsByRackId(int rackId)
+        public ActionResult<Response> GetPluginsByRackId(int rackId)
         {
-            return plugins;
+            response = new Response();
+            response = pluginService.GetPluginByRackId(rackId);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult CreatePlugin(Plugin plugin)
+        public ActionResult<Response> CreatePlugin(Plugin plugin)
         {
-            return response;
+            response = new Response();
+            response = pluginService.CreatePlugin(plugin);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
-        public ActionResult UpdatePlugin(Plugin plugin)
+        public ActionResult<Response> UpdatePlugin(Plugin plugin)
         {
-            return response;
+            response = new Response();
+            response = pluginService.UpdatePlugin(plugin);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
-        public ActionResult RemovePlugin(Plugin plugin)
+        public ActionResult<Response> DeletePlugin(Plugin plugin)
         {
-            return response;
+            response = new Response();
+            response = pluginService.DeletePlugin(plugin);
+
+            return controllerResponseFactory.BuildControllerResponse(response);
         }
     }
 }
