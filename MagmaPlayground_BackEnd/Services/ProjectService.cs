@@ -32,7 +32,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = projectDao.GetProjectById(id);
 
-            if (response.plugin == null)
+            if (response.project == null)
             {
                 return responseFactory.BuildResponse("Error: project not found", ResponseStatus.NOTFOUND);
             }

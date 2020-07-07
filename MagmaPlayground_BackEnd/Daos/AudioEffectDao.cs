@@ -39,7 +39,6 @@ namespace MagmaPlayground_BackEnd.Daos
             response.responseStatus = ResponseStatus.OK;
 
             return response;
-
         }
 
         public Response CreateAudioEffect(AudioEffect audioEffect)
