@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,6 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
 {
     public class ResponseSerializer
     {
-        private Response response;
         private string json;
 
         public ResponseSerializer()
@@ -18,12 +18,13 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
         public string SerializeResponse(Response response)
         {
             json = JsonConvert.SerializeObject(
-                            response, 
-                            Newtonsoft.Json.Formatting.None,
-                            new JsonSerializerSettings
-                            {
-                                NullValueHandling = NullValueHandling.Ignore
-                            });
+                                    response, 
+                                    Newtonsoft.Json.Formatting.Indented,
+                                    new JsonSerializerSettings
+                                    {
+                                        NullValueHandling = NullValueHandling.Ignore
+                                    }
+                            );
 
             return json;
         }
