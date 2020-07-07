@@ -16,14 +16,14 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class RackController : ControllerBase
     {
         private RackService rackService;
-        private ControllerResponseFactory controllerResponseFactory;
+        private ResponseFactory responseFactory;
         private Response response;
 
 
         public RackController(MagmaDbContext magmaDbContext)
         {
             rackService = new RackService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
         
         [HttpGet("{id}")]
@@ -32,7 +32,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = rackService.GetRackById(id);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("track/{trackId}")]
@@ -41,7 +41,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = rackService.GetRackByTrackId(trackId);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
@@ -50,7 +50,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = rackService.CreateRack(rack);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
@@ -59,7 +59,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = rackService.UpdateRack(rack);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
@@ -68,7 +68,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = rackService.DeleteRack(rack);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
     }
 }

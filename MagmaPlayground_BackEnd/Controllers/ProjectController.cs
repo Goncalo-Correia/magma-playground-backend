@@ -18,12 +18,12 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private ProjectService projectService;
         private Response response;
-        private ControllerResponseFactory controllerResponseFactory;
+        private ResponseFactory responseFactory;
 
         public ProjectController(MagmaDbContext magmaDbContext)
         {
             projectService = new ProjectService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
         [HttpGet("{id}")]
@@ -32,7 +32,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = projectService.GetProjectById(id);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("user/{userId}")]
@@ -41,7 +41,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = projectService.GetProjectByUserId(userId);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
@@ -50,7 +50,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = projectService.CreateProject(project);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
@@ -59,7 +59,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = projectService.UpdateProject(project);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
@@ -68,7 +68,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = projectService.DeleteProject(project);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
     }
 }

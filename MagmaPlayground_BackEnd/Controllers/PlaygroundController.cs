@@ -14,13 +14,13 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class PlaygroundController : ControllerBase
     {
         private PlaygroundService playgroundService;
-        private ControllerResponseFactory controllerResponseFactory;
+        private ResponseFactory responseFactory;
         private Response response;
 
         public PlaygroundController(MagmaDbContext magmaDbContext)
         {
             playgroundService = new PlaygroundService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
         [HttpGet("project/{id}")]
@@ -29,7 +29,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = playgroundService.GetCompleteProjectById(id);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
     }

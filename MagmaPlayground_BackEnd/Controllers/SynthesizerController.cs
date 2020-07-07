@@ -16,13 +16,13 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class SynthesizerController : ControllerBase
     {
         private SynthesizerService synthesizerService;
-        private ControllerResponseFactory controllerResponseFactory;
+        private ResponseFactory responseFactory;
         private Response response;
 
         public SynthesizerController(MagmaDbContext magmaDbContext)
         {
             synthesizerService = new SynthesizerService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
         [HttpGet("{id}")]
@@ -31,7 +31,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = synthesizerService.GetSynthesizerById(id);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("plugin/{pluginId}")]
@@ -40,7 +40,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = synthesizerService.GetSynthesizerByPluginId(pluginId);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = synthesizerService.CreateSynthesizer(synthesizer);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
@@ -58,7 +58,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = synthesizerService.UpdateSynthesizer(synthesizer);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
@@ -67,7 +67,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = synthesizerService.DeleteSynthesizer(synthesizer);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
     }
 }

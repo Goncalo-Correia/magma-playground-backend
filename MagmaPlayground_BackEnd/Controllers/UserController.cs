@@ -17,12 +17,12 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private UserService userService;
         private Response response;
-        private ControllerResponseFactory controllerResponseFactory;
+        private ResponseFactory responseFactory;
 
         public UserController(MagmaDbContext magmaDbContext)
         {
             userService = new UserService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
         [HttpGet("{id}")]
@@ -31,7 +31,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = userService.GetUserById(id);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("email/{email}")]
@@ -40,7 +40,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = userService.GetUserByEmail(email);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = userService.CreateUser(user);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
@@ -58,7 +58,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = userService.UpdateUser(user);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
@@ -67,7 +67,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = userService.DeleteUser(user);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
     }
 }

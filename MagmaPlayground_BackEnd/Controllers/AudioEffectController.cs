@@ -16,13 +16,13 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class AudioEffectController : ControllerBase
     {
         private AudioEffectService audioEffectService;
-        private ControllerResponseFactory controllerResponseFactory;
+        private ResponseFactory responseFactory;
         private Response response;
 
         public AudioEffectController(MagmaDbContext magmaDbContext)
         {
             audioEffectService = new AudioEffectService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
         [HttpGet("{id}")]
@@ -31,7 +31,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = audioEffectService.GetAudioEffectById(id);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("plugin/{pluginId}")]
@@ -40,7 +40,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = audioEffectService.GetAudioEffectsByPluginId(pluginId);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = audioEffectService.CreateAudioEffect(audioEffect);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
@@ -58,7 +58,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = audioEffectService.UpdateAudioEffect(audioEffect);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
@@ -67,7 +67,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = audioEffectService.DeleteAudioEffect(audioEffect);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
     }
 }

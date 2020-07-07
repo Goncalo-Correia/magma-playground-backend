@@ -16,13 +16,13 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class PluginController : ControllerBase
     {
         private PluginService pluginService;
-        private ControllerResponseFactory controllerResponseFactory;
+        private ResponseFactory responseFactory;
         private Response response;
 
         public PluginController(MagmaDbContext magmaDbContext)
         {
             pluginService = new PluginService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
 
         [HttpGet("{id}")]
@@ -31,7 +31,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = pluginService.GetPluginById(id);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpGet("rack/{rackId}")]
@@ -40,7 +40,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = pluginService.GetPluginByRackId(rackId);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = pluginService.CreatePlugin(plugin);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpPost("update")]
@@ -58,7 +58,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = pluginService.UpdatePlugin(plugin);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
 
         [HttpDelete]
@@ -67,7 +67,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = pluginService.DeletePlugin(plugin);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
     }
 }

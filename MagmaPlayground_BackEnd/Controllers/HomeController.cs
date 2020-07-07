@@ -14,12 +14,12 @@ namespace MagmaPlayground_BackEnd.Controllers
     {
         private HomeService homeService;
         private Response response;
-        public ControllerResponseFactory controllerResponseFactory;
+        public ResponseFactory responseFactory;
 
         public HomeController(MagmaDbContext magmaDbContext)
         {
             homeService = new HomeService(magmaDbContext);
-            controllerResponseFactory = new ControllerResponseFactory();
+            responseFactory = new ResponseFactory();
         }
         
         [HttpGet]
@@ -28,7 +28,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = homeService.Login(email, password);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
         
         [HttpPost]
@@ -37,7 +37,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = homeService.Register(registerUser);
 
-            return controllerResponseFactory.BuildControllerResponse(response);
+            return responseFactory.BuildControllerResponse(response);
         }
     }
 }
