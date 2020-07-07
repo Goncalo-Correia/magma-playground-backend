@@ -25,11 +25,6 @@ namespace MagmaPlayground_BackEnd.Daos
         {
             response = new Response();
 
-            var query = from project in magmaDbContext.Projects
-                        where project.id == id
-                        join track in magmaDbContext.Tracks on project.id equals track.projectId
-                        select new { Project = project, Track = track };
-
             return response;
         }
     }
