@@ -45,18 +45,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateUser(User user)
         {
-            magmaDbContext.Add<User>(user);
+            int id;
+
+            id = magmaDbContext.Add<User>(user).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created user", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created user", ResponseStatus.OK, id);
         }
 
         public Response UpdateUser(User user)
         {
-            magmaDbContext.Update<User>(user);
+            int id;
+
+            id = magmaDbContext.Update<User>(user).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated user", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated user", ResponseStatus.OK, id);
         }
 
         public Response DeleteUser(User user)

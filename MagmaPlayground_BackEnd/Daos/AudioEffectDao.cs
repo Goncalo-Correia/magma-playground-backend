@@ -43,18 +43,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateAudioEffect(AudioEffect audioEffect)
         {
-            magmaDbContext.Add<AudioEffect>(audioEffect);
+            int id;
+
+            id = magmaDbContext.Add<AudioEffect>(audioEffect).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created audio effect", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created audio effect", ResponseStatus.OK, id);
         }
 
         public Response UpdateAudioEffect(AudioEffect audioEffect)
         {
-            magmaDbContext.Update<AudioEffect>(audioEffect);
+            int id;
+
+            id = magmaDbContext.Update<AudioEffect>(audioEffect).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated audio effect", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated audio effect", ResponseStatus.OK, id);
         }
 
         public Response DeleteAudioEffect(AudioEffect audioEffect)
