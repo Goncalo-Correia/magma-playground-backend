@@ -69,13 +69,58 @@ namespace MagmaPlayground_BackEnd.Daos
             return response;
         }
 
-        public Response CreateProject(Project project)
+        public Response SaveNewProject(Project project)
         {
-            response = new Response();
+            int projectId;
+            int trackId;
+            int rackId;
+            int pluginId;
+
+            projectId = projectDao.CreateProject(project).id;
+
+            foreach (Track track in project.tracks)
+            {
+                track.projectId = projectId;
+                trackId = trackDao.CreateTrack(track).id;
+
+                track.rack.trackId = trackId;
+                rackId = rackDao.CreateRack(track.rack).id;
+
+                foreach (Plugin plugin in track.rack.plugins)
+                {
+                    plugin.rackId = rackId;
+                    pluginId = pluginDao.CreatePlugin(plugin).id;
+
+                    switch (plugin.pluginType)
+                    {
+                        case PluginType.SAMPLER:
+                            samplerDao.CreateSampler(plugin.sampler);
+                            break;
+                        case PluginType.SYNTHESIZER:
+                            synthesizerDao.CreateSynthesizer(plugin.synthesizer);
+                            break;
+                        case PluginType.AUDIOEFFECT:
+                            audioEffectDao.CreateAudioEffect(plugin.audioEffect);
+                            break;
+                    }
+                }
+            }
+
+            return responseFactory.BuildResponse("Success: created project", ResponseStatus.OK); ;
+        }
+
+        public Response SaveProject(Project project)
+        {
 
 
+            return responseFactory.BuildResponse("Success: saved project", ResponseStatus.OK);
+        }
 
-            return response;
+        public Response DeleteProject(Project project)
+        {
+
+
+            return responseFactory.BuildResponse("Success: deleted project", ResponseStatus.OK);
         }
     }
 }
