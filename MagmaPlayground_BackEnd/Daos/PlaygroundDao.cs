@@ -71,87 +71,87 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response SaveNewProject(Project project)
         {
-            int projectId;
-            int trackId;
-            int rackId;
-            int pluginId;
+            response = new Response();
 
-            projectId = projectDao.CreateProject(project).id;
+            project.id = projectDao.CreateProject(project).id;
 
             foreach (Track track in project.tracks)
             {
-                track.projectId = projectId;
-                trackId = trackDao.CreateTrack(track).id;
+                track.projectId = project.id;
+                track.id = trackDao.CreateTrack(track).id;
 
-                track.rack.trackId = trackId;
-                rackId = rackDao.CreateRack(track.rack).id;
+                track.rack.trackId = track.id;
+                track.rack.id = rackDao.CreateRack(track.rack).id;
 
                 foreach (Plugin plugin in track.rack.plugins)
                 {
-                    plugin.rackId = rackId;
-                    pluginId = pluginDao.CreatePlugin(plugin).id;
+                    plugin.rackId = track.rack.id;
+                    plugin.id = pluginDao.CreatePlugin(plugin).id;
 
                     switch (plugin.pluginType)
                     {
                         case PluginType.SAMPLER:
-                            samplerDao.CreateSampler(plugin.sampler);
+                            plugin.sampler.pluginId = plugin.id;
+                            plugin.sampler.id = samplerDao.CreateSampler(plugin.sampler).id;
                             break;
                         case PluginType.SYNTHESIZER:
-                            synthesizerDao.CreateSynthesizer(plugin.synthesizer);
+                            plugin.synthesizer.pluginId = plugin.id;
+                            plugin.synthesizer.id = synthesizerDao.CreateSynthesizer(plugin.synthesizer).id;
                             break;
                         case PluginType.AUDIOEFFECT:
-                            audioEffectDao.CreateAudioEffect(plugin.audioEffect);
+                            plugin.audioEffect.pluginId = plugin.id;
+                            plugin.audioEffect.id = audioEffectDao.CreateAudioEffect(plugin.audioEffect).id;
                             break;
                     }
                 }
             }
+            response.message = "Success: created project";
+            response.responseStatus = ResponseStatus.OK;
+            response.project = project;
 
-            return responseFactory.BuildResponse("Success: created project", ResponseStatus.OK); ;
+            return response;
         }
 
         public Response SaveProject(Project project)
         {
-            int projectId;
-            int trackId;
-            int rackId;
-            int pluginId;
+            response = new Response();
 
-            projectId = projectDao.UpdateProject(project).id;
+            project.id = projectDao.UpdateProject(project).id;
 
             foreach (Track track in project.tracks)
             {
                 if (track.id == 0)
                 {
-                    track.projectId = projectId;
-                    trackId = trackDao.CreateTrack(track).id;
+                    track.projectId = project.id;
+                    track.id = trackDao.CreateTrack(track).id;
 
-                    track.rack.trackId = trackId;
-                    rackId = rackDao.CreateRack(track.rack).id;
+                    track.rack.trackId = track.id;
+                    track.rack.id = rackDao.CreateRack(track.rack).id;
                 } 
                 else
                 {
-                    trackId = trackDao.UpdateTrack(track).id;
-                    rackId = rackDao.UpdateRack(track.rack).id;
+                    track.id = trackDao.UpdateTrack(track).id;
+                    track.rack.id = rackDao.UpdateRack(track.rack).id;
                 }
 
                 foreach (Plugin plugin in track.rack.plugins)
                 {
                     if (plugin.id == 0)
                     {
-                        plugin.rackId = rackId;
-                        pluginId = pluginDao.CreatePlugin(plugin).id;
+                        plugin.rackId = track.rack.id;
+                        plugin.id = pluginDao.CreatePlugin(plugin).id;
                     }
                     else
                     {
-                        pluginId = pluginDao.UpdatePlugin(plugin).id;
+                        plugin.id = pluginDao.UpdatePlugin(plugin).id;
                     }
 
                     switch (plugin.pluginType)
                     {
                         case PluginType.SAMPLER:
-                            if (plugin.id == 0)
+                            if (plugin.sampler.id == 0)
                             {
-                                plugin.sampler.pluginId = pluginId;
+                                plugin.sampler.pluginId = plugin.id;
                                 samplerDao.CreateSampler(plugin.sampler);
                             }
                             else
@@ -160,9 +160,9 @@ namespace MagmaPlayground_BackEnd.Daos
                             }
                             break;
                         case PluginType.SYNTHESIZER:
-                            if (plugin.id == 0)
+                            if (plugin.synthesizer.id == 0)
                             {
-                                plugin.synthesizer.pluginId = pluginId;
+                                plugin.synthesizer.pluginId = plugin.id;
                                 synthesizerDao.CreateSynthesizer(plugin.synthesizer);
                             }
                             else
@@ -171,9 +171,9 @@ namespace MagmaPlayground_BackEnd.Daos
                             }
                             break;
                         case PluginType.AUDIOEFFECT:
-                            if (plugin.id == 0)
+                            if (plugin.audioEffect.id == 0)
                             {
-                                plugin.audioEffect.pluginId = pluginId;
+                                plugin.audioEffect.pluginId = plugin.id;
                                 audioEffectDao.CreateAudioEffect(plugin.audioEffect);
                             }
                             else
@@ -185,7 +185,11 @@ namespace MagmaPlayground_BackEnd.Daos
                 }
             }
 
-            return responseFactory.BuildResponse("Success: saved project", ResponseStatus.OK);
+            response.message = "Success: saved project";
+            response.responseStatus = ResponseStatus.OK;
+            response.project = project;
+
+            return response;
         }
 
         public Response DeleteProject(Project project)
