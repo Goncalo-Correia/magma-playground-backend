@@ -27,6 +27,16 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
             return response;
         }
 
+        public Response BuildIdResponse(string message, ResponseStatus responseStatus, int id)
+        {
+            response = new Response();
+            response.message = message;
+            response.responseStatus = responseStatus;
+            response.id = id;
+
+            return response;
+        }
+
         public ActionResult<Response> BuildControllerResponse(Response response)
         {
             if (response.responseStatus == ResponseStatus.BADREQUEST)

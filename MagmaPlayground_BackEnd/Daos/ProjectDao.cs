@@ -45,18 +45,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateProject(Project project)
         {
-            magmaDbContext.Add<Project>(project);
+            int id;
+
+            id = magmaDbContext.Add<Project>(project).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created project", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created project", ResponseStatus.OK, id);
         }
 
         public Response UpdateProject(Project project)
         {
-            magmaDbContext.Update<Project>(project);
+            int id;
+
+            id = magmaDbContext.Update<Project>(project).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated project", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated project", ResponseStatus.OK, id);
         }
 
         public Response DeleteProject(Project project)

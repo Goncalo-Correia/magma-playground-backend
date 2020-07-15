@@ -13,6 +13,8 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
         public string message { get; set; }
         public ResponseStatus responseStatus { get; set; }
 
+        public int id { get; set; }
+
         public User user { get; set; }
         public Project project { get; set; }
         public Track track { get; set; }

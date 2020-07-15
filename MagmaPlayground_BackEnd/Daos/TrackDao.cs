@@ -45,18 +45,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateTrack(Track track)
         {
-            magmaDbContext.Add<Track>(track);
+            int id;
+
+            id = magmaDbContext.Add<Track>(track).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created track", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created track", ResponseStatus.OK, id);
         }
 
         public Response UpdateTrack(Track track)
         {
-            magmaDbContext.Update<Track>(track);
+            int id;
+
+            id = magmaDbContext.Update<Track>(track).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated track", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated track", ResponseStatus.OK, id);
         }
 
         public Response DeleteTrack(Track track)

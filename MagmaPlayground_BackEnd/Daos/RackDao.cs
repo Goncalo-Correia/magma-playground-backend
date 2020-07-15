@@ -43,18 +43,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateRack(Rack rack)
         {
-            magmaDbContext.Add<Rack>(rack);
+            int id;
+
+            id = magmaDbContext.Add<Rack>(rack).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created rack", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created rack", ResponseStatus.OK, id);
         }
 
         public Response UpdateRack(Rack rack)
         {
-            magmaDbContext.Update<Rack>(rack);
+            int id;
+
+            id = magmaDbContext.Update<Rack>(rack).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated rack", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated rack", ResponseStatus.OK, id);
         }
 
         public Response DeleteRack(Rack rack)
