@@ -29,7 +29,7 @@ namespace MagmaPlayground_BackEnd.Model
         public decimal pan { get; set; }
 
         [Required(ErrorMessage = "Tracktype is required")]
-        [Column("tracktype")]
+        [Column("track_type_id")]
         public TrackType trackType { get; set; }
 
         [Required(ErrorMessage = "Project id is required")]
@@ -37,9 +37,7 @@ namespace MagmaPlayground_BackEnd.Model
         public int projectId { get; set; }
         public Project Project { get; set; }
 
-        [Column("rack_id")]
-        public int rackId { get; set; }
-        public Rack Rack { get; set; }
+        public Rack rack { get; set; }
 
         public Track()
         {

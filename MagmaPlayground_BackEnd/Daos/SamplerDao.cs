@@ -36,7 +36,7 @@ namespace MagmaPlayground_BackEnd.Daos
         {
             response = new Response();
 
-            response.sampler = magmaDbContext.Samplers.Single<Sampler>(prop => prop.plugin.id == pluginId);
+            response.sampler = magmaDbContext.Samplers.Single<Sampler>(prop => prop.pluginId == pluginId);
             response.message = "Success: sampler found";
             response.responseStatus = ResponseStatus.OK;
 

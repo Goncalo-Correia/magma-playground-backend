@@ -24,14 +24,12 @@ namespace MagmaPlayground_BackEnd.Model
         public string name { get; set; }
 
         [Required(ErrorMessage = "Audio effect type is required")]
-        [Column("audioeffecttype")]
+        [Column("audioeffect_type_id")]
         public AudioEffectType audioEffectType { get; set; }
 
         [Required(ErrorMessage = "Plugin is required")]
         [Column("plugin_id")]
         public int pluginId { get; set; }
-
-        public Plugin plugin { get; set; }
 
         public AudioEffect()
         {

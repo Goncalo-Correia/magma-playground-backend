@@ -24,10 +24,10 @@ namespace MagmaPlayground_BackEnd.Services
             responseFactory = new ResponseFactory();
         }
 
-        public Response GetCompleteProjectById(int id)
+        public Response GetProjectById(int id)
         {
             response = new Response();
-            response = playgroundDao.GetCompleteProjectById(id);
+            response = playgroundDao.GetProjectById(id);
 
             return response;
         }

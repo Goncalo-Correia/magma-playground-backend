@@ -38,7 +38,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetAudioEffectByPluginId(int pluginId)
         {
             response = new Response();
-            response = audioEffectService.GetAudioEffectsByPluginId(pluginId);
+            response = audioEffectService.GetAudioEffectByPluginId(pluginId);
 
             return responseFactory.BuildControllerResponse(response);
         }

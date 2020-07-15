@@ -44,51 +44,11 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
                 .HasForeignKey(prop => prop.projectId)
                 .HasConstraintName("track_project_fkey");
 
-            modelBuilder.Entity<Track>()
-                .HasOne(prop => prop.Rack)
-                .WithOne(prop => prop.Track);
-
-            modelBuilder.Entity<Rack>()
-                .HasOne(prop => prop.Track)
-                .WithOne(prop => prop.Rack)
-                .HasForeignKey<Track>(prop => prop.rackId)
-                .HasConstraintName("rack_track_fkey");
-
             modelBuilder.Entity<Plugin>()
                 .HasOne(prop => prop.rack)
                 .WithMany(prop => prop.plugins)
                 .HasForeignKey(prop => prop.rackId)
                 .HasConstraintName("plugin_rack_fkey");
-
-            modelBuilder.Entity<Plugin>()
-                .HasOne(prop => prop.sampler)
-                .WithOne(prop => prop.plugin);
-
-            modelBuilder.Entity<Plugin>()
-                .HasOne(prop => prop.synthesizer)
-                .WithOne(prop => prop.plugin);
-
-            modelBuilder.Entity<Plugin>()
-                .HasMany(prop => prop.audioEffects)
-                .WithOne(prop => prop.plugin);
-
-            modelBuilder.Entity<Sampler>()
-                .HasOne(prop => prop.plugin)
-                .WithOne(prop => prop.sampler)
-                .HasForeignKey<Plugin>(prop => prop.samplerId)
-                .HasConstraintName("sampler_plugin_id");
-
-            modelBuilder.Entity<Synthesizer>()
-                .HasOne(prop => prop.plugin)
-                .WithOne(prop => prop.synthesizer)
-                .HasForeignKey<Plugin>(prop => prop.synthesizerId)
-                .HasConstraintName("synthesizer_plugin_id");
-
-            modelBuilder.Entity<AudioEffect>()
-                .HasOne(prop => prop.plugin)
-                .WithMany(prop => prop.audioEffects)
-                .HasForeignKey(prop => prop.pluginId)
-                .HasConstraintName("audioeffect_plugin_fkey");
         }
 
         public DbSet<User> Users { get; set; }

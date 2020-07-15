@@ -32,9 +32,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return response;
         }
 
-        public Response GetAudioEffectsByPluginId(int pluginId)
+        public Response GetAudioEffectByPluginId(int pluginId)
         {
-            response.audioEffects = magmaDbContext.AudioEffects.Where<AudioEffect>(prop => prop.plugin.id == pluginId).ToList();
+            response.audioEffect = magmaDbContext.AudioEffects.Single<AudioEffect>(prop => prop.pluginId == pluginId);
             response.message = "Success: audio effects found";
             response.responseStatus = ResponseStatus.OK;
 

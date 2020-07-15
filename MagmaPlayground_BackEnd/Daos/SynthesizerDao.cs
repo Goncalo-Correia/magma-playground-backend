@@ -36,7 +36,7 @@ namespace MagmaPlayground_BackEnd.Daos
         {
             response = new Response();
 
-            response.synthesizer = magmaDbContext.Synthesizers.Single<Synthesizer>(prop => prop.plugin.id == pluginId);
+            response.synthesizer = magmaDbContext.Synthesizers.Single<Synthesizer>(prop => prop.pluginId == pluginId);
             response.message = "Success: synthesizer found";
             response.responseStatus = ResponseStatus.OK;
 

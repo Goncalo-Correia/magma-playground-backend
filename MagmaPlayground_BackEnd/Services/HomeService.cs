@@ -17,8 +17,9 @@ namespace MagmaPlayground_BackEnd.Services
 
         public HomeService(MagmaDbContext magmaDbContext)
         {
-            this.response = new Response();
-            this.userDao = new UserDao(magmaDbContext);
+            responseFactory = new ResponseFactory();
+            response = new Response();
+            userDao = new UserDao(magmaDbContext);
         }
 
         public Response Login(string email, string password)

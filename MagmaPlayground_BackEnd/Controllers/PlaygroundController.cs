@@ -24,13 +24,12 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("project/{id}")]
-        public ActionResult<Response> GetCompleteProjectById(int id)
+        public ActionResult<Response> GetProjectById(int id)
         {
             response = new Response();
-            response = playgroundService.GetCompleteProjectById(id);
+            response = playgroundService.GetProjectById(id);
 
             return responseFactory.BuildControllerResponse(response);
         }
-
     }
 }

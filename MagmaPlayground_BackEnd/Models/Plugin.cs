@@ -21,7 +21,7 @@ namespace MagmaPlayground_BackEnd.Model
         public int order { get; set; }
 
         [Required(ErrorMessage = "Plugin type is required")]
-        [Column("plugintype")]
+        [Column("plugin_type_id")]
         public PluginType pluginType { get; set; }
 
         [Required(ErrorMessage = "Plugin name is required")]
@@ -33,15 +33,11 @@ namespace MagmaPlayground_BackEnd.Model
         public int rackId { get; set; }
         public Rack rack { get; set; }
 
-        [Column("sampler_id")]
-        public int samplerId { get; set; }
         public Sampler sampler { get; set; }
 
-        [Column("synthesizer_id")]
-        public int synthesizerId { get; set; }
         public Synthesizer synthesizer { get; set; }
 
-        public List<AudioEffect> audioEffects { get; set; }
+        public AudioEffect audioEffect { get; set; }
 
         public Plugin()
         {

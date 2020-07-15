@@ -41,7 +41,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetAudioEffectsByPluginId(int pluginId)
+        public Response GetAudioEffectByPluginId(int pluginId)
         {
             response = new Response();
             try
@@ -51,7 +51,7 @@ namespace MagmaPlayground_BackEnd.Services
                     return responseFactory.BuildResponse("Error: id cannot be null", ResponseStatus.BADREQUEST);
                 }
 
-                response = audioEffectDao.GetAudioEffectsByPluginId(pluginId);
+                response = audioEffectDao.GetAudioEffectByPluginId(pluginId);
 
                 if (response.audioEffects == null)
                 {

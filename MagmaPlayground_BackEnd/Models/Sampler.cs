@@ -22,7 +22,6 @@ namespace MagmaPlayground_BackEnd.Model
         [Required(ErrorMessage = "Plugin is required")]
         [Column("plugin_id")]
         public int pluginId { get; set; }
-        public Plugin plugin { get; set; }
 
         public Sampler()
         {
