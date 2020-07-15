@@ -45,18 +45,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateSynthesizer(Synthesizer synthesizer)
         {
-            magmaDbContext.Add<Synthesizer>(synthesizer);
+            int id;
+
+            id = magmaDbContext.Add<Synthesizer>(synthesizer).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created synthesizer", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created synthesizer", ResponseStatus.OK, id);
         }
 
         public Response UpdateSynthesizer(Synthesizer synthesizer)
         {
-            magmaDbContext.Update<Synthesizer>(synthesizer);
+            int id;
+
+            id = magmaDbContext.Update<Synthesizer>(synthesizer).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated synthesizer", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated synthesizer", ResponseStatus.OK, id);
         }
 
         public Response DeleteSynthesizer(Synthesizer synthesizer)

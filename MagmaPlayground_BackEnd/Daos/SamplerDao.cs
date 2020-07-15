@@ -45,18 +45,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateSampler(Sampler sampler)
         {
-            magmaDbContext.Add<Sampler>(sampler);
+            int id;
+
+            id = magmaDbContext.Add<Sampler>(sampler).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created sampler", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created sampler", ResponseStatus.OK, id);
         }
 
         public Response UpdateSampler(Sampler sampler)
         {
-            magmaDbContext.Update<Sampler>(sampler);
+            int id;
+
+            id = magmaDbContext.Update<Sampler>(sampler).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated sampler", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated sampler", ResponseStatus.OK, id);
         }
 
         public Response DeleteSampler(Sampler sampler)

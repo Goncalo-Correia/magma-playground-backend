@@ -41,18 +41,22 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreatePlugin(Plugin plugin)
         {
-            magmaDbContext.Add<Plugin>(plugin);
+            int id;
+
+            id = magmaDbContext.Add<Plugin>(plugin).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: created plugin", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: created plugin", ResponseStatus.OK, id);
         }
 
         public Response UpdatePlugin(Plugin plugin)
         {
-            magmaDbContext.Update<Plugin>(plugin);
+            int id;
+
+            id = magmaDbContext.Update<Plugin>(plugin).Entity.id;
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: updated plugin", ResponseStatus.OK);
+            return responseFactory.BuildIdResponse("Success: updated plugin", ResponseStatus.OK, id);
         }
 
         public Response DeletePlugin(Plugin plugin)
