@@ -34,6 +34,8 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetRackByTrackId(int trackId)
         {
+            response = new Response();
+
             response.rack = magmaDbContext.Racks.Single<Rack>(prop => prop.trackId == trackId);
             response.message = "Success: rack found";
             response.responseStatus = ResponseStatus.OK;

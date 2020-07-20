@@ -32,6 +32,8 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetPluginsByRackId(int rackId)
         {
+            response = new Response();
+
             response.plugins = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
             response.message = "Success: plugins found";
             response.responseStatus = ResponseStatus.OK;

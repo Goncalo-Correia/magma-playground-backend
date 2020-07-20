@@ -20,9 +20,10 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
             json = JsonConvert.SerializeObject(
                                     response, 
                                     Newtonsoft.Json.Formatting.Indented,
-                                    new JsonSerializerSettings
+                                    new JsonSerializerSettings()
                                     {
-                                        NullValueHandling = NullValueHandling.Ignore
+                                        NullValueHandling = NullValueHandling.Ignore,
+                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                                     }
                             );
 
