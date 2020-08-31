@@ -105,7 +105,7 @@ namespace MagmaPlayground_BackEnd.Daos
                     }
                 }
             }
-            response.message = "Success: created project";
+            response.message = "Success: saved new project";
             response.responseStatus = ResponseStatus.OK;
             response.project = project;
 
