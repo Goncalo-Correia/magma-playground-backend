@@ -3,17 +3,15 @@
 ## Controllers
 
   - User [Route("magma_api/user")]
-      - Requests:
-            - GetUserById(int id) - [HttpGet("{id}")]
-            - GetUserByEmail(string email) - [HttpGet("email/{email}")]
-            - CreateUser(User user) - [HttpPost]
-            - UpdateUser(User user) - [HttpPost("update")]
-            - DeleteUser(User user) - [HttpDelete]
+      - GetUserById(int id) - [HttpGet("{id}")]
+      - GetUserByEmail(string email) - [HttpGet("email/{email}")]
+      - CreateUser(User user) - [HttpPost]
+      - UpdateUser(User user) - [HttpPost("update")]
+      - DeleteUser(User user) - [HttpDelete]
             
   - Home [Route("magma_api/home")]
-      - Requests:
-            - Login(string email, string password) - [HttpGet] 
-            - Register(User user) - [HttpPost] 
+      - Login(string email, string password) - [HttpGet] 
+      - Register(User user) - [HttpPost] 
             
   - Playground [Route("magma_api/playground")]
   - Project [Route("magma_api/project")]
