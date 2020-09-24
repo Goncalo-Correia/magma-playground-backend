@@ -69,6 +69,8 @@
       - Delete(Sampler) - [HttpDelete]
 
 ## Model properties
+      #### User
+      - Project
       - 
 
 ## Response Utilities
