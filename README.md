@@ -69,8 +69,20 @@
       - Delete(Sampler) - [HttpDelete]
 
 ## Model properties
-      #### User
-      - Project
-      - 
+      #### User #####          #### Project #####          #### Track #####          #### Rack #####             
+      - id                     - id                        - id                      - id     
+      - name                   - name                      - order                   - track id 
+      - last name              - created on                - name
+      - email                  - updated on                - volume 
+      - password               - user id                   - pan 
+      - created on                                         - track type
+      - updated on                                         - project id 
+      
+      #### Plugin #####        #### Audio Effect #####     #### Synthesizer #####    #### Sampler #####             
+      - id                     - id                        - id                      - id     
+      - order                  - order                     - name                    - track id 
+      - plugin type            - name                      - synthesizer type
+      - plugin name            - audio effect type         - volume 
+      - rack id                - plugin id                 - pan  
 
 ## Response Utilities
