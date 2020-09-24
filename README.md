@@ -84,5 +84,3 @@
       - plugin type            - name                      - synthesizer type        - plugin id
       - plugin name            - audio effect type         - plugin id 
       - rack id                - plugin id                   
-
-## Response Utilities
