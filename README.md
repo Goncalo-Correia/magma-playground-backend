@@ -80,9 +80,9 @@
       
       #### Plugin #####        #### Audio Effect #####     #### Synthesizer #####    #### Sampler #####             
       - id                     - id                        - id                      - id     
-      - order                  - order                     - name                    - track id 
-      - plugin type            - name                      - synthesizer type
-      - plugin name            - audio effect type         - volume 
-      - rack id                - plugin id                 - pan  
+      - order                  - order                     - name                    - name 
+      - plugin type            - name                      - synthesizer type        - plugin id
+      - plugin name            - audio effect type         - plugin id 
+      - rack id                - plugin id                   
 
 ## Response Utilities
