@@ -29,6 +29,12 @@ namespace MagmaPlayground_BackEnd.Model
         public int userId { get; set; }
         public User user { get; set; }
 
+        [Column("is_template")]
+        public bool isTemplate { get; set; }
+
+        [Column("is_default")]
+        public bool isDefault { get; set; }
+
         public List<Track> tracks { get; set; }
 
         public Project()

@@ -21,7 +21,7 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
                 .HasColumnType("datetime");
 
             builder.Property(prop => prop.updatedOn)
-                .HasColumnType("datetime");
+                .HasColumnType("datetime");  
         }
     }
 }
