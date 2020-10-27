@@ -24,7 +24,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             responseFactory = new ResponseFactory();
         }
 
-        [HttpGet("project/{id}")]
+        [HttpGet("{id}")]
         public ActionResult<Response> GetProjectById(int id)
         {
             response = new Response();
@@ -33,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.BuildControllerResponse(response);
         }
 
-        [HttpPost("project/savenew")]
+        [HttpPost("create")]
         public ActionResult<Response> SaveNewProject(Project project)
         {
             response = new Response();
@@ -42,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.BuildControllerResponse(response);
         }
 
-        [HttpPost("project/save")]
+        [HttpPost("update")]
         public ActionResult<Response> SaveProject(Project project)
         {
             response = new Response();
@@ -51,11 +51,12 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.BuildControllerResponse(response);
         }
 
-        [HttpDelete]
-        public ActionResult<Response> DeleteProject(Project project)
+        [HttpDelete("{id}")]
+        public ActionResult<Response> DeleteProject(int id)
         {
             response = new Response();
-            response = playgroundService.DeleteProject(project);
+
+            response = playgroundService.DeleteProject(id);
 
             return responseFactory.BuildControllerResponse(response);
         }

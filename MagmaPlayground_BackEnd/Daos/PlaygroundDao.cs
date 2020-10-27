@@ -69,6 +69,15 @@ namespace MagmaPlayground_BackEnd.Daos
             return response;
         }
 
+        public Response GetProjectForDelete(int id)
+        {
+            response = new Response();
+
+            response = projectDao.GetProjectById(id);
+
+            return response;
+        }
+
         public Response SaveNewProject(Project project)
         {
             response = new Response();
@@ -192,10 +201,12 @@ namespace MagmaPlayground_BackEnd.Daos
             return response;
         }
 
-        public Response DeleteProject(Project project)
+        public Response DeleteProject(int id)
         {
             response = new Response();
-            response = projectDao.DeleteProject(project);
+            Response projectForDeleteResponse = projectDao.GetProjectById(id);
+
+            response = projectDao.DeleteProject(projectForDeleteResponse.project);
 
             return response;
         }

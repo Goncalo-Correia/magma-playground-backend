@@ -66,14 +66,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteProject(Project project)
+        public Response DeleteProject(int id)
         {
-            if (project.id == 0)
+            if (id == 0)
             {
                 return responseFactory.BuildResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
             response = new Response();
-            response = playgroundDao.DeleteProject(project);
+            response = playgroundDao.DeleteProject(id);
 
             return response;
         }
