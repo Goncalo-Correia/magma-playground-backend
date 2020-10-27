@@ -194,9 +194,10 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response DeleteProject(Project project)
         {
+            response = new Response();
+            response = projectDao.DeleteProject(project);
 
-
-            return responseFactory.BuildResponse("Success: deleted project", ResponseStatus.OK);
+            return response;
         }
     }
 }

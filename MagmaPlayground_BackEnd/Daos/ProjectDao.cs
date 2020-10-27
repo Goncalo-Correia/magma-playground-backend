@@ -68,7 +68,7 @@ namespace MagmaPlayground_BackEnd.Daos
             magmaDbContext.Remove<Project>(project);
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: removed user", ResponseStatus.OK);
+            return responseFactory.BuildResponse("Success: removed project", ResponseStatus.OK);
         }
     }
 }
