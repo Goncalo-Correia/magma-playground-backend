@@ -24,18 +24,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetRackById(int id)
         {
-            response = new Response();
-
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
+            response = new Response();
+            
             response = rackDao.GetRackById(id);
 
             if (response.rack == null)
             {
-                return responseFactory.BuildResponse("Error: rack not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: rack not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -43,28 +43,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetRackByTrackId(int trackId)
         {
+            if (trackId == 0)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (trackId == 0)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                response = rackDao.GetRackByTrackId(trackId);
+            response = rackDao.GetRackByTrackId(trackId);
 
-                if (response.rack == null)
-                {
-                    return responseFactory.BuildResponse("Error: rack not found for this track", ResponseStatus.NOTFOUND);
-                }
-            }
-            catch (ArgumentNullException ex)
+            if (response.rack == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: rack not found for this track", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -72,87 +62,57 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response CreateRack(Rack rack)
         {
+            if (rack == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (rack.id != 0)
+            {
+                return responseFactory.CreateResponse("Error: rack already exists, id must be null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (rack == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (rack.id != 0)
-                {
-                    return responseFactory.BuildResponse("Error: rack already exists, id must be null", ResponseStatus.BADREQUEST);
-                }
-
-                response = rackDao.CreateRack(rack);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = rackDao.CreateRack(rack);
 
             return response;
         }
 
         public Response UpdateRack(Rack rack)
         {
+            if (rack == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (rack.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (rack == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (rack.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = rackDao.UpdateRack(rack);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = rackDao.UpdateRack(rack);
 
             return response;
         }
 
         public Response DeleteRack(Rack rack)
         {
+            if (rack == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (rack.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (rack == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (rack.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = rackDao.DeleteRack(rack);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = rackDao.DeleteRack(rack);
 
             return response;
         }

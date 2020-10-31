@@ -26,15 +26,16 @@ namespace MagmaPlayground_BackEnd.Services
         {
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
             response = new Response();
+
             response = playgroundDao.GetProjectById(id);
 
             if (response.project.id == 0)
             {
-                return responseFactory.BuildResponse("Error: project not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: project not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -44,10 +45,11 @@ namespace MagmaPlayground_BackEnd.Services
         {
             if (project.id != 0)
             {
-                return responseFactory.BuildResponse("Error: project id is not null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: project id is not null", ResponseStatus.BADREQUEST);
             }
 
             response = new Response();
+
             response = playgroundDao.SaveNewProject(project);
 
             return response;
@@ -57,10 +59,11 @@ namespace MagmaPlayground_BackEnd.Services
         {
             if (project.id == 0)
             {
-                return responseFactory.BuildResponse("Error: project id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
 
             response = new Response();
+
             response = playgroundDao.SaveProject(project);
 
             return response;
@@ -70,9 +73,10 @@ namespace MagmaPlayground_BackEnd.Services
         {
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: project id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
             response = new Response();
+
             response = playgroundDao.DeleteProject(id);
 
             return response;

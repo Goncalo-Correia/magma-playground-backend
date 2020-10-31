@@ -24,18 +24,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetSynthesizerById(int id)
         {
-            response = new Response();
-
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
+
+            response = new Response();
 
             response = synthesizerDao.GetSynthesizerById(id);
 
             if (response.synthesizer == null)
             {
-                return responseFactory.BuildResponse("Error: synthesizer not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: synthesizer not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -43,28 +43,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetSynthesizerByPluginId(int pluginId)
         {
+            if (pluginId == 0)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (pluginId == 0)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
+            
+            response = synthesizerDao.GetSynthesizerByPluginId(pluginId);
 
-                response = synthesizerDao.GetSynthesizerByPluginId(pluginId);
-
-                if (response.synthesizer == null)
-                {
-                    return responseFactory.BuildResponse("Error: synthesizer not found for this plugin", ResponseStatus.NOTFOUND);
-                }
-            }
-            catch (ArgumentNullException ex)
+            if (response.synthesizer == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: synthesizer not found for this plugin", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -72,87 +62,57 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response CreateSynthesizer(Synthesizer synthesizer)
         {
+            if (synthesizer == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (synthesizer.id != 0)
+            {
+                return responseFactory.CreateResponse("Error: synthesizer already exists, id must be null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (synthesizer == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (synthesizer.id != 0)
-                {
-                    return responseFactory.BuildResponse("Error: synthesizer already exists, id must be null", ResponseStatus.BADREQUEST);
-                }
-
-                response = synthesizerDao.CreateSynthesizer(synthesizer);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = synthesizerDao.CreateSynthesizer(synthesizer);
 
             return response;
         }
 
         public Response UpdateSynthesizer(Synthesizer synthesizer)
         {
+            if (synthesizer == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (synthesizer.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (synthesizer == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (synthesizer.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = synthesizerDao.UpdateSynthesizer(synthesizer);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = synthesizerDao.UpdateSynthesizer(synthesizer);
 
             return response;
         }
 
         public Response DeleteSynthesizer(Synthesizer synthesizer)
         {
+            if (synthesizer == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (synthesizer.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (synthesizer == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (synthesizer.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = synthesizerDao.DeleteSynthesizer(synthesizer);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = synthesizerDao.DeleteSynthesizer(synthesizer);
 
             return response;
         }

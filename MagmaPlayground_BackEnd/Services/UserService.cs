@@ -24,17 +24,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetUserById(int userId)
         {
-            response = new Response();
             if (userId == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
+
+            response = new Response();
 
             response = userDao.GetUserById(userId);
 
             if (response.user == null)
             {
-                return responseFactory.BuildResponse("Error: user not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: user not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -42,28 +43,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetUserByEmail(string email)
         {
+            if (email == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter email is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (email == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter email is null", ResponseStatus.BADREQUEST);
-                }
 
-                response = userDao.GetUserByEmail(email);
+            response = userDao.GetUserByEmail(email);
 
-                if (response.user == null)
-                {
-                    return responseFactory.BuildResponse("Error: user not found", ResponseStatus.NOTFOUND);
-                }
-            }
-            catch (ArgumentNullException ex)
+            if (response.user == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: user not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -71,87 +62,57 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response CreateUser(User user)
         {
+            if (user == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (user.id != 0)
+            {
+                return responseFactory.CreateResponse("Error: user already exists, id must be null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (user == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (user.id != 0)
-                {
-                    return responseFactory.BuildResponse("Error: user already exists, id must be null", ResponseStatus.BADREQUEST);
-                }
-
-                response = userDao.CreateUser(user);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = userDao.CreateUser(user);
 
             return response;
         }
 
         public Response UpdateUser(User user)
         {
+            if (user == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (user.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: user id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (user == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (user.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: user id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = userDao.UpdateUser(user);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = userDao.UpdateUser(user);
 
             return response;
         }
 
         public Response DeleteUser(User user)
         {
+            if (user == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (user.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: user id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (user == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (user.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: user id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = userDao.DeleteUser(user);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = userDao.DeleteUser(user);
 
             return response;
         }

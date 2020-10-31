@@ -24,17 +24,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetProjectById(int id)
         {
-            response = new Response();
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
+
+            response = new Response();
 
             response = projectDao.GetProjectById(id);
 
             if (response.project == null)
             {
-                return responseFactory.BuildResponse("Error: project not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: project not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -42,24 +43,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetProjectByUserId(int userId)
         {
-            response = new Response();
-            try
+            if (userId == 0)
             {
-                if (userId == 0)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter userId is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = projectDao.GetProjectsByUserId(userId);
-
-                if (response.projects == null)
-                {
-                    return responseFactory.BuildResponse("Error: projects not found for this user", ResponseStatus.NOTFOUND);
-                }
+                return responseFactory.CreateResponse("Error: input parameter userId is null", ResponseStatus.BADREQUEST);
             }
-            catch (ArgumentNullException ex)
+
+            response = new Response();
+
+            response = projectDao.GetProjectsByUserId(userId);
+
+            if (response.projects == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: projects not found for this user", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -67,85 +62,57 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response CreateProject(Project project)
         {
-            response = new Response();
-            try
+            if (project == null)
             {
-                if (project == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
 
-                if (project.id != 0)
-                {
-                    return responseFactory.BuildResponse("Error: project already exists, id must be null", ResponseStatus.BADREQUEST);
-                }
+            if (project.id != 0)
+            {
+                return responseFactory.CreateResponse("Error: project already exists, id must be null", ResponseStatus.BADREQUEST);
+            }
 
-                response = projectDao.CreateProject(project);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = new Response()
+
+            response = projectDao.CreateProject(project);
 
             return response;
         }
 
         public Response UpdateProject(Project project)
         {
-            response = new Response();
-            try
+            if (project == null)
             {
-                if (project == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
 
-                if (project.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: project id is null", ResponseStatus.BADREQUEST);
-                }
-            }
-            catch (DbUpdateConcurrencyException ex)
+            if (project.id == 0)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+
+            response = new Response();
+
+            response = projectDao.UpdateProject(project);
 
             return response;
         }
 
         public Response DeleteProject(Project project)
         {
+            if (project == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (project.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (project == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (project.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: project id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = projectDao.DeleteProject(project);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = projectDao.DeleteProject(project);
 
             return response;
         }

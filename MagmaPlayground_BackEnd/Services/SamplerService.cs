@@ -24,18 +24,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetSamplerById(int id)
         {
-            response = new Response();
-
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
+            response = new Response();
+            
             response = samplerDao.GetSamplerById(id);
 
             if (response.sampler == null)
             {
-                return responseFactory.BuildResponse("Error: track not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: track not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -43,28 +43,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetSamplerByPluginId(int pluginId)
         {
+            if (pluginId == 0)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (pluginId == 0)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                response = samplerDao.GetSamplerByPluginId(pluginId);
+            response = samplerDao.GetSamplerByPluginId(pluginId);
 
-                if (response.sampler == null)
-                {
-                    return responseFactory.BuildResponse("Error: sampler not found for this plugin", ResponseStatus.NOTFOUND);
-                }
-            }
-            catch (ArgumentNullException ex)
+            if (response.sampler == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: sampler not found for this plugin", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -72,84 +62,54 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response CreateSampler(Sampler sampler)
         {
-            response = new Response();
-            try
+            if (sampler == null)
             {
-                if (sampler == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
-                if (sampler.id != 0)
-                {
-                    return responseFactory.BuildResponse("Error: sampler already exists, id must be null", ResponseStatus.BADREQUEST);
-                }
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+            if (sampler.id != 0)
+            {
+                return responseFactory.CreateResponse("Error: sampler already exists, id must be null", ResponseStatus.BADREQUEST);
+            }
 
-                response = samplerDao.CreateSampler(sampler);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = new Response();
+
+            response = samplerDao.CreateSampler(sampler);
 
             return response;
         }
 
         public Response UpdateSampler(Sampler sampler)
         {
-            response = new Response();
-            try
+            if (sampler == null)
             {
-                if (sampler == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
-                if (sampler.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
-                }
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+            if (sampler.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
+            }
 
-                response = samplerDao.UpdateSampler(sampler);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = new Response();
+
+            response = samplerDao.UpdateSampler(sampler);
 
             return response;
         }
 
         public Response DeleteSampler(Sampler sampler)
         {
-            response = new Response();
-            try
+            if (sampler == null)
             {
-                if (sampler == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
-                if (sampler.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
-                }
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+            if (sampler.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
+            }
 
-                response = samplerDao.DeleteSampler(sampler);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = new Response();
+            
+            response = samplerDao.DeleteSampler(sampler);
 
             return response;
         }

@@ -25,18 +25,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetPluginById(int id)
         {
-            response = new Response();
-
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
+
+            response = new Response();
 
             response = pluginDao.GetPluginById(id);
 
             if (response.plugin == null)
             {
-                return responseFactory.BuildResponse("Error: plugin not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: plugin not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -44,24 +44,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetPluginByRackId(int rackId)
         {
-            response = new Response();
-            try
+            if (rackId == 0)
             {
-                if (rackId == 0)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = pluginDao.GetPluginsByRackId(rackId);
-
-                if (response.plugins == null)
-                {
-                    return responseFactory.BuildResponse("Error: plugins not found for this rack", ResponseStatus.NOTFOUND);
-                }
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
-            catch (ArgumentNullException ex)
+
+            response = new Response();
+
+            response = pluginDao.GetPluginsByRackId(rackId);
+
+            if (response.plugins == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: plugins not found for this rack", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -69,86 +63,57 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response CreatePlugin(Plugin plugin)
         {
+            if (plugin == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (plugin.id != 0)
+            {
+                return responseFactory.CreateResponse("Error: plugin already exists, id must be null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (plugin == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (plugin.id != 0)
-                {
-                    return responseFactory.BuildResponse("Error: plugin already exists, id must be null", ResponseStatus.BADREQUEST);
-                }
-
-                response = pluginDao.CreatePlugin(plugin);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = pluginDao.CreatePlugin(plugin);
 
             return response;
         }
 
         public Response UpdatePlugin(Plugin plugin)
         {
+            if (plugin == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (plugin.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: plugin id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (plugin == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (plugin.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: plugin id is null", ResponseStatus.BADREQUEST);
-                }
+            response = pluginDao.UpdatePlugin(plugin);
 
-                response = pluginDao.UpdatePlugin(plugin);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
             return response;
         }
 
         public Response DeletePlugin(Plugin plugin)
         {
+            if (plugin == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+
+            if (plugin.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (plugin == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
 
-                if (plugin.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: track id is null", ResponseStatus.BADREQUEST);
-                }
-
-                response = pluginDao.DeletePlugin(plugin);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = pluginDao.DeletePlugin(plugin);
 
             return response;
         }

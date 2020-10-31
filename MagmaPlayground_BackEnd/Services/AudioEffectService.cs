@@ -4,9 +4,6 @@ using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -24,18 +21,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetAudioEffectById(int id)
         {
-            response = new Response();
-
             if (id == 0)
             {
-                return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
+
+            response = new Response();
 
             response = audioEffectDao.GetAudioEffectById(id);
 
             if (response.audioEffect == null)
             {
-                return responseFactory.BuildResponse("Error: audio effect not found", ResponseStatus.NOTFOUND);
+                return responseFactory.CreateResponse("Error: audio effect not found", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -43,24 +40,18 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response GetAudioEffectByPluginId(int pluginId)
         {
-            response = new Response();
-            try
+            if (pluginId == 0)
             {
-                if (pluginId == 0)
-                {
-                    return responseFactory.BuildResponse("Error: id cannot be null", ResponseStatus.BADREQUEST);
-                }
-
-                response = audioEffectDao.GetAudioEffectByPluginId(pluginId);
-
-                if (response.audioEffects == null)
-                {
-                    return responseFactory.BuildResponse("Error: audio effects not found for this plugin", ResponseStatus.NOTFOUND);
-                }
+                return responseFactory.CreateResponse("Error: id cannot be null", ResponseStatus.BADREQUEST);
             }
-            catch (ArgumentNullException ex)
+            
+            response = new Response();
+
+            response = audioEffectDao.GetAudioEffectByPluginId(pluginId);
+
+            if (response.audioEffects == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: audio effects not found for this plugin", ResponseStatus.NOTFOUND);
             }
 
             return response;
@@ -68,84 +59,56 @@ namespace MagmaPlayground_BackEnd.Services
 
         public Response CreateAudioEffect(AudioEffect audioEffect)
         {
+
+            if (audioEffect == null)
+            {
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+            if (audioEffect.id != 0)
+            {
+                return responseFactory.CreateResponse("Error: audio effect already exists, id must be null", ResponseStatus.BADREQUEST);
+            }
+
             response = new Response();
-            try
-            {
-                if (audioEffect == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
-                if (audioEffect.id != 0)
-                {
-                    return responseFactory.BuildResponse("Error: audio effect already exists, id must be null", ResponseStatus.BADREQUEST);
-                }
 
-
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = audioEffectDao.CreateAudioEffect(audioEffect);
 
             return response;
         }
 
         public Response UpdateAudioEffect(AudioEffect audioEffect)
         {
-            response = new Response();
-            try
+            if (audioEffect == null)
             {
-                if (audioEffect == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
-                if (audioEffect.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
-                }
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+            }
+            if (audioEffect.id == 0)
+            {
+                return responseFactory.CreateResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
+            }
 
-                response = audioEffectDao.UpdateAudioEffect(audioEffect);
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
-            catch (DbUpdateException ex)
-            {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
-            }
+            response = new Response();
+
+            response = audioEffectDao.UpdateAudioEffect(audioEffect);
 
             return response;
         }
 
         public Response DeleteAudioEffect(AudioEffect audioEffect)
         {
-            response = new Response();
-            try
-            {
-                if (audioEffect == null)
-                {
-                    return responseFactory.BuildResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-                }
-                if (audioEffect.id == 0)
-                {
-                    return responseFactory.BuildResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
-                }
 
-                response = audioEffectDao.DeleteAudioEffect(audioEffect);
-            }
-            catch (DbUpdateConcurrencyException ex)
+            if (audioEffect == null)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
-            catch (DbUpdateException ex)
+            if (audioEffect.id == 0)
             {
-                return responseFactory.BuildResponse("Exception: " + ex.InnerException.Message, ResponseStatus.EXCEPTION);
+                return responseFactory.CreateResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
             }
+
+            response = new Response();
+
+            response = audioEffectDao.DeleteAudioEffect(audioEffect);
 
             return response;
         }
