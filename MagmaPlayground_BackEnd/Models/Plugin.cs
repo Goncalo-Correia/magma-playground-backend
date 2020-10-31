@@ -16,6 +16,10 @@ namespace MagmaPlayground_BackEnd.Model
         [Column("id")]
         public int id { get; set; }
 
+        [Required(ErrorMessage = "Plugin name is required")]
+        [Column("plugin_name")]
+        public string pluginName { get; set; }
+
         [Required(ErrorMessage = "Order is required")]
         [Column("order")]
         public int order { get; set; }
@@ -23,10 +27,6 @@ namespace MagmaPlayground_BackEnd.Model
         [Required(ErrorMessage = "Plugin type is required")]
         [Column("plugin_type_id")]
         public PluginType pluginType { get; set; }
-
-        [Required(ErrorMessage = "Plugin name is required")]
-        [Column("plugin_name")]
-        public string pluginName { get; set; }
 
         [Required(ErrorMessage = "Rack is required")]
         [Column("rack_id")]

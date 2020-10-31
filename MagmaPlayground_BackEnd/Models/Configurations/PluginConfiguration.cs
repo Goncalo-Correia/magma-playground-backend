@@ -17,6 +17,10 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
                 .HasColumnType("int")
                 .IsRequired();
 
+            builder.Property(prop => prop.pluginName)
+                .HasMaxLength(30)
+                .IsRequired();
+
             builder.Property(prop => prop.pluginType)
                 .HasColumnType("int")
                 .IsRequired();

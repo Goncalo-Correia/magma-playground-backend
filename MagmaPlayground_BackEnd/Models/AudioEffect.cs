@@ -15,7 +15,7 @@ namespace MagmaPlayground_BackEnd.Model
         [Column("id")]
         public int id { get; set; }
 
-        [Required(ErrorMessage = " Order is required")]
+        [Required(ErrorMessage = "Order is required")]
         [Column("order")]
         public int order { get; set; }
 

@@ -18,6 +18,7 @@ namespace MagmaPlayground_BackEnd.Model.Configurations
                 .IsRequired();
 
             builder.Property(prop => prop.synthesizerType)
+                .HasColumnType("int")
                 .IsRequired();
         }
     }
