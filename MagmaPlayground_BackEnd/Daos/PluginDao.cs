@@ -24,10 +24,8 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.plugin = magmaDbContext.Find<Plugin>(id);
-            response.message = "Success: found plugin";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: found plugin", ResponseStatus.OK);
         }
 
         public Response GetPluginsByRackId(int rackId)
@@ -35,38 +33,39 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.plugins = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
-            response.message = "Success: plugins found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: plugins found", ResponseStatus.OK);
         }
 
         public Response CreatePlugin(Plugin plugin)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Add<Plugin>(plugin).Entity.id;
+            response.plugin.id = magmaDbContext.Add<Plugin>(plugin).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: created plugin", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: created plugin", ResponseStatus.OK);
         }
 
         public Response UpdatePlugin(Plugin plugin)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Update<Plugin>(plugin).Entity.id;
+            response.plugin.id = magmaDbContext.Update<Plugin>(plugin).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: updated plugin", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: updated plugin", ResponseStatus.OK);
         }
 
         public Response DeletePlugin(Plugin plugin)
         {
             magmaDbContext.Remove<Plugin>(plugin);
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: deleted plugin", ResponseStatus.OK);
+            return responseFactory.CreateResponse("Success: deleted plugin", ResponseStatus.OK);
         }
     }
 }

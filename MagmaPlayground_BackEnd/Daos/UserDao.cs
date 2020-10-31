@@ -26,10 +26,8 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.user = magmaDbContext.Users.Find(id);
-            response.message = "Success: found user";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: found user", ResponseStatus.OK);
         }
 
         public Response GetUserByEmail(string email)
@@ -37,38 +35,39 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.user = magmaDbContext.Users.Single<User>(prop => prop.email == email);
-            response.message = "Success: user found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: user found", ResponseStatus.OK);
         }
 
         public Response CreateUser(User user)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Add<User>(user).Entity.id;
+            response.user.id = magmaDbContext.Add<User>(user).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: created user", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: created user", ResponseStatus.OK);
         }
 
         public Response UpdateUser(User user)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Update<User>(user).Entity.id;
+            response.user.id = magmaDbContext.Update<User>(user).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: updated user", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: updated user", ResponseStatus.OK);
         }
 
         public Response DeleteUser(User user)
         {
             magmaDbContext.Remove<User>(user);
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: deleted user", ResponseStatus.OK);
+            return responseFactory.CreateResponse("Success: deleted user", ResponseStatus.OK);
         }
     }
 }

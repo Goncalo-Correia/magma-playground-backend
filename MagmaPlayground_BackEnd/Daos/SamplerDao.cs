@@ -26,10 +26,8 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
             
             response.sampler = magmaDbContext.Find<Sampler>(id);
-            response.message = "Success: sampler found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: sampler found", ResponseStatus.OK);
         }
 
         public Response GetSamplerByPluginId(int pluginId)
@@ -37,38 +35,39 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.sampler = magmaDbContext.Samplers.SingleOrDefault<Sampler>(prop => prop.pluginId == pluginId);
-            response.message = "Success: sampler found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: sampler found", ResponseStatus.OK);
         }
 
         public Response CreateSampler(Sampler sampler)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Add<Sampler>(sampler).Entity.id;
+            response.plugin.id = magmaDbContext.Add<Sampler>(sampler).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: created sampler", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: created sampler", ResponseStatus.OK);
         }
 
         public Response UpdateSampler(Sampler sampler)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Update<Sampler>(sampler).Entity.id;
+            response.sampler.id = magmaDbContext.Update<Sampler>(sampler).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: updated sampler", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: updated sampler", ResponseStatus.OK);
         }
 
         public Response DeleteSampler(Sampler sampler)
         {
             magmaDbContext.Remove<Sampler>(sampler);
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: removed sampler", ResponseStatus.OK);
+            return responseFactory.CreateResponse("Success: removed sampler", ResponseStatus.OK);
         }
     }
 }

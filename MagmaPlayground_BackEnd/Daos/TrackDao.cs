@@ -26,10 +26,8 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.track = magmaDbContext.Find<Track>(id);
-            response.message = "Success: track found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: track found", ResponseStatus.OK);
         }
 
         public Response GetTracksByProjectId(int projectId)
@@ -37,38 +35,39 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.tracks = magmaDbContext.Tracks.Where<Track>(prop => prop.projectId == projectId).ToList();
-            response.message = "Success: tracks found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: tracks found", ResponseStatus.OK);
         }
 
         public Response CreateTrack(Track track)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Add<Track>(track).Entity.id;
+            response.track.id = magmaDbContext.Add<Track>(track).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: created track", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: created track", ResponseStatus.OK);
         }
 
         public Response UpdateTrack(Track track)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Update<Track>(track).Entity.id;
+            response.track.id = magmaDbContext.Update<Track>(track).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: updated track", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: updated track", ResponseStatus.OK);
         }
 
         public Response DeleteTrack(Track track)
         {
             magmaDbContext.Remove<Track>(track);
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: removed track", ResponseStatus.OK);
+            return responseFactory.CreateResponse("Success: removed track", ResponseStatus.OK);
         }
     }
 }

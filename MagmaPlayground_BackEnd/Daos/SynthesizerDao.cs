@@ -26,10 +26,8 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.synthesizer = magmaDbContext.Find<Synthesizer>(id);
-            response.message = "Success: synthesizer found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: synthesizer found", ResponseStatus.OK);
         }
 
         public Response GetSynthesizerByPluginId(int pluginId)
@@ -37,38 +35,39 @@ namespace MagmaPlayground_BackEnd.Daos
             response = new Response();
 
             response.synthesizer = magmaDbContext.Synthesizers.SingleOrDefault<Synthesizer>(prop => prop.pluginId == pluginId);
-            response.message = "Success: synthesizer found";
-            response.responseStatus = ResponseStatus.OK;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: synthesizer found", ResponseStatus.OK);
         }
 
         public Response CreateSynthesizer(Synthesizer synthesizer)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Add<Synthesizer>(synthesizer).Entity.id;
+            response.synthesizer.id = magmaDbContext.Add<Synthesizer>(synthesizer).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: created synthesizer", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: created synthesizer", ResponseStatus.OK);
         }
 
         public Response UpdateSynthesizer(Synthesizer synthesizer)
         {
-            int id;
+            response = new Response();
 
-            id = magmaDbContext.Update<Synthesizer>(synthesizer).Entity.id;
+            response.synthesizer.id = magmaDbContext.Update<Synthesizer>(synthesizer).Entity.id;
+
             magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildIdResponse("Success: updated synthesizer", ResponseStatus.OK, id);
+            return responseFactory.UpdateResponse(response, "Success: updated synthesizer", ResponseStatus.OK);
         }
 
         public Response DeleteSynthesizer(Synthesizer synthesizer)
         {
                 magmaDbContext.Remove<Synthesizer>(synthesizer);
+
                 magmaDbContext.SaveChanges();
 
-            return responseFactory.BuildResponse("Success: removed synthesizer", ResponseStatus.OK);
+            return responseFactory.CreateResponse("Success: removed synthesizer", ResponseStatus.OK);
         }
     }
 }

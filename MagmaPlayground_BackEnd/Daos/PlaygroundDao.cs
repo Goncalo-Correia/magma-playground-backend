@@ -41,34 +41,46 @@ namespace MagmaPlayground_BackEnd.Daos
 
             response = projectDao.GetProjectById(id);
 
-            response.project.tracks = trackDao.GetTracksByProjectId(id).tracks;
-
-            foreach (Track track in response.project.tracks)
+            if (response.project.id != 0)
             {
-                track.rack = rackDao.GetRackByTrackId(track.id).rack;
+                response.project.tracks = trackDao.GetTracksByProjectId(id).tracks;
 
-                track.rack.plugins = pluginDao.GetPluginsByRackId(track.rack.id).plugins;
-
-                foreach (Plugin plugin in track.rack.plugins)
+                foreach (Track track in response.project.tracks)
                 {
-                    switch (plugin.pluginType)
+                    if (track.id != 0)
                     {
-                        case PluginType.SAMPLER:
-                            plugin.sampler = samplerDao.GetSamplerByPluginId(plugin.id).sampler;
-                            break;
-                        case PluginType.SYNTHESIZER:
-                            plugin.synthesizer = synthesizerDao.GetSynthesizerByPluginId(plugin.id).synthesizer;
-                            break;
-                        case PluginType.AUDIOEFFECT:
-                            plugin.audioEffect = audioEffectDao.GetAudioEffectByPluginId(plugin.id).audioEffect;
-                            break;
+                        track.rack = rackDao.GetRackByTrackId(track.id).rack;
+
+                        if (track.rack.id != 0)
+                        {
+                            track.rack.plugins = pluginDao.GetPluginsByRackId(track.rack.id).plugins;
+
+                            foreach (Plugin plugin in track.rack.plugins)
+                            {
+                                if (plugin.id != 0)
+                                {
+                                    switch (plugin.pluginType)
+                                    {
+                                        case PluginType.SAMPLER:
+                                            plugin.sampler = samplerDao.GetSamplerByPluginId(plugin.id).sampler;
+                                            break;
+                                        case PluginType.SYNTHESIZER:
+                                            plugin.synthesizer = synthesizerDao.GetSynthesizerByPluginId(plugin.id).synthesizer;
+                                            break;
+                                        case PluginType.AUDIOEFFECT:
+                                            plugin.audioEffect = audioEffectDao.GetAudioEffectByPluginId(plugin.id).audioEffect;
+                                            break;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: found project", ResponseStatus.OK);
         }
-
+        /*
         public Response GetProjectForDelete(int id)
         {
             response = new Response();
@@ -77,70 +89,68 @@ namespace MagmaPlayground_BackEnd.Daos
 
             return response;
         }
-
+        */
         public Response SaveNewProject(Project project)
         {
             response = new Response();
 
-            project.id = projectDao.CreateProject(project).id;
+            project.id = projectDao.CreateProject(project).project.id;
 
             foreach (Track track in project.tracks)
             {
                 track.projectId = project.id;
-                track.id = trackDao.CreateTrack(track).id;
+                track.id = trackDao.CreateTrack(track).track.id;
 
                 track.rack.trackId = track.id;
-                track.rack.id = rackDao.CreateRack(track.rack).id;
+                track.rack.id = rackDao.CreateRack(track.rack).rack.id;
 
                 foreach (Plugin plugin in track.rack.plugins)
                 {
                     plugin.rackId = track.rack.id;
-                    plugin.id = pluginDao.CreatePlugin(plugin).id;
+                    plugin.id = pluginDao.CreatePlugin(plugin).plugin.id;
 
                     switch (plugin.pluginType)
                     {
                         case PluginType.SAMPLER:
                             plugin.sampler.pluginId = plugin.id;
-                            plugin.sampler.id = samplerDao.CreateSampler(plugin.sampler).id;
+                            plugin.sampler.id = samplerDao.CreateSampler(plugin.sampler).sampler.id;
                             break;
                         case PluginType.SYNTHESIZER:
                             plugin.synthesizer.pluginId = plugin.id;
-                            plugin.synthesizer.id = synthesizerDao.CreateSynthesizer(plugin.synthesizer).id;
+                            plugin.synthesizer.id = synthesizerDao.CreateSynthesizer(plugin.synthesizer).synthesizer.id;
                             break;
                         case PluginType.AUDIOEFFECT:
                             plugin.audioEffect.pluginId = plugin.id;
-                            plugin.audioEffect.id = audioEffectDao.CreateAudioEffect(plugin.audioEffect).id;
+                            plugin.audioEffect.id = audioEffectDao.CreateAudioEffect(plugin.audioEffect).audioEffect.id;
                             break;
                     }
                 }
             }
-            response.message = "Success: saved new project";
-            response.responseStatus = ResponseStatus.OK;
             response.project = project;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: saved new project", ResponseStatus.OK);
         }
 
         public Response SaveProject(Project project)
         {
             response = new Response();
 
-            project.id = projectDao.UpdateProject(project).id;
+            project.id = projectDao.UpdateProject(project).project.id;
 
             foreach (Track track in project.tracks)
             {
                 if (track.id == 0)
                 {
                     track.projectId = project.id;
-                    track.id = trackDao.CreateTrack(track).id;
+                    track.id = trackDao.CreateTrack(track).track.id;
 
                     track.rack.trackId = track.id;
-                    track.rack.id = rackDao.CreateRack(track.rack).id;
+                    track.rack.id = rackDao.CreateRack(track.rack).rack.id;
                 } 
                 else
                 {
-                    track.id = trackDao.UpdateTrack(track).id;
-                    track.rack.id = rackDao.UpdateRack(track.rack).id;
+                    track.id = trackDao.UpdateTrack(track).track.id;
+                    track.rack.id = rackDao.UpdateRack(track.rack).rack.id;
                 }
 
                 foreach (Plugin plugin in track.rack.plugins)
@@ -148,11 +158,11 @@ namespace MagmaPlayground_BackEnd.Daos
                     if (plugin.id == 0)
                     {
                         plugin.rackId = track.rack.id;
-                        plugin.id = pluginDao.CreatePlugin(plugin).id;
+                        plugin.id = pluginDao.CreatePlugin(plugin).plugin.id;
                     }
                     else
                     {
-                        plugin.id = pluginDao.UpdatePlugin(plugin).id;
+                        plugin.id = pluginDao.UpdatePlugin(plugin).plugin.id;
                     }
 
                     switch (plugin.pluginType)
@@ -193,17 +203,15 @@ namespace MagmaPlayground_BackEnd.Daos
                     }
                 }
             }
-
-            response.message = "Success: saved project";
-            response.responseStatus = ResponseStatus.OK;
             response.project = project;
 
-            return response;
+            return responseFactory.UpdateResponse(response, "Success: saved project", ResponseStatus.OK);
         }
 
         public Response DeleteProject(int id)
         {
             response = new Response();
+
             Response projectForDeleteResponse = projectDao.GetProjectById(id);
 
             response = projectDao.DeleteProject(projectForDeleteResponse.project);

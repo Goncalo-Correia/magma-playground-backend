@@ -18,7 +18,7 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
             responseSerializer = new ResponseSerializer();
         }
 
-        public Response BuildResponse(string message, ResponseStatus responseStatus)
+        public Response CreateResponse(string message, ResponseStatus responseStatus)
         {
             response = new Response();
             response.message = message;
@@ -27,17 +27,15 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
             return response;
         }
 
-        public Response BuildIdResponse(string message, ResponseStatus responseStatus, int id)
+        public Response UpdateResponse(Response response, string message, ResponseStatus responseStatus)
         {
-            response = new Response();
             response.message = message;
             response.responseStatus = responseStatus;
-            response.id = id;
 
             return response;
         }
 
-        public ActionResult<Response> BuildControllerResponse(Response response)
+        public ActionResult<Response> CreateControllerResponse(Response response)
         {
             if (response.responseStatus == ResponseStatus.BADREQUEST)
             {
