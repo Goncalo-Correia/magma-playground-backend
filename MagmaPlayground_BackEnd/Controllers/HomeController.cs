@@ -26,18 +26,20 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> Login(string email, string password)
         {
             response = new Response();
+
             response = homeService.Login(email, password);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
         
         [HttpPost]
         public ActionResult<Response> Register(User registerUser)
         {
             response = new Response();
+
             response = homeService.Register(registerUser);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }

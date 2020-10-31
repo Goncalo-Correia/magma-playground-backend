@@ -30,45 +30,50 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetRackById(int id)
         {
             response = new Response();
+
             response = rackService.GetRackById(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpGet("track/{trackId}")]
         public ActionResult<Response> GetRackByTrackId(int trackId)
         {
             response = new Response();
+
             response = rackService.GetRackByTrackId(trackId);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost]
         public ActionResult<Response> CreateRack(Rack rack)
         {
             response = new Response();
+
             response = rackService.CreateRack(rack);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("update")]
         public ActionResult<Response> UpdateRack(Rack rack)
         {
             response = new Response();
+
             response = rackService.UpdateRack(rack);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpDelete]
         public ActionResult<Response> DeleteRack(Rack rack)
         {
             response = new Response();
+
             response = rackService.DeleteRack(rack);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }

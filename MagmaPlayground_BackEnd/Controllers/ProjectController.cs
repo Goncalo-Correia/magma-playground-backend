@@ -30,45 +30,50 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetProjectById(int id)
         {
             response = new Response();
+
             response = projectService.GetProjectById(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpGet("user/{userId}")]
         public ActionResult<Response> GetProjectsByUserId(int userId)
         {
             response = new Response();
+
             response = projectService.GetProjectByUserId(userId);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost]
         public ActionResult<Response> CreateProject(Project project)
         {
             response = new Response();
+
             response = projectService.CreateProject(project);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("update")]
         public ActionResult<Response> UpdateProject(Project project)
         {
             response = new Response();
+
             response = projectService.UpdateProject(project);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpDelete]
         public ActionResult<Response> DeleteProject(Project project)
         {
             response = new Response();
+
             response = projectService.DeleteProject(project);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }

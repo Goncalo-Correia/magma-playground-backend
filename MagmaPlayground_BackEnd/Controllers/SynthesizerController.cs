@@ -29,45 +29,50 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetSynthesizerById(int id)
         {
             response = new Response();
+
             response = synthesizerService.GetSynthesizerById(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpGet("plugin/{pluginId}")]
         public ActionResult<Response> GetSynthesizerByPluginId(int pluginId)
         {
             response = new Response();
+
             response = synthesizerService.GetSynthesizerByPluginId(pluginId);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost]
         public ActionResult<Response> CreateSynthesizer(Synthesizer synthesizer)
         {
             response = new Response();
+
             response = synthesizerService.CreateSynthesizer(synthesizer);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("update")]
         public ActionResult<Response> UpdateSynthesizer(Synthesizer synthesizer)
         {
             response = new Response();
+
             response = synthesizerService.UpdateSynthesizer(synthesizer);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpDelete]
         public ActionResult<Response> DeleteSynthesizer(Synthesizer synthesizer)
         {
             response = new Response();
+
             response = synthesizerService.DeleteSynthesizer(synthesizer);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }

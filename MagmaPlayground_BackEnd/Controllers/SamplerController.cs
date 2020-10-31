@@ -29,45 +29,50 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetSamplerById(int id)
         {
             response = new Response();
+
             response = samplerService.GetSamplerById(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpGet("plugin/{pluginId}")]
         public ActionResult<Response> GetSamplerByPluginId(int pluginId)
         {
             response = new Response();
+
             response = samplerService.GetSamplerByPluginId(pluginId);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost]
         public ActionResult<Response> CreateSampler(Sampler sampler)
         {
             response = new Response();
+
             response = samplerService.CreateSampler(sampler);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("update")]
         public ActionResult<Response> UpdateSampler(Sampler sampler)
         {
             response = new Response();
+
             response = samplerService.UpdateSampler(sampler);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpDelete]
         public ActionResult<Response> DeleteSampler(Sampler sampler)
         {
             response = new Response();
+
             response = samplerService.DeleteSampler(sampler);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }

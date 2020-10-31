@@ -29,45 +29,50 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetPluginById(int id)
         {
             response = new Response();
+
             response = pluginService.GetPluginById(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpGet("rack/{rackId}")]
         public ActionResult<Response> GetPluginsByRackId(int rackId)
         {
             response = new Response();
+
             response = pluginService.GetPluginByRackId(rackId);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost]
         public ActionResult<Response> CreatePlugin(Plugin plugin)
         {
             response = new Response();
+
             response = pluginService.CreatePlugin(plugin);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("update")]
         public ActionResult<Response> UpdatePlugin(Plugin plugin)
         {
             response = new Response();
+
             response = pluginService.UpdatePlugin(plugin);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpDelete]
         public ActionResult<Response> DeletePlugin(Plugin plugin)
         {
             response = new Response();
+
             response = pluginService.DeletePlugin(plugin);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }

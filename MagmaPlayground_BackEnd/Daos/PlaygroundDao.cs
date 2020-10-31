@@ -80,16 +80,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
             return responseFactory.UpdateResponse(response, "Success: found project", ResponseStatus.OK);
         }
-        /*
-        public Response GetProjectForDelete(int id)
-        {
-            response = new Response();
 
-            response = projectDao.GetProjectById(id);
-
-            return response;
-        }
-        */
         public Response SaveNewProject(Project project)
         {
             response = new Response();

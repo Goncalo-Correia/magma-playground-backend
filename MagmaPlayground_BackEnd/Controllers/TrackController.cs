@@ -31,9 +31,10 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetTrackById(int id)
         {
             response = new Response();
+
             response = trackService.GetTrackById(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpGet("project/{projectId}")]
@@ -42,34 +43,37 @@ namespace MagmaPlayground_BackEnd.Controllers
             response = new Response();
             response = trackService.GetTracksByProjectId(projectId);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost]
         public ActionResult<Response> CreateTrack(Track track)
         {
             response = new Response();
+
             response = trackService.CreateTrack(track);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("update")]
         public ActionResult<Response> UpdateTrack(Track track)
         {
             response = new Response();
+
             response = trackService.UpdateTrack(track);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpDelete]
         public ActionResult<Response> DeleteTrack(Track track)
         {
             response = new Response();
+
             response = trackService.DeleteTrack(track);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }

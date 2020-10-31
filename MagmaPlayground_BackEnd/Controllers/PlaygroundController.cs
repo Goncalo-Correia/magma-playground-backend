@@ -28,27 +28,30 @@ namespace MagmaPlayground_BackEnd.Controllers
         public ActionResult<Response> GetProjectById(int id)
         {
             response = new Response();
+
             response = playgroundService.GetProjectById(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("create")]
         public ActionResult<Response> SaveNewProject(Project project)
         {
             response = new Response();
+
             response = playgroundService.SaveNewProject(project);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost("update")]
         public ActionResult<Response> SaveProject(Project project)
         {
             response = new Response();
+
             response = playgroundService.SaveProject(project);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpDelete("{id}")]
@@ -58,7 +61,7 @@ namespace MagmaPlayground_BackEnd.Controllers
 
             response = playgroundService.DeleteProject(id);
 
-            return responseFactory.BuildControllerResponse(response);
+            return responseFactory.CreateControllerResponse(response);
         }
     }
 }
