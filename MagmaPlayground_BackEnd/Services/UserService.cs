@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -31,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = userDao.GetUserById(userId);
+            try
+            {
+                response = userDao.GetUserById(userId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.user == null)
             {
@@ -50,7 +53,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = userDao.GetUserByEmail(email);
+            try
+            {
+                response = userDao.GetUserByEmail(email);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.user == null)
             {
@@ -74,7 +84,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = userDao.CreateUser(user);
+            try
+            {
+                response = userDao.CreateUser(user);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -93,7 +110,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = userDao.UpdateUser(user);
+            try
+            {
+                response = userDao.UpdateUser(user);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -112,7 +136,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = userDao.DeleteUser(user);
+            try
+            {
+                response = userDao.DeleteUser(user);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

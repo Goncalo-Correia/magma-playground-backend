@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -31,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
             
-            response = rackDao.GetRackById(id);
+            try
+            {
+                response = rackDao.GetRackById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.rack == null)
             {
@@ -50,7 +53,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = rackDao.GetRackByTrackId(trackId);
+            try
+            {
+                response = rackDao.GetRackByTrackId(trackId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.rack == null)
             {
@@ -74,7 +84,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = rackDao.CreateRack(rack);
+            try
+            {
+                response = rackDao.CreateRack(rack);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -93,7 +110,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = rackDao.UpdateRack(rack);
+            try
+            {
+                response = rackDao.UpdateRack(rack);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -112,7 +136,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = rackDao.DeleteRack(rack);
+            try
+            {
+                response = rackDao.DeleteRack(rack);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

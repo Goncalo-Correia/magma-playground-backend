@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -32,7 +28,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = pluginDao.GetPluginById(id);
+            try
+            {
+                response = pluginDao.GetPluginById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.plugin == null)
             {
@@ -51,7 +54,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = pluginDao.GetPluginsByRackId(rackId);
+            try
+            {
+                response = pluginDao.GetPluginsByRackId(rackId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.plugins == null)
             {
@@ -75,7 +85,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = pluginDao.CreatePlugin(plugin);
+            try
+            {
+                response = pluginDao.CreatePlugin(plugin);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION)~;
+            }
 
             return response;
         }
@@ -94,7 +111,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = pluginDao.UpdatePlugin(plugin);
+            try
+            {
+                response = pluginDao.UpdatePlugin(plugin);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -113,7 +137,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = pluginDao.DeletePlugin(plugin);
+            try
+            {
+                response = pluginDao.DeletePlugin(plugin);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

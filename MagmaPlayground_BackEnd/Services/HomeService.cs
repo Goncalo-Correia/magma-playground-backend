@@ -3,9 +3,6 @@ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -30,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = userDao.GetUserByEmail(email);
+            try
+            {
+                response = userDao.GetUserByEmail(email);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.responseStatus != ResponseStatus.OK)
             {
@@ -58,7 +62,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = userDao.GetUserByEmail(user.email);
+            try
+            {
+                response = userDao.GetUserByEmail(user.email);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.user != null)
             {

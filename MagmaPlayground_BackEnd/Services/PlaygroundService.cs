@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -31,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = playgroundDao.GetProjectById(id);
+            try
+            {
+                response = playgroundDao.GetProjectById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.project.id == 0)
             {
@@ -50,7 +53,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = playgroundDao.SaveNewProject(project);
+            try
+            {
+                response = playgroundDao.SaveNewProject(project);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -64,7 +74,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = playgroundDao.SaveProject(project);
+            try
+            {
+                response = playgroundDao.SaveProject(project);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -75,9 +92,17 @@ namespace MagmaPlayground_BackEnd.Services
             {
                 return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
+
             response = new Response();
 
-            response = playgroundDao.DeleteProject(id);
+            try
+            {
+                response = playgroundDao.DeleteProject(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

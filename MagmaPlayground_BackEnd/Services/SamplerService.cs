@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -31,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
             
-            response = samplerDao.GetSamplerById(id);
+            try
+            {
+                response = samplerDao.GetSamplerById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.sampler == null)
             {
@@ -50,7 +53,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = samplerDao.GetSamplerByPluginId(pluginId);
+            try
+            {
+                response = samplerDao.GetSamplerByPluginId(pluginId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.sampler == null)
             {
@@ -66,6 +76,7 @@ namespace MagmaPlayground_BackEnd.Services
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
+
             if (sampler.id != 0)
             {
                 return responseFactory.CreateResponse("Error: sampler already exists, id must be null", ResponseStatus.BADREQUEST);
@@ -73,7 +84,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = samplerDao.CreateSampler(sampler);
+            try
+            {
+                response = samplerDao.CreateSampler(sampler);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -84,6 +102,7 @@ namespace MagmaPlayground_BackEnd.Services
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
+
             if (sampler.id == 0)
             {
                 return responseFactory.CreateResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
@@ -91,7 +110,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = samplerDao.UpdateSampler(sampler);
+            try
+            {
+                response = samplerDao.UpdateSampler(sampler);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -102,6 +128,7 @@ namespace MagmaPlayground_BackEnd.Services
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
+
             if (sampler.id == 0)
             {
                 return responseFactory.CreateResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
@@ -109,7 +136,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
             
-            response = samplerDao.DeleteSampler(sampler);
+            try
+            {
+                response = samplerDao.DeleteSampler(sampler);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

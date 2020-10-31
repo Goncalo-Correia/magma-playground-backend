@@ -2,7 +2,6 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace MagmaPlayground_BackEnd.Services
@@ -28,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = audioEffectDao.GetAudioEffectById(id);
+            try
+            {
+                response = audioEffectDao.GetAudioEffectById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.audioEffect == null)
             {
@@ -46,8 +52,15 @@ namespace MagmaPlayground_BackEnd.Services
             }
             
             response = new Response();
-
-            response = audioEffectDao.GetAudioEffectByPluginId(pluginId);
+            
+            try
+            {
+                response = audioEffectDao.GetAudioEffectByPluginId(pluginId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.audioEffects == null)
             {
@@ -71,7 +84,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = audioEffectDao.CreateAudioEffect(audioEffect);
+            try
+            {
+                response = audioEffectDao.CreateAudioEffect(audioEffect);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -89,7 +109,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = audioEffectDao.UpdateAudioEffect(audioEffect);
+            try
+            {
+                response = audioEffectDao.UpdateAudioEffect(audioEffect);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -108,7 +135,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = audioEffectDao.DeleteAudioEffect(audioEffect);
+            try
+            {
+                response = audioEffectDao.DeleteAudioEffect(audioEffect);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -31,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = synthesizerDao.GetSynthesizerById(id);
+            try
+            {
+                response = synthesizerDao.GetSynthesizerById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.synthesizer == null)
             {
@@ -50,7 +53,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
             
-            response = synthesizerDao.GetSynthesizerByPluginId(pluginId);
+            try
+            {
+                response = synthesizerDao.GetSynthesizerByPluginId(pluginId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.synthesizer == null)
             {
@@ -74,7 +84,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = synthesizerDao.CreateSynthesizer(synthesizer);
+            try
+            {
+                response = synthesizerDao.CreateSynthesizer(synthesizer);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -93,7 +110,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = synthesizerDao.UpdateSynthesizer(synthesizer);
+            try
+            {
+                response = synthesizerDao.UpdateSynthesizer(synthesizer);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -112,7 +136,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = synthesizerDao.DeleteSynthesizer(synthesizer);
+            try
+            {
+                response = synthesizerDao.DeleteSynthesizer(synthesizer);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -31,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = trackDao.GetTrackById(id);
+            try
+            {
+                response = trackDao.GetTrackById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.track == null)
             {
@@ -49,8 +52,15 @@ namespace MagmaPlayground_BackEnd.Services
             }
 
             response = new Response();
-
-            response = trackDao.GetTracksByProjectId(projectId);
+            
+            try
+            {
+                response = trackDao.GetTracksByProjectId(projectId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.tracks == null)
             {
@@ -72,7 +82,16 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: track already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = trackDao.CreateTrack(track);
+            response = new Response();
+
+            try
+            {
+                response = trackDao.CreateTrack(track);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -91,7 +110,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = trackDao.UpdateTrack(track);
+            try
+            {
+                response = trackDao.UpdateTrack(track);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -110,7 +136,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = trackDao.DeleteTrack(track);
+            try
+            {
+                response = trackDao.DeleteTrack(track);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }

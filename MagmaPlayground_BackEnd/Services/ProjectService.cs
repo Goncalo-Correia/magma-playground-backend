@@ -2,11 +2,7 @@
 using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Services
 {
@@ -31,7 +27,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = projectDao.GetProjectById(id);
+            try
+            {
+                response = projectDao.GetProjectById(id);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.project == null)
             {
@@ -50,7 +53,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = projectDao.GetProjectsByUserId(userId);
+            try
+            {
+                response = projectDao.GetProjectsByUserId(userId);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             if (response.projects == null)
             {
@@ -72,9 +82,16 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: project already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response()
+            response = new Response();
 
-            response = projectDao.CreateProject(project);
+            try
+            {
+                response = projectDao.CreateProject(project);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -93,7 +110,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = projectDao.UpdateProject(project);
+            try
+            {
+                response = projectDao.UpdateProject(project);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
@@ -112,7 +136,14 @@ namespace MagmaPlayground_BackEnd.Services
 
             response = new Response();
 
-            response = projectDao.DeleteProject(project);
+            try
+            {
+                response = projectDao.DeleteProject(project);
+            }
+            catch (Exception exception)
+            {
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+            }
 
             return response;
         }
