@@ -15,8 +15,8 @@
             
   - Playground - [Route("magma_api/playground")]
       - GetProjectById - [HttpGet("project/{id}")]
-      - SaveNewProject(Project) - [HttpPost("project/savenew")]
-      - SaveProject(Project) - [HttpPost("project/save")]
+      - Create(Project) - [HttpPost("project/create")]
+      - UPdate(Project) - [HttpPost("project/update")]
       
   - Project - [Route("magma_api/project")]
       - GetById - [HttpGet("{id}")]
