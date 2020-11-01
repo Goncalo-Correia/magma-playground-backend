@@ -122,14 +122,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteProject(Project project)
+        public Response DeleteProject(int id)
         {
-            if (project == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-
-            if (project.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
@@ -138,7 +133,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             try
             {
-                response = projectDao.DeleteProject(project);
+                response = projectDao.DeleteProject(id);
             }
             catch (Exception exception)
             {

@@ -65,12 +65,12 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.CreateControllerResponse(response);
         }
 
-        [HttpDelete]
-        public ActionResult<Response> DeletePlugin(Plugin plugin)
+        [HttpDelete("{id}")]
+        public ActionResult<Response> DeletePlugin(int id)
         {
             response = new Response();
 
-            response = pluginService.DeletePlugin(plugin);
+            response = pluginService.DeletePlugin(id);
 
             return responseFactory.CreateControllerResponse(response);
         }

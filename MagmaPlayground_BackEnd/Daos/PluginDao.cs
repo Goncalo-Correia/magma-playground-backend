@@ -60,9 +60,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated plugin", ResponseStatus.OK);
         }
 
-        public Response DeletePlugin(Plugin plugin)
+        public Response DeletePlugin(int id)
         {
-            magmaDbContext.Remove<Plugin>(plugin);
+            magmaDbContext.Remove<Plugin>(GetPluginById(id).plugin);
 
             magmaDbContext.SaveChanges();
 

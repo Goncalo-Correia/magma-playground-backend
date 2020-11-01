@@ -62,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated track", ResponseStatus.OK);
         }
 
-        public Response DeleteTrack(Track track)
+        public Response DeleteTrack(int id)
         {
-            magmaDbContext.Remove<Track>(track);
+            magmaDbContext.Remove<Track>(GetTrackById(id).track);
 
             magmaDbContext.SaveChanges();
 

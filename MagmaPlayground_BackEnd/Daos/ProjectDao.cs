@@ -62,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated project", ResponseStatus.OK);
         }
 
-        public Response DeleteProject(Project project)
+        public Response DeleteProject(int id)
         {
-            magmaDbContext.Remove<Project>(project);
+            magmaDbContext.Remove<Project>(GetProjectById(id).project);
 
             magmaDbContext.SaveChanges();
 

@@ -122,14 +122,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteUser(User user)
+        public Response DeleteUser(int id)
         {
-            if (user == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter user is null", ResponseStatus.BADREQUEST);
-            }
-
-            if (user.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: user id is null", ResponseStatus.BADREQUEST);
             }
@@ -138,7 +133,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             try
             {
-                response = userDao.DeleteUser(user);
+                response = userDao.DeleteUser(id);
             }
             catch (Exception exception)
             {

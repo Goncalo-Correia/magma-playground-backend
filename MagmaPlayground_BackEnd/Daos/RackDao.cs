@@ -62,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated rack", ResponseStatus.OK);
         }
 
-        public Response DeleteRack(Rack rack)
+        public Response DeleteRack(int id)
         {
-            magmaDbContext.Remove<Rack>(rack);
+            magmaDbContext.Remove<Rack>(GetRackById(id).rack);
 
             magmaDbContext.SaveChanges();
 

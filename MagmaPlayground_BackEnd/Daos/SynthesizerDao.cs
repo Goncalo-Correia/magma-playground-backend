@@ -62,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated synthesizer", ResponseStatus.OK);
         }
 
-        public Response DeleteSynthesizer(Synthesizer synthesizer)
+        public Response DeleteSynthesizer(int id)
         {
-                magmaDbContext.Remove<Synthesizer>(synthesizer);
+                magmaDbContext.Remove<Synthesizer>(GetSynthesizerById(id).synthesizer);
 
                 magmaDbContext.SaveChanges();
 

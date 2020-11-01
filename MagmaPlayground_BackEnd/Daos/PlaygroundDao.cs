@@ -199,16 +199,5 @@ namespace MagmaPlayground_BackEnd.Daos
 
             return responseFactory.UpdateResponse(response, "Success: saved project", ResponseStatus.OK);
         }
-
-        public Response DeleteProject(int id)
-        {
-            response = new Response();
-
-            Response projectForDeleteResponse = projectDao.GetProjectById(id);
-
-            response = projectDao.DeleteProject(projectForDeleteResponse.project);
-
-            return response;
-        }
     }
 }

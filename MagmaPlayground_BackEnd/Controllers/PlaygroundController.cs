@@ -53,15 +53,5 @@ namespace MagmaPlayground_BackEnd.Controllers
 
             return responseFactory.CreateControllerResponse(response);
         }
-
-        [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteProject(int id)
-        {
-            response = new Response();
-
-            response = playgroundService.DeleteProject(id);
-
-            return responseFactory.CreateControllerResponse(response);
-        }
     }
 }

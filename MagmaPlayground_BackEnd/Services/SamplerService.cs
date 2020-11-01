@@ -122,14 +122,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteSampler(Sampler sampler)
+        public Response DeleteSampler(int id)
         {
-            if (sampler == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-
-            if (sampler.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
             }
@@ -138,7 +133,7 @@ namespace MagmaPlayground_BackEnd.Services
             
             try
             {
-                response = samplerDao.DeleteSampler(sampler);
+                response = samplerDao.DeleteSampler(id);
             }
             catch (Exception exception)
             {

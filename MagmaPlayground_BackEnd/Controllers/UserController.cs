@@ -65,12 +65,12 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.CreateControllerResponse(response);
         }
 
-        [HttpDelete]
-        public ActionResult<Response> DeleteUser(User user)
+        [HttpDelete("{id}")]
+        public ActionResult<Response> DeleteUser(int id)
         {
             response = new Response();
 
-            response = userService.DeleteUser(user);
+            response = userService.DeleteUser(id);
 
             return responseFactory.CreateControllerResponse(response);
         }

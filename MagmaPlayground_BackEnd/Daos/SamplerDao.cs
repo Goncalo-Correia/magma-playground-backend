@@ -62,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated sampler", ResponseStatus.OK);
         }
 
-        public Response DeleteSampler(Sampler sampler)
+        public Response DeleteSampler(int id)
         {
-            magmaDbContext.Remove<Sampler>(sampler);
+            magmaDbContext.Remove<Sampler>(GetSamplerById(id).sampler);
 
             magmaDbContext.SaveChanges();
 

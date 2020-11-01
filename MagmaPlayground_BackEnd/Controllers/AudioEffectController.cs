@@ -60,12 +60,12 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.CreateControllerResponse(response);
         }
 
-        [HttpDelete]
-        public ActionResult<Response> DeleteAudioEffect(AudioEffect audioEffect)
+        [HttpDelete("{id}")]
+        public ActionResult<Response> DeleteAudioEffect(int id)
         {
             response = new Response();
 
-            response = audioEffectService.DeleteAudioEffect(audioEffect);
+            response = audioEffectService.DeleteAudioEffect(id);
 
             return responseFactory.CreateControllerResponse(response);
         }

@@ -123,14 +123,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeletePlugin(Plugin plugin)
+        public Response DeletePlugin(int id)
         {
-            if (plugin == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-
-            if (plugin.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
             }
@@ -139,7 +134,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             try
             {
-                response = pluginDao.DeletePlugin(plugin);
+                response = pluginDao.DeletePlugin(id);
             }
             catch (Exception exception)
             {

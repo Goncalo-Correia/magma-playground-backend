@@ -62,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated audio effect", ResponseStatus.OK);
         }
 
-        public Response DeleteAudioEffect(AudioEffect audioEffect)
+        public Response DeleteAudioEffect(int id)
         {
-            magmaDbContext.Remove<AudioEffect>(audioEffect);
+            magmaDbContext.Remove<AudioEffect>(GetAudioEffectById(id).audioEffect);
 
             magmaDbContext.SaveChanges();
 

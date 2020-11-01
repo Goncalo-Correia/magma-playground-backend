@@ -62,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated user", ResponseStatus.OK);
         }
 
-        public Response DeleteUser(User user)
+        public Response DeleteUser(int id)
         {
-            magmaDbContext.Remove<User>(user);
+            magmaDbContext.Remove<User>(GetUserById(id).user);
 
             magmaDbContext.SaveChanges();
 
