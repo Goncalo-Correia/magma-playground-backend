@@ -91,7 +91,7 @@ namespace MagmaPlayground_BackEnd.Services
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION)~;
+                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
             }
 
             return response;
