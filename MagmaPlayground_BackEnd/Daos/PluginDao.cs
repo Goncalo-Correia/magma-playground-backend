@@ -17,11 +17,12 @@ namespace MagmaPlayground_BackEnd.Daos
         {
             this.magmaDbContext = magmaDbContext;
             responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetPluginById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreatePluginResponse();
 
             response.plugin = magmaDbContext.Find<Plugin>(id);
 
@@ -30,7 +31,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetPluginsByRackId(int rackId)
         {
-            response = new Response();
+            response = responseFactory.CreatePluginResponse();
 
             response.plugins = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
 
@@ -39,7 +40,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreatePlugin(Plugin plugin)
         {
-            response = new Response();
+            response = responseFactory.CreatePluginResponse();
 
             response.plugin.id = magmaDbContext.Add<Plugin>(plugin).Entity.id;
 
@@ -50,7 +51,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdatePlugin(Plugin plugin)
         {
-            response = new Response();
+            response = responseFactory.CreatePluginResponse();
 
             response.plugin.id = magmaDbContext.Update<Plugin>(plugin).Entity.id;
 

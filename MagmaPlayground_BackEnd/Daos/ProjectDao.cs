@@ -19,11 +19,12 @@ namespace MagmaPlayground_BackEnd.Daos
         {
             this.magmaDbContext = magmaDbContext;
             this.responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetProjectById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateProjectResponse();
 
             response.project = magmaDbContext.Projects.Find(id);
 
@@ -32,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetProjectsByUserId(int userId)
         {
-            response = new Response();
+            response = responseFactory.CreateProjectResponse();
 
             response.projects = magmaDbContext.Projects.Where<Project>(prop => prop.userId == userId).ToList<Project>();
 
@@ -41,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateProject(Project project)
         {
-            response = new Response();
+            response = responseFactory.CreateProjectResponse();
 
             response.project.id = magmaDbContext.Add<Project>(project).Entity.id;
 
@@ -52,7 +53,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdateProject(Project project)
         {
-            response = new Response();
+            response = responseFactory.CreateProjectResponse();
 
             response.project.id = magmaDbContext.Update<Project>(project).Entity.id;
 

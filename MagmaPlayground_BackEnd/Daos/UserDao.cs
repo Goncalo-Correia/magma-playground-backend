@@ -18,12 +18,13 @@ namespace MagmaPlayground_BackEnd.Daos
         public UserDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.responseFactory = new ResponseFactory();
+            responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetUserById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateUserResponse();
 
             response.user = magmaDbContext.Users.Find(id);
 
@@ -32,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetUserByEmail(string email)
         {
-            response = new Response();
+            response = responseFactory.CreateUserResponse();
 
             response.user = magmaDbContext.Users.Single<User>(prop => prop.email == email);
 
@@ -41,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateUser(User user)
         {
-            response = new Response();
+            response = responseFactory.CreateUserResponse();
 
             response.user.id = magmaDbContext.Add<User>(user).Entity.id;
 
@@ -52,7 +53,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdateUser(User user)
         {
-            response = new Response();
+            response = responseFactory.CreateUserResponse();
 
             response.user.id = magmaDbContext.Update<User>(user).Entity.id;
 

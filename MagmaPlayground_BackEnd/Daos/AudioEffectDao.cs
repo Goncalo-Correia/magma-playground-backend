@@ -1,4 +1,4 @@
-﻿using MagmaPlayground_BackEnd.Model;
+﻿ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +18,13 @@ namespace MagmaPlayground_BackEnd.Daos
         public AudioEffectDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.responseFactory = new ResponseFactory();
+            responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetAudioEffectById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateAudioEffectResponse();
 
             response.audioEffect = magmaDbContext.Find<AudioEffect>(id);
 
@@ -32,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetAudioEffectByPluginId(int pluginId)
         {
-            response = new Response();
+            response = responseFactory.CreateAudioEffectResponse();
 
             response.audioEffect = magmaDbContext.AudioEffects.SingleOrDefault<AudioEffect>(prop => prop.pluginId == pluginId);
 
@@ -41,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateAudioEffect(AudioEffect audioEffect)
         {
-            response = new Response();
+            response = responseFactory.CreateAudioEffectResponse();
 
             response.audioEffect.id = magmaDbContext.Add<AudioEffect>(audioEffect).Entity.id;
 
@@ -52,7 +53,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdateAudioEffect(AudioEffect audioEffect)
         {
-            response = new Response();
+            response = responseFactory.CreateAudioEffectResponse();
 
             response.audioEffect.id = magmaDbContext.Update<AudioEffect>(audioEffect).Entity.id;
 

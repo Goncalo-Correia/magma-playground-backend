@@ -19,11 +19,12 @@ namespace MagmaPlayground_BackEnd.Daos
         {
             this.magmaDbContext = magmaDbContext;
             responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetSamplerById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateSamplerResponse();
             
             response.sampler = magmaDbContext.Find<Sampler>(id);
 
@@ -32,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetSamplerByPluginId(int pluginId)
         {
-            response = new Response();
+            response = responseFactory.CreateSamplerResponse();
 
             response.sampler = magmaDbContext.Samplers.SingleOrDefault<Sampler>(prop => prop.pluginId == pluginId);
 
@@ -41,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateSampler(Sampler sampler)
         {
-            response = new Response();
+            response = responseFactory.CreateSamplerResponse();
 
             response.plugin.id = magmaDbContext.Add<Sampler>(sampler).Entity.id;
 
@@ -52,7 +53,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdateSampler(Sampler sampler)
         {
-            response = new Response();
+            response = responseFactory.CreateSamplerResponse();
 
             response.sampler.id = magmaDbContext.Update<Sampler>(sampler).Entity.id;
 

@@ -18,12 +18,13 @@ namespace MagmaPlayground_BackEnd.Daos
         public SynthesizerDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.responseFactory = new ResponseFactory();
+            responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetSynthesizerById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateSynthesizerResponse();
 
             response.synthesizer = magmaDbContext.Find<Synthesizer>(id);
 
@@ -32,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetSynthesizerByPluginId(int pluginId)
         {
-            response = new Response();
+            response = responseFactory.CreateSynthesizerResponse();
 
             response.synthesizer = magmaDbContext.Synthesizers.SingleOrDefault<Synthesizer>(prop => prop.pluginId == pluginId);
 
@@ -41,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateSynthesizer(Synthesizer synthesizer)
         {
-            response = new Response();
+            response = responseFactory.CreateSynthesizerResponse();
 
             response.synthesizer.id = magmaDbContext.Add<Synthesizer>(synthesizer).Entity.id;
 
@@ -52,7 +53,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdateSynthesizer(Synthesizer synthesizer)
         {
-            response = new Response();
+            response = responseFactory.CreateSynthesizerResponse();
 
             response.synthesizer.id = magmaDbContext.Update<Synthesizer>(synthesizer).Entity.id;
 
