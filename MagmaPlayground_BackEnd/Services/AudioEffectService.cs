@@ -121,14 +121,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteAudioEffect(AudioEffect audioEffect)
+        public Response DeleteAudioEffect(int id)
         {
-
-            if (audioEffect == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-            if (audioEffect.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
             }
@@ -137,7 +132,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             try
             {
-                response = audioEffectDao.DeleteAudioEffect(audioEffect);
+                response = audioEffectDao.DeleteAudioEffect(id);
             }
             catch (Exception exception)
             {

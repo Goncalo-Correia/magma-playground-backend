@@ -18,12 +18,13 @@ namespace MagmaPlayground_BackEnd.Daos
         public RackDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.responseFactory = new ResponseFactory();
+            responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetRackById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateRackResponse();
 
             response.rack = magmaDbContext.Find<Rack>(id);
 
@@ -32,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetRackByTrackId(int trackId)
         {
-            response = new Response();
+            response = responseFactory.CreateRackResponse();
 
             response.rack = magmaDbContext.Racks.Single<Rack>(prop => prop.trackId == trackId);
 
@@ -41,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateRack(Rack rack)
         {
-            response = new Response();
+            response = responseFactory.CreateRackResponse();
 
             response.rack.id = magmaDbContext.Add<Rack>(rack).Entity.id;
 
@@ -52,7 +53,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdateRack(Rack rack)
         {
-            response = new Response();
+            response = responseFactory.CreateRackResponse();
 
             response.rack.id = magmaDbContext.Update<Rack>(rack).Entity.id;
 
@@ -61,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated rack", ResponseStatus.OK);
         }
 
-        public Response DeleteRack(Rack rack)
+        public Response DeleteRack(int id)
         {
-            magmaDbContext.Remove<Rack>(rack);
+            magmaDbContext.Remove<Rack>(GetRackById(id).rack);
 
             magmaDbContext.SaveChanges();
 

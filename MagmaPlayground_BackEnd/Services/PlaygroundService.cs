@@ -85,26 +85,5 @@ namespace MagmaPlayground_BackEnd.Services
 
             return response;
         }
-
-        public Response DeleteProject(int id)
-        {
-            if (id == 0)
-            {
-                return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
-            }
-
-            response = new Response();
-
-            try
-            {
-                response = playgroundDao.DeleteProject(id);
-            }
-            catch (Exception exception)
-            {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
-            }
-
-            return response;
-        }
     }
 }

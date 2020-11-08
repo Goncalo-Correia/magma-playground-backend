@@ -65,12 +65,12 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.CreateControllerResponse(response);
         }
 
-        [HttpDelete]
-        public ActionResult<Response> DeleteSynthesizer(Synthesizer synthesizer)
+        [HttpDelete("{id}")]
+        public ActionResult<Response> DeleteSynthesizer(int id)
         {
             response = new Response();
 
-            response = synthesizerService.DeleteSynthesizer(synthesizer);
+            response = synthesizerService.DeleteSynthesizer(id);
 
             return responseFactory.CreateControllerResponse(response);
         }

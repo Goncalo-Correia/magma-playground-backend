@@ -26,6 +26,7 @@ namespace MagmaPlayground_BackEnd.Daos
         {
             this.magmaDbContext = magmaDbContext;
             responseFactory = new ResponseFactory();
+            response = new Response();
             projectDao = new ProjectDao(magmaDbContext);
             trackDao = new TrackDao(magmaDbContext);
             rackDao = new RackDao(magmaDbContext);
@@ -37,7 +38,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetProjectById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateProjectResponse();
 
             response = projectDao.GetProjectById(id);
 
@@ -83,7 +84,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response SaveNewProject(Project project)
         {
-            response = new Response();
+            response = responseFactory.CreateProjectResponse();
 
             project.id = projectDao.CreateProject(project).project.id;
 
@@ -124,7 +125,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response SaveProject(Project project)
         {
-            response = new Response();
+            response = responseFactory.CreateProjectResponse();
 
             project.id = projectDao.UpdateProject(project).project.id;
 
@@ -197,17 +198,6 @@ namespace MagmaPlayground_BackEnd.Daos
             response.project = project;
 
             return responseFactory.UpdateResponse(response, "Success: saved project", ResponseStatus.OK);
-        }
-
-        public Response DeleteProject(int id)
-        {
-            response = new Response();
-
-            Response projectForDeleteResponse = projectDao.GetProjectById(id);
-
-            response = projectDao.DeleteProject(projectForDeleteResponse.project);
-
-            return response;
         }
     }
 }

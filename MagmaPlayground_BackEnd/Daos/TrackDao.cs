@@ -18,12 +18,13 @@ namespace MagmaPlayground_BackEnd.Daos
         public TrackDao(MagmaDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.responseFactory = new ResponseFactory();
+            responseFactory = new ResponseFactory();
+            response = new Response();
         }
 
         public Response GetTrackById(int id)
         {
-            response = new Response();
+            response = responseFactory.CreateTrackResponse();
 
             response.track = magmaDbContext.Find<Track>(id);
 
@@ -32,7 +33,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response GetTracksByProjectId(int projectId)
         {
-            response = new Response();
+            response = responseFactory.CreateTrackResponse();
 
             response.tracks = magmaDbContext.Tracks.Where<Track>(prop => prop.projectId == projectId).ToList();
 
@@ -41,7 +42,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response CreateTrack(Track track)
         {
-            response = new Response();
+            response = responseFactory.CreateTrackResponse();
 
             response.track.id = magmaDbContext.Add<Track>(track).Entity.id;
 
@@ -52,7 +53,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
         public Response UpdateTrack(Track track)
         {
-            response = new Response();
+            response = responseFactory.CreateTrackResponse();
 
             response.track.id = magmaDbContext.Update<Track>(track).Entity.id;
 
@@ -61,9 +62,9 @@ namespace MagmaPlayground_BackEnd.Daos
             return responseFactory.UpdateResponse(response, "Success: updated track", ResponseStatus.OK);
         }
 
-        public Response DeleteTrack(Track track)
+        public Response DeleteTrack(int id)
         {
-            magmaDbContext.Remove<Track>(track);
+            magmaDbContext.Remove<Track>(GetTrackById(id).track);
 
             magmaDbContext.SaveChanges();
 

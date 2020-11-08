@@ -122,14 +122,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteRack(Rack rack)
+        public Response DeleteRack(int id)
         {
-            if (rack == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-
-            if (rack.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
             }
@@ -138,7 +133,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             try
             {
-                response = rackDao.DeleteRack(rack);
+                response = rackDao.DeleteRack(id);
             }
             catch (Exception exception)
             {

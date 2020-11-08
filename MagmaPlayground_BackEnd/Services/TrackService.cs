@@ -122,14 +122,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteTrack(Track track)
+        public Response DeleteTrack(int id)
         {
-            if (track == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-
-            if (track.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
             }
@@ -138,7 +133,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             try
             {
-                response = trackDao.DeleteTrack(track);
+                response = trackDao.DeleteTrack(id);
             }
             catch (Exception exception)
             {

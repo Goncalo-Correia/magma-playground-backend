@@ -122,14 +122,9 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteSynthesizer(Synthesizer synthesizer)
+        public Response DeleteSynthesizer(int id)
         {
-            if (synthesizer == null)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-
-            if (synthesizer.id == 0)
+            if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
             }
@@ -138,7 +133,7 @@ namespace MagmaPlayground_BackEnd.Services
 
             try
             {
-                response = synthesizerDao.DeleteSynthesizer(synthesizer);
+                response = synthesizerDao.DeleteSynthesizer(id);
             }
             catch (Exception exception)
             {

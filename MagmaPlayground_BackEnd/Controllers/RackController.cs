@@ -66,12 +66,12 @@ namespace MagmaPlayground_BackEnd.Controllers
             return responseFactory.CreateControllerResponse(response);
         }
 
-        [HttpDelete]
-        public ActionResult<Response> DeleteRack(Rack rack)
+        [HttpDelete("{id}")]
+        public ActionResult<Response> DeleteRack(int id)
         {
             response = new Response();
 
-            response = rackService.DeleteRack(rack);
+            response = rackService.DeleteRack(id);
 
             return responseFactory.CreateControllerResponse(response);
         }
