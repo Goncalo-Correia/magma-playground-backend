@@ -7,16 +7,19 @@
   <ItemGroup>
     <Compile Remove="Controller\**" />
     <Compile Remove="Factories\**" />
+    <Compile Remove="Models\Dtos\**" />
     <Content Remove="Controller\**" />
     <Content Remove="Factories\**" />
+    <Content Remove="Models\Dtos\**" />
     <EmbeddedResource Remove="Controller\**" />
     <EmbeddedResource Remove="Factories\**" />
+    <EmbeddedResource Remove="Models\Dtos\**" />
     <None Remove="Controller\**" />
     <None Remove="Factories\**" />
+    <None Remove="Models\Dtos\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Dtos\" />
     <Folder Include="View\" />
   </ItemGroup>
 
