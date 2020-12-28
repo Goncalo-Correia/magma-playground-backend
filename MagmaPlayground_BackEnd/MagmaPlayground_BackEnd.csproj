@@ -7,16 +7,16 @@
   <ItemGroup>
     <Compile Remove="Controller\**" />
     <Compile Remove="Factories\**" />
-    <Compile Remove="Models\Dtos\**" />
+    <Compile Remove="MagmaDaw\Models\Dtos\**" />
     <Content Remove="Controller\**" />
     <Content Remove="Factories\**" />
-    <Content Remove="Models\Dtos\**" />
+    <Content Remove="MagmaDaw\Models\Dtos\**" />
     <EmbeddedResource Remove="Controller\**" />
     <EmbeddedResource Remove="Factories\**" />
-    <EmbeddedResource Remove="Models\Dtos\**" />
+    <EmbeddedResource Remove="MagmaDaw\Models\Dtos\**" />
     <None Remove="Controller\**" />
     <None Remove="Factories\**" />
-    <None Remove="Models\Dtos\**" />
+    <None Remove="MagmaDaw\Models\Dtos\**" />
   </ItemGroup>
 
   <ItemGroup>
