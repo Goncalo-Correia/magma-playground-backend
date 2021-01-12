@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MagmaLive\Daos\" />
     <Folder Include="MagmaLive\Controllers\" />
     <Folder Include="MagmaLive\Services\" />
     <Folder Include="View\" />
