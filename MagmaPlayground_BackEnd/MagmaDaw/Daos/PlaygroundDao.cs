@@ -11,7 +11,7 @@ namespace MagmaPlayground_BackEnd.Daos
 {
     public class PlaygroundDao
     {
-        private MagmaDbContext magmaDbContext;
+        private MagmaDawDbContext magmaDbContext;
         private ResponseFactory responseFactory;
         private Response response;
         private ProjectDao projectDao;
@@ -22,7 +22,7 @@ namespace MagmaPlayground_BackEnd.Daos
         private SynthesizerDao synthesizerDao;
         private AudioEffectDao audioEffectDao;
 
-        public PlaygroundDao(MagmaDbContext magmaDbContext)
+        public PlaygroundDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
             responseFactory = new ResponseFactory();

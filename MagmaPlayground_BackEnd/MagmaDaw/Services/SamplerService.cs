@@ -12,7 +12,7 @@ namespace MagmaPlayground_BackEnd.Services
         private ResponseFactory responseFactory;
         private Response response;
 
-        public SamplerService(MagmaDbContext magmaDbContext)
+        public SamplerService(MagmaDawDbContext magmaDbContext)
         {
             samplerDao = new SamplerDao(magmaDbContext);
             responseFactory = new ResponseFactory();

@@ -16,7 +16,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private Response response;
         public ResponseFactory responseFactory;
 
-        public HomeController(MagmaDbContext magmaDbContext)
+        public HomeController(MagmaDawDbContext magmaDbContext)
         {
             homeService = new HomeService(magmaDbContext);
             responseFactory = new ResponseFactory();

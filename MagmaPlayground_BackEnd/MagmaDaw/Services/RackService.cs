@@ -12,7 +12,7 @@ namespace MagmaPlayground_BackEnd.Services
         private ResponseFactory responseFactory;
         private Response response;
 
-        public RackService(MagmaDbContext magmaDbContext)
+        public RackService(MagmaDawDbContext magmaDbContext)
         {
             rackDao = new RackDao(magmaDbContext);
             responseFactory = new ResponseFactory();

@@ -19,7 +19,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private ResponseFactory responseFactory;
         private Response response;
 
-        public SynthesizerController(MagmaDbContext magmaDbContext)
+        public SynthesizerController(MagmaDawDbContext magmaDbContext)
         {
             synthesizerService = new SynthesizerService(magmaDbContext);
             responseFactory = new ResponseFactory();

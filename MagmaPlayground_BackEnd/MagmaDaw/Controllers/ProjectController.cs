@@ -20,7 +20,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private Response response;
         private ResponseFactory responseFactory;
 
-        public ProjectController(MagmaDbContext magmaDbContext)
+        public ProjectController(MagmaDawDbContext magmaDbContext)
         {
             projectService = new ProjectService(magmaDbContext);
             responseFactory = new ResponseFactory();

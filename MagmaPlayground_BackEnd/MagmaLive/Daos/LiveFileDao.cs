@@ -1,4 +1,5 @@
-﻿using MagmaPlayground_BackEnd.Models.MagmaLive;
+﻿using MagmaPlayground_BackEnd.MagmaDB.MagmaLive.MagmaDbContext;
+using MagmaPlayground_BackEnd.Models.MagmaLive;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +9,31 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Daos
 {
     public class LiveFileDao
     {
-        public LiveFileDao()
-        {
+        private MagmaLiveDbContext magmaLiveDbContext;
 
+        public LiveFileDao(MagmaLiveDbContext magmaLiveDbContext)
+        {
+            this.magmaLiveDbContext = magmaLiveDbContext;
         }
 
-        public int CreateLiveFile(LiveFile liveFile)
+        public LiveFile GetLiveFileById(int id)
         {
-            return liveFile.id;
+            return magmaLiveDbContext.Find<LiveFile>(id);
         }
 
-        public int UpdateLive(LiveFile liveFile)
+        public LiveFile CreateLiveFile(LiveFile liveFile)
         {
-            return liveFile.id;
+            return magmaLiveDbContext.Add<LiveFile>(liveFile).Entity;
         }
 
-        public int CreateOrUpdateLive(LiveFile liveFile)
+        public LiveFile UpdateLiveFile(LiveFile liveFile)
         {
-            return liveFile.id;
+            return magmaLiveDbContext.Update<LiveFile>(liveFile).Entity;
         }
 
-        public void DeleteLive(LiveFile liveFile)
+        public void DeleteLiveFile(LiveFile liveFile)
         {
-
+            magmaLiveDbContext.Remove<LiveFile>(liveFile);
         }
     }
 }

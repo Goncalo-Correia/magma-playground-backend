@@ -12,7 +12,7 @@ namespace MagmaPlayground_BackEnd.Services
         private ResponseFactory responseFactory;
         private Response response;
 
-        public SynthesizerService(MagmaDbContext magmaDbContext)
+        public SynthesizerService(MagmaDawDbContext magmaDbContext)
         {
             synthesizerDao = new SynthesizerDao(magmaDbContext);
             responseFactory = new ResponseFactory();

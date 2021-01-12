@@ -11,11 +11,11 @@ namespace MagmaPlayground_BackEnd.Daos
 {
     public class AudioEffectDao
     {
-        private MagmaDbContext magmaDbContext;
+        private MagmaDawDbContext magmaDbContext;
         private ResponseFactory responseFactory;
         private Response response;
 
-        public AudioEffectDao(MagmaDbContext magmaDbContext)
+        public AudioEffectDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
             responseFactory = new ResponseFactory();

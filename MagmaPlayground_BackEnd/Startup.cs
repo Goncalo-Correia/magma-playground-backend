@@ -31,7 +31,7 @@ namespace MagmaPlayground_BackEnd
         {
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
-            services.AddDbContext<MagmaDbContext>(
+            services.AddDbContext<MagmaDawDbContext>(
                 options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
             );
         }

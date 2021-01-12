@@ -11,11 +11,11 @@ namespace MagmaPlayground_BackEnd.Daos
 {
     public class UserDao
     {
-        private MagmaDbContext magmaDbContext;
+        private MagmaDawDbContext magmaDbContext;
         private ResponseFactory responseFactory;
         private Response response;
 
-        public UserDao(MagmaDbContext magmaDbContext)
+        public UserDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
             responseFactory = new ResponseFactory();

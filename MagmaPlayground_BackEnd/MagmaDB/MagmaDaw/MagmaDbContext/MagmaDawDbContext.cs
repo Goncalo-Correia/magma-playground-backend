@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
 {
-    public class MagmaDbContext : DbContext
+    public class MagmaDawDbContext : DbContext
     {
-        public MagmaDbContext(DbContextOptions<MagmaDbContext> options) : base(options)
+        public MagmaDawDbContext(DbContextOptions<MagmaDawDbContext> options) : base(options)
         {
 
         }

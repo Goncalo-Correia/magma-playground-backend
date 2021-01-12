@@ -12,7 +12,7 @@ namespace MagmaPlayground_BackEnd.Services
         private ResponseFactory responseFactory;
         private Response response;
 
-        public AudioEffectService(MagmaDbContext magmaDbContext)
+        public AudioEffectService(MagmaDawDbContext magmaDbContext)
         {
             audioEffectDao = new AudioEffectDao(magmaDbContext);
             responseFactory = new ResponseFactory();

@@ -19,7 +19,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private ResponseFactory responseFactory;
         private Response response;
 
-        public SamplerController(MagmaDbContext magmaDbContext)
+        public SamplerController(MagmaDawDbContext magmaDbContext)
         {
             samplerService = new SamplerService(magmaDbContext);
             responseFactory = new ResponseFactory();

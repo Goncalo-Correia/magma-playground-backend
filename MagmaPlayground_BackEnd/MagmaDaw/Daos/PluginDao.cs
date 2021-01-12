@@ -9,11 +9,11 @@ namespace MagmaPlayground_BackEnd.Daos
 {
     public class PluginDao
     {
-        private MagmaDbContext magmaDbContext;
+        private MagmaDawDbContext magmaDbContext;
         private ResponseFactory responseFactory;
         private Response response;
 
-        public PluginDao(MagmaDbContext magmaDbContext)
+        public PluginDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
             responseFactory = new ResponseFactory();

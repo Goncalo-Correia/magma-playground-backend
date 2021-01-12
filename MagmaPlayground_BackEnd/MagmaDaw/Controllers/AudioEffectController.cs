@@ -14,7 +14,7 @@ namespace MagmaPlayground_BackEnd.Controllers
         private ResponseFactory responseFactory;
         private Response response;
 
-        public AudioEffectController(MagmaDbContext magmaDbContext)
+        public AudioEffectController(MagmaDawDbContext magmaDbContext)
         {
             audioEffectService = new AudioEffectService(magmaDbContext);
             responseFactory = new ResponseFactory();
