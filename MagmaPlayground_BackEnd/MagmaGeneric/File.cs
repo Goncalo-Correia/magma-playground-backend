@@ -14,8 +14,8 @@ namespace MagmaPlayground_BackEnd.Models.MagmaGeneric
         public DateTime createdOn { get; set; }
         public DateTime updatedOn { get; set; }
 
-        public int fileTypeId { get; set; }
         public Enum_FileType enum_FileType { get; set; }
+        public int fileTypeId { get; set; }
         public FileType fileType { get; set; }
 
         public int fileContentId { get; set; }

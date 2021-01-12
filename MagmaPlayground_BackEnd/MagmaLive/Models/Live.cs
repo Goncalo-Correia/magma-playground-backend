@@ -13,8 +13,8 @@ namespace MagmaPlayground_BackEnd.Models.MagmaLive
         public string description { get; set; }
         public DateTime uploadedOn { get; set; }
 
-        public int liveTypeId { get; set; }
         public Enum_LiveType enum_LiveType { get; set; }
+        public int liveTypeId { get; set; }
         public LiveType liveType { get; set; }
 
         public int liveFileId { get; set; }
