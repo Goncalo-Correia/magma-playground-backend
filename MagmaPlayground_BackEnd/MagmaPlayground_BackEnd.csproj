@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="MagmaDB\MagmaLive\ModelConfigurations\" />
     <Folder Include="MagmaLive\Controllers\" />
-    <Folder Include="MagmaLive\Services\" />
     <Folder Include="View\" />
   </ItemGroup>
 

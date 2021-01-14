@@ -16,22 +16,22 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Daos
             this.magmaLiveDbContext = magmaLiveDbContext;
         }
 
-        public LiveFileType GetLiveFileById(int id)
+        public LiveFileType GetLiveFileTypeById(int id)
         {
             return magmaLiveDbContext.Find<LiveFileType>(id);
         }
 
-        public LiveFileType CreateLiveFile(LiveFileType liveFileType)
+        public LiveFileType CreateLiveFileType(LiveFileType liveFileType)
         {
             return magmaLiveDbContext.Add<LiveFileType>(liveFileType).Entity;
         }
 
-        public LiveFileType UpdateLiveFile(LiveFileType liveFileType)
+        public LiveFileType UpdateLiveFileType(LiveFileType liveFileType)
         {
             return magmaLiveDbContext.Update<LiveFileType>(liveFileType).Entity;
         }
 
-        public void DeleteLiveFile(LiveFileType liveFileType)
+        public void DeleteLiveFileType(LiveFileType liveFileType)
         {
             magmaLiveDbContext.Remove<LiveFileType>(liveFileType);
         }
