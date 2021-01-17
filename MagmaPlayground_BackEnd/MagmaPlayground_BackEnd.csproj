@@ -8,21 +8,24 @@
     <Compile Remove="Controller\**" />
     <Compile Remove="Factories\**" />
     <Compile Remove="MagmaDaw\Models\Dtos\**" />
+    <Compile Remove="View\**" />
     <Content Remove="Controller\**" />
     <Content Remove="Factories\**" />
     <Content Remove="MagmaDaw\Models\Dtos\**" />
+    <Content Remove="View\**" />
     <EmbeddedResource Remove="Controller\**" />
     <EmbeddedResource Remove="Factories\**" />
     <EmbeddedResource Remove="MagmaDaw\Models\Dtos\**" />
+    <EmbeddedResource Remove="View\**" />
     <None Remove="Controller\**" />
     <None Remove="Factories\**" />
     <None Remove="MagmaDaw\Models\Dtos\**" />
+    <None Remove="View\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="MagmaDB\MagmaGeneric\ModelConfigurations\" />
     <Folder Include="MagmaDB\MagmaLive\ModelConfigurations\" />
-    <Folder Include="View\" />
   </ItemGroup>
 
   <ItemGroup>
