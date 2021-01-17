@@ -19,6 +19,7 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Services
         public FileTypeService(MagmaGenericDbContext magmaGenericDBContext)
         {
             fileTypeDao = new FileTypeDao(magmaGenericDBContext);
+            genericResponseFactory = new GenericResponseFactory();
         }
 
         public GenericResponse GetFileTypeById(int id)

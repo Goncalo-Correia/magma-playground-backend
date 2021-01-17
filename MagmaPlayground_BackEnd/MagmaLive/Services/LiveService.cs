@@ -19,6 +19,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Services
         public LiveService(MagmaLiveDbContext magmaLiveDbContext)
         {
             liveDao = new LiveDao(magmaLiveDbContext);
+            liveResponseFactory = new LiveResponseFactory();
         }
 
         public LiveResponse GetLiveById(int id)

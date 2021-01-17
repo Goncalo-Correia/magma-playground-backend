@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
 {
+    [ApiController]
+    [Route("magma_api/[controller]")]
     public class LiveFileTypeController : ControllerBase
     {
         private LiveFileTypeService liveFileTypeService;
@@ -25,7 +27,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
             return liveFileTypeService.GetLiveFileTypeById(id);
         }
 
-        [HttpGet("create")]
+        [HttpPost("create")]
         public ActionResult<LiveResponse> CreateLiveFileType(LiveFileType liveFileType)
         {
             return liveFileTypeService.CreateLiveFileType(liveFileType);

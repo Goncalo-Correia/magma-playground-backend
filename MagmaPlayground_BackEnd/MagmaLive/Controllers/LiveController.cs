@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
 {
+    [ApiController]
+    [Route("magma_api/[controller]")]
     public class LiveController : ControllerBase
     {
         private LiveService liveService;
@@ -25,7 +27,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
             return liveService.GetLiveById(id);
         }
 
-        [HttpGet("create")]
+        [HttpPost("create")]
         public ActionResult<LiveResponse> CreateLive(Live live)
         {
             return liveService.CreateLive(live);

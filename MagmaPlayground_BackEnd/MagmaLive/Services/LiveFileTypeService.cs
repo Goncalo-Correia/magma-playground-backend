@@ -19,6 +19,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Services
         public LiveFileTypeService(MagmaLiveDbContext magmaLiveDbContext)
         {
             liveFileTypeDao = new LiveFileTypeDao(magmaLiveDbContext);
+            liveResponseFactory = new LiveResponseFactory();
         }
 
         public LiveResponse GetLiveFileTypeById(int id)

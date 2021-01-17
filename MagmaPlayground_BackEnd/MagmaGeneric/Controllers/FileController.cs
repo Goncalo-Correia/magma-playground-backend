@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.MagmaGeneric.Controllers
 {
+    [ApiController]
+    [Route("magma_api/[controller]")]
     public class FileController : ControllerBase
     {
         private FileService fileService;
@@ -25,7 +27,7 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Controllers
             return fileService.GetFileById(id);
         }
 
-        [HttpGet("create")]
+        [HttpPost("create")]
         public ActionResult<GenericResponse> CreateFile(File file)
         {
             return fileService.CreateFile(file);
