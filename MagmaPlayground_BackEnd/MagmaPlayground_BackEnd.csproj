@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MagmaDB\MagmaGeneric\ModelConfigurations\" />
     <Folder Include="MagmaDB\MagmaLive\ModelConfigurations\" />
   </ItemGroup>
 

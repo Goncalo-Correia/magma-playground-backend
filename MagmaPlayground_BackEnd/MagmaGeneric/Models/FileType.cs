@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MagmaPlayground_BackEnd.Models.MagmaLive
+namespace MagmaPlayground_BackEnd.Models.MagmaGeneric
 {
-    [Table("live_type")]
-    public class LiveType
+    [Table("file_type")]
+    public class FileType
     {
         [Key]
         [Column("id")]
@@ -21,6 +21,7 @@ namespace MagmaPlayground_BackEnd.Models.MagmaLive
 
         [Column("description")]
         [DataType(DataType.Text)]
+        [Required(ErrorMessage = "Description is required")]
         public string description { get; set; }
     }
 }
