@@ -1,4 +1,4 @@
-﻿using MagmaPlayground_BackEnd.MagmaDB.MagmaLive.MagmaDbContext;
+﻿using MagmaPlayground_BackEnd.MagmaDB.MagmaGeneric;
 using MagmaPlayground_BackEnd.Models.MagmaGeneric;
 using System;
 using System.Collections.Generic;
@@ -9,31 +9,31 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Daos
 {
     public class FileDao
     {
-        private MagmaLiveDbContext magmaLiveDbContext;
+        private MagmaGenericDbContext magmaGenericDbContext;
 
-        public FileDao(MagmaLiveDbContext magmaLiveDbContext)
+        public FileDao(MagmaGenericDbContext magmaGenericDbContext)
         {
-            this.magmaLiveDbContext = magmaLiveDbContext;
+            this.magmaGenericDbContext = magmaGenericDbContext;
         }
 
         public File GetFileById(int id)
         {
-            return magmaLiveDbContext.Find<File>(id);
+            return magmaGenericDbContext.Find<File>(id);
         }
 
         public File CreateFile(File file)
         {
-            return magmaLiveDbContext.Add<File>(file).Entity;
+            return magmaGenericDbContext.Add<File>(file).Entity;
         }
 
         public File UpdateFile(File file)
         {
-            return magmaLiveDbContext.Update<File>(file).Entity;
+            return magmaGenericDbContext.Update<File>(file).Entity;
         }
 
         public void DeleteFile(File file)
         {
-            magmaLiveDbContext.Remove<File>(file);
+            magmaGenericDbContext.Remove<File>(file);
         }
     }
 }

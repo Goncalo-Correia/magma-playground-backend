@@ -10,29 +10,29 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.MagmaGeneric.Services
 {
-    public class FileService
+    public class FileTypeService
     {
-        private FileDao fileDao;
+        private FileTypeDao fileTypeDao;
         private GenericResponseFactory genericResponseFactory;
         private GenericResponse genericResponse;
 
-        public FileService(MagmaGenericDbContext magmaGenericDBContext)
+        public FileTypeService(MagmaGenericDbContext magmaGenericDBContext)
         {
-            fileDao = new FileDao(magmaGenericDBContext);
+            fileTypeDao = new FileTypeDao(magmaGenericDBContext);
         }
 
-        public GenericResponse GetFileById(int id)
+        public GenericResponse GetFileTypeById(int id)
         {
             genericResponse = new GenericResponse();
 
             if (id == 0)
             {
-                return genericResponseFactory.CreateGenericResponse(genericResponse, "file.id is null", HttpStatusCode.BadRequest);
+                return genericResponseFactory.CreateGenericResponse(genericResponse, "fileType.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                genericResponse.file = fileDao.GetFileById(id);
+                genericResponse.fileType = fileTypeDao.GetFileTypeById(id);
             }
             catch (Exception ex)
             {
@@ -42,18 +42,18 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Services
             return genericResponseFactory.CreateGenericResponse(genericResponse, "", HttpStatusCode.OK);
         }
 
-        public GenericResponse CreateFile(File file)
+        public GenericResponse CreateFileType(FileType fileType)
         {
             genericResponse = new GenericResponse();
 
-            if (file.id != 0)
+            if (fileType.id != 0)
             {
-                return genericResponseFactory.CreateGenericResponse(genericResponse, "file.id is not null", HttpStatusCode.BadRequest);
+                return genericResponseFactory.CreateGenericResponse(genericResponse, "fileType.id is not null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                genericResponse.file = fileDao.CreateFile(file);
+                genericResponse.fileType = fileTypeDao.CreateFileType(fileType);
             }
             catch (Exception ex)
             {
@@ -63,18 +63,18 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Services
             return genericResponseFactory.CreateGenericResponse(genericResponse, "", HttpStatusCode.OK);
         }
 
-        public GenericResponse UpdateFile(File file)
+        public GenericResponse UpdateFileType(FileType fileType)
         {
             genericResponse = new GenericResponse();
 
-            if (file.id == 0)
+            if (fileType.id == 0)
             {
-                return genericResponseFactory.CreateGenericResponse(genericResponse, "file.id is null", HttpStatusCode.BadRequest);
+                return genericResponseFactory.CreateGenericResponse(genericResponse, "fileType.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                genericResponse.file = fileDao.CreateFile(file);
+                genericResponse.fileType = fileTypeDao.CreateFileType(fileType);
             }
             catch (Exception ex)
             {
@@ -84,18 +84,18 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Services
             return genericResponseFactory.CreateGenericResponse(genericResponse, "", HttpStatusCode.OK);
         }
 
-        public GenericResponse DeleteFile(File file)
+        public GenericResponse DeleteFileType(FileType fileType)
         {
             genericResponse = new GenericResponse();
 
-            if (file.id == 0)
+            if (fileType.id == 0)
             {
-                return genericResponseFactory.CreateGenericResponse(genericResponse, "file.id is null", HttpStatusCode.BadRequest);
+                return genericResponseFactory.CreateGenericResponse(genericResponse, "fileType.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                fileDao.DeleteFile(file);
+                fileTypeDao.DeleteFileType(fileType);
             }
             catch (Exception ex)
             {

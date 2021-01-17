@@ -8,7 +8,7 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Response
 {
     public class GenericResponseFactory
     {
-        public GenericResponse CreateLiveResponse(GenericResponse genericResponse, string errorMessage, HttpStatusCode httpStatusCode)
+        public GenericResponse CreateGenericResponse(GenericResponse genericResponse, string errorMessage, HttpStatusCode httpStatusCode)
         {
             genericResponse.errorMessage = errorMessage;
             genericResponse.httpStatusCode = httpStatusCode;
