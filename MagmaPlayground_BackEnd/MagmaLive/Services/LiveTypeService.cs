@@ -21,7 +21,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Services
             liveTypeDao = new LiveTypeDao(magmaLiveDbContext);
         }
 
-        public LiveResponse GetLiveFileById(int id)
+        public LiveResponse GetLiveTypeById(int id)
         {
             liveResponse = new LiveResponse();
 
@@ -42,7 +42,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Services
             return liveResponseFactory.CreateLiveResponse(liveResponse, "", HttpStatusCode.OK);
         }
 
-        public LiveResponse CreateLiveFile(LiveType liveType)
+        public LiveResponse CreateLiveType(LiveType liveType)
         {
             liveResponse = new LiveResponse();
 
@@ -63,7 +63,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Services
             return liveResponseFactory.CreateLiveResponse(liveResponse, "", HttpStatusCode.OK);
         }
 
-        public LiveResponse UpdateLiveFile(LiveType liveType)
+        public LiveResponse UpdateLiveType(LiveType liveType)
         {
             liveResponse = new LiveResponse();
 
@@ -84,7 +84,7 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Services
             return liveResponseFactory.CreateLiveResponse(liveResponse, "", HttpStatusCode.OK);
         }
 
-        public LiveResponse DeleteLiveFile(LiveType liveType)
+        public LiveResponse DeleteLiveType(LiveType liveType)
         {
             liveResponse = new LiveResponse();
 
