@@ -31,7 +31,7 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
             modelBuilder.ApplyConfiguration(new SynthesizerConfiguration());
 
             modelBuilder.ApplyConfiguration(new AudioEffectConfiguration());
-
+       
             modelBuilder.Entity<Project>()
                 .HasOne(prop => prop.user)
                 .WithMany(prop => prop.projects)
