@@ -23,17 +23,27 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Daos
 
         public LiveFile CreateLiveFile(LiveFile liveFile)
         {
-            return magmaLiveDbContext.Add<LiveFile>(liveFile).Entity;
+            liveFile = magmaLiveDbContext.Add<LiveFile>(liveFile).Entity;
+
+            magmaLiveDbContext.SaveChanges();
+
+            return liveFile;
         }
 
         public LiveFile UpdateLiveFile(LiveFile liveFile)
         {
-            return magmaLiveDbContext.Update<LiveFile>(liveFile).Entity;
+            liveFile = magmaLiveDbContext.Update<LiveFile>(liveFile).Entity;
+
+            magmaLiveDbContext.SaveChanges();
+
+            return liveFile;
         }
 
         public void DeleteLiveFile(LiveFile liveFile)
         {
             magmaLiveDbContext.Remove<LiveFile>(liveFile);
+
+            magmaLiveDbContext.SaveChanges();
         }
     }
 }

@@ -15,34 +15,36 @@ namespace MagmaPlayground_BackEnd.MagmaLive
     public class LiveTypeController : ControllerBase
     {
         private LiveTypeService liveTypeService;
+        private LiveResponseFactory liveResponseFactory;
 
         public LiveTypeController(MagmaLiveDbContext magmaLiveDbContext)
         {
             liveTypeService = new LiveTypeService(magmaLiveDbContext);
+            liveResponseFactory = new LiveResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LiveResponse> GetLiveTypeById(int id)
+        public ActionResult<string> GetLiveTypeById(int id)
         {
-            return liveTypeService.GetLiveTypeById(id);
+            return liveResponseFactory.CreateLiveControllerResponse(liveTypeService.GetLiveTypeById(id));
         }
 
         [HttpPost("create")]
-        public ActionResult<LiveResponse> CreateLiveType(LiveType liveType)
+        public ActionResult<string> CreateLiveType(LiveType liveType)
         {
-            return liveTypeService.CreateLiveType(liveType);
+            return liveResponseFactory.CreateLiveControllerResponse(liveTypeService.CreateLiveType(liveType));
         }
 
         [HttpPost("update")]
-        public ActionResult<LiveResponse> UpdateLiveType(LiveType liveType)
+        public ActionResult<string> UpdateLiveType(LiveType liveType)
         {
-            return liveTypeService.UpdateLiveType(liveType);
+            return liveResponseFactory.CreateLiveControllerResponse(liveTypeService.UpdateLiveType(liveType));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<LiveResponse> DeleteLiveType(LiveType liveType)
+        public ActionResult<string> DeleteLiveType(LiveType liveType)
         {
-            return liveTypeService.DeleteLiveType(liveType);
+            return liveResponseFactory.CreateLiveControllerResponse(liveTypeService.DeleteLiveType(liveType));
         }
     }
 }

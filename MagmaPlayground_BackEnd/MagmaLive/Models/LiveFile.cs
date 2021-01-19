@@ -23,18 +23,17 @@ namespace MagmaPlayground_BackEnd.Models.MagmaLive
 
         [Column("live_file_type_id")]
         [ForeignKey("livefile_livefiletype_fkey")]
-        public int liveFileTypeId { get; set; }
+        public int? liveFileTypeId { get; set; }
         public LiveFileType liveFileType { get; set; }
-        public Enum_LiveFileType enum_LiveFileType { get; set; }
 
         [Column("preview_file_id")]
         [ForeignKey("livefile_previewfile_fkey")]
-        public int previewFileId { get; set; }
+        public int? previewFileId { get; set; }
         public File previewFile { get; set; }
 
         [Column("live_type_id")]
         [ForeignKey("livefile_file_fkey")]
-        public int fileId { get; set; }
+        public int? fileId { get; set; }
         public File file { get; set; }
     }
 }

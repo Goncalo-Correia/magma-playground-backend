@@ -19,6 +19,7 @@ namespace MagmaPlayground_BackEnd.MagmaDB.MagmaLive.MagmaDbContext
         {
             modelBuilder.HasDefaultSchema("magma_live");
             base.OnModelCreating(modelBuilder);
+
         }
 
         public DbSet<Live> Lives { get; set; }

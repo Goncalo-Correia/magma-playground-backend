@@ -23,17 +23,27 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Daos
 
         public LiveType CreateLiveType(LiveType liveType)
         {
-            return magmaLiveDbContext.Add<LiveType>(liveType).Entity;
+            liveType = magmaLiveDbContext.Add<LiveType>(liveType).Entity;
+
+            magmaLiveDbContext.SaveChanges();
+
+            return liveType;
         }
 
         public LiveType UpdateLiveType(LiveType liveType)
         {
-            return magmaLiveDbContext.Update<LiveType>(liveType).Entity;
+            liveType = magmaLiveDbContext.Update<LiveType>(liveType).Entity;
+
+            magmaLiveDbContext.SaveChanges();
+
+            return liveType;
         }
 
         public void DeleteLiveType(LiveType liveType)
         { 
             magmaLiveDbContext.Remove<LiveType>(liveType);
+
+            magmaLiveDbContext.SaveChanges();
         }
     }
 }

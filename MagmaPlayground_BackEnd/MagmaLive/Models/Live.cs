@@ -28,16 +28,15 @@ namespace MagmaPlayground_BackEnd.Models.MagmaLive
         [Column("uploaded_on")]
         [DataType(DataType.DateTime)]
         public DateTime uploadedOn { get; set; }
-
+        
         [Column("live_file_id")]
         [ForeignKey("live_livefile_fkey")]
-        public int liveFileId { get; set; }
+        public int? liveFileId { get; set; }
         public LiveFile liveFile { get; set; }
 
         [Column("live_type_id")]
         [ForeignKey("live_livetype_fkey")]
-        public int liveTypeId { get; set; }
+        public int? liveTypeId { get; set; }
         public LiveType liveType { get; set; }
-        public Enum_LiveType enum_LiveType { get; set; }
     }
 }

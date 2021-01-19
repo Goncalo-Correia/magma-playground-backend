@@ -15,34 +15,36 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
     public class LiveFileController : ControllerBase
     {
         private LiveFileService liveFileService;
+        private LiveResponseFactory liveResponseFactory;
 
         public LiveFileController (MagmaLiveDbContext magmaLiveDbContext)
         {
             liveFileService = new LiveFileService(magmaLiveDbContext);
+            liveResponseFactory = new LiveResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LiveResponse> GetLiveFileById(int id)
+        public ActionResult<string> GetLiveFileById(int id)
         {
-            return liveFileService.GetLiveFileById(id);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileService.GetLiveFileById(id));
         }
 
         [HttpPost("create")]
-        public ActionResult<LiveResponse> CreateLiveFile(LiveFile liveFile)
+        public ActionResult<string> CreateLiveFile(LiveFile liveFile)
         {
-            return liveFileService.CreateLiveFile(liveFile);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileService.CreateLiveFile(liveFile));
         }
 
         [HttpPost("update")]
-        public ActionResult<LiveResponse> UpdateLiveFile(LiveFile liveFile)
+        public ActionResult<string> UpdateLiveFile(LiveFile liveFile)
         {
-            return liveFileService.UpdateLiveFile(liveFile);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileService.UpdateLiveFile(liveFile));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<LiveResponse> DeleteLiveFile(LiveFile liveFile)
+        public ActionResult<string> DeleteLiveFile(LiveFile liveFile)
         {
-            return liveFileService.DeleteLiveFile(liveFile);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileService.DeleteLiveFile(liveFile));
         }
     }
 }

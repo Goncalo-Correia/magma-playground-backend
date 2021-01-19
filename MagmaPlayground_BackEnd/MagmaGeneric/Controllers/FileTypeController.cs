@@ -15,34 +15,36 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Controllers
     public class FileTypeController : ControllerBase
     {
         private FileTypeService fileTypeService;
+        private GenericResponseFactory genericResponseFactory;
 
         public FileTypeController(MagmaGenericDbContext magmaGenericDbContext)
         {
             fileTypeService = new FileTypeService(magmaGenericDbContext);
+            genericResponseFactory = new GenericResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<GenericResponse> GetFileContentById(int id)
+        public ActionResult<string> GetFileContentById(int id)
         {
-            return fileTypeService.GetFileTypeById(id);
+            return genericResponseFactory.CreateGenericControllerResponse(fileTypeService.GetFileTypeById(id));
         }
 
         [HttpPost("create")]
-        public ActionResult<GenericResponse> CreateFileContent(FileType fileType)
+        public ActionResult<string> CreateFileContent(FileType fileType)
         {
-            return fileTypeService.CreateFileType(fileType);
+            return genericResponseFactory.CreateGenericControllerResponse(fileTypeService.CreateFileType(fileType));
         }
 
         [HttpPost("update")]
-        public ActionResult<GenericResponse> UpdateFileContent(FileType fileType)
+        public ActionResult<string> UpdateFileContent(FileType fileType)
         {
-            return fileTypeService.UpdateFileType(fileType);
+            return genericResponseFactory.CreateGenericControllerResponse(fileTypeService.UpdateFileType(fileType));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<GenericResponse> DeleteFileContent(FileType fileType)
+        public ActionResult<string> DeleteFileContent(FileType fileType)
         {
-            return fileTypeService.DeleteFileType(fileType);
+            return genericResponseFactory.CreateGenericControllerResponse(fileTypeService.DeleteFileType(fileType));
         }
     }
 }

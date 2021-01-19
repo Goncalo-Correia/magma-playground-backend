@@ -23,17 +23,27 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Daos
 
         public Live CreateLive(Live live)
         {
-            return magmaLiveDbContext.Add<Live>(live).Entity;
+            live = magmaLiveDbContext.Add<Live>(live).Entity;
+
+            magmaLiveDbContext.SaveChanges();
+
+            return live;
         }
 
         public Live UpdateLive(Live live)
         {
-            return magmaLiveDbContext.Update<Live>(live).Entity;
+            live = magmaLiveDbContext.Update<Live>(live).Entity;
+
+            magmaLiveDbContext.SaveChanges();
+
+            return live; 
         }
 
         public void DeleteLive(Live live)
         {
             magmaLiveDbContext.Remove<Live>(live);
+
+            magmaLiveDbContext.SaveChanges();
         }
     }
 }

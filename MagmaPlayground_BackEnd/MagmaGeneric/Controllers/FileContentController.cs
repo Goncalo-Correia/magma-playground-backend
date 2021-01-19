@@ -15,34 +15,36 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Controllers
     public class FileContentController : ControllerBase
     {
         private FileContentService fileContentService;
+        private GenericResponseFactory genericResponseFactory;
 
         public FileContentController(MagmaGenericDbContext magmaGenericDbContext)
         {
             fileContentService = new FileContentService(magmaGenericDbContext);
+            genericResponseFactory = new GenericResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<GenericResponse> GetFileContentById(int id)
+        public ActionResult<string> GetFileContentById(int id)
         {
-            return fileContentService.GetFileContentById(id);
+            return genericResponseFactory.CreateGenericControllerResponse(fileContentService.GetFileContentById(id));
         }
 
         [HttpPost("create")]
-        public ActionResult<GenericResponse> CreateFileContent(FileContent fileContent)
+        public ActionResult<string> CreateFileContent(FileContent fileContent)
         {
-            return fileContentService.CreateFileContent(fileContent);
+            return genericResponseFactory.CreateGenericControllerResponse(fileContentService.CreateFileContent(fileContent));
         }
 
         [HttpPost("update")]
-        public ActionResult<GenericResponse> UpdateFileContent(FileContent fileContent)
+        public ActionResult<string> UpdateFileContent(FileContent fileContent)
         {
-            return fileContentService.UpdateFileContent(fileContent);
+            return genericResponseFactory.CreateGenericControllerResponse(fileContentService.UpdateFileContent(fileContent));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<GenericResponse> DeleteFileContent(FileContent fileContent)
+        public ActionResult<string> DeleteFileContent(FileContent fileContent)
         {
-            return fileContentService.DeleteFileContent(fileContent);
+            return genericResponseFactory.CreateGenericControllerResponse(fileContentService.DeleteFileContent(fileContent));
         }
     }
 }

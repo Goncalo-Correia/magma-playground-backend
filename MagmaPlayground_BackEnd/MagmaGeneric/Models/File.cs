@@ -37,13 +37,12 @@ namespace MagmaPlayground_BackEnd.Models.MagmaGeneric
         [Column("file_type_id")]
         [ForeignKey("file_filetype_fkey")]
         [Required(ErrorMessage = "FileTypeId is required")]
-        public int fileTypeId { get; set; }
+        public int? fileTypeId { get; set; }
         public FileType fileType { get; set; }
-        public Enum_FileType enum_FileType { get; set; }
 
         [Column("file_content_id")]
         [ForeignKey("file_filecontent_fkey")]
-        public int fileContentId { get; set; }
+        public int? fileContentId { get; set; }
         public FileContent fileContent { get; set; }
     }
 }

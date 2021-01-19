@@ -15,34 +15,36 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Controllers
     public class FileController : ControllerBase
     {
         private FileService fileService;
+        private GenericResponseFactory genericResponseFactory;
 
         public FileController(MagmaGenericDbContext magmaGenericDbContext)
         {
             fileService = new FileService(magmaGenericDbContext);
+            genericResponseFactory = new GenericResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<GenericResponse> GetFileById(int id)
+        public ActionResult<string> GetFileById(int id)
         {
-            return fileService.GetFileById(id);
+            return genericResponseFactory.CreateGenericControllerResponse(fileService.GetFileById(id));
         }
 
         [HttpPost("create")]
-        public ActionResult<GenericResponse> CreateFile(File file)
+        public ActionResult<string> CreateFile(File file)
         {
-            return fileService.CreateFile(file);
+            return genericResponseFactory.CreateGenericControllerResponse(fileService.CreateFile(file));
         }
 
         [HttpPost("update")]
-        public ActionResult<GenericResponse> UpdateFile(File file)
+        public ActionResult<string> UpdateFile(File file)
         {
-            return fileService.UpdateFile(file);
+            return genericResponseFactory.CreateGenericControllerResponse(fileService.UpdateFile(file));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<GenericResponse> DeleteFile(File file)
+        public ActionResult<string> DeleteFile(File file)
         {
-            return fileService.DeleteFile(file);
+            return genericResponseFactory.CreateGenericControllerResponse(fileService.DeleteFile(file));
         }
     }
 }

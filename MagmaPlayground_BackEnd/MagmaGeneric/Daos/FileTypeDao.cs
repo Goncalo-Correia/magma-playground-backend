@@ -23,17 +23,27 @@ namespace MagmaPlayground_BackEnd.MagmaGeneric.Daos
 
         public FileType CreateFileType(FileType fileType)
         {
-            return magmaGenericDbContext.Add<FileType>(fileType).Entity;
+            fileType = magmaGenericDbContext.Add<FileType>(fileType).Entity;
+
+            magmaGenericDbContext.SaveChanges();
+
+            return fileType;
         }
 
         public FileType UpdateFileType(FileType fileType)
         {
-            return magmaGenericDbContext.Update<FileType>(fileType).Entity;
+            fileType = magmaGenericDbContext.Update<FileType>(fileType).Entity;
+
+            magmaGenericDbContext.SaveChanges();
+
+            return fileType;
         }
 
         public void DeleteFileType(FileType fileType)
         {
             magmaGenericDbContext.Remove<FileType>(fileType);
+
+            magmaGenericDbContext.SaveChanges();
         }
     }
 }

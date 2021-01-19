@@ -15,36 +15,38 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
     public class LiveController : ControllerBase
     {
         private LiveService liveService;
-        private LiveResponseSerializer liveResponseSerializer;
+        private LiveResponseFactory liveResponseFactory;
 
         public LiveController(MagmaLiveDbContext magmaLiveDbContext)
         {
             liveService = new LiveService(magmaLiveDbContext);
-            liveResponseSerializer = new LiveResponseSerializer();
+            liveResponseFactory = new LiveResponseFactory();
         }
 
         [HttpGet("{id}")]
         public ActionResult<string> GetLiveById(int id)
         {
-            return liveResponseSerializer.SerializeResponse(liveService.GetLiveById(id));
+            var a = liveService.GetLiveById(id);
+
+            return liveResponseFactory.CreateLiveControllerResponse(liveService.GetLiveById(id));
         }
 
         [HttpPost("create")]
-        public ActionResult<LiveResponse> CreateLive(Live live)
+        public ActionResult<string> CreateLive(Live live)
         {
-            return liveService.CreateLive(live);
+            return liveResponseFactory.CreateLiveControllerResponse(liveService.CreateLive(live));
         }
 
         [HttpPost("update")]
-        public ActionResult<LiveResponse> UpdateLive(Live live)
+        public ActionResult<string> UpdateLive(Live live)
         {
-            return liveService.UpdateLive(live);
+            return liveResponseFactory.CreateLiveControllerResponse(liveService.UpdateLive(live));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<LiveResponse> DeleteLive(Live live)
+        public ActionResult<string> DeleteLive(Live live)
         { 
-            return liveService.DeleteLive(live);
+            return liveResponseFactory.CreateLiveControllerResponse(liveService.DeleteLive(live));
         }
     }
 }

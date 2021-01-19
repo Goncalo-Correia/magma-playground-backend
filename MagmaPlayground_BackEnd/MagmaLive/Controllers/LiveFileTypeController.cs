@@ -15,34 +15,36 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
     public class LiveFileTypeController : ControllerBase
     {
         private LiveFileTypeService liveFileTypeService;
+        private LiveResponseFactory liveResponseFactory;
 
         public LiveFileTypeController(MagmaLiveDbContext magmaLiveDbContext)
         {
             liveFileTypeService = new LiveFileTypeService(magmaLiveDbContext);
+            liveResponseFactory = new LiveResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LiveResponse> GetLiveFileTypeById(int id)
+        public ActionResult<string> GetLiveFileTypeById(int id)
         {
-            return liveFileTypeService.GetLiveFileTypeById(id);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileTypeService.GetLiveFileTypeById(id));
         }
 
         [HttpPost("create")]
-        public ActionResult<LiveResponse> CreateLiveFileType(LiveFileType liveFileType)
+        public ActionResult<string> CreateLiveFileType(LiveFileType liveFileType)
         {
-            return liveFileTypeService.CreateLiveFileType(liveFileType);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileTypeService.CreateLiveFileType(liveFileType));
         }
 
         [HttpPost("update")]
-        public ActionResult<LiveResponse> UpdateLive(LiveFileType liveFileType)
+        public ActionResult<string> UpdateLive(LiveFileType liveFileType)
         {
-            return liveFileTypeService.UpdateLiveFileType(liveFileType);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileTypeService.UpdateLiveFileType(liveFileType));
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<LiveResponse> DeleteLive(LiveFileType liveFileType)
+        public ActionResult<string> DeleteLive(LiveFileType liveFileType)
         {
-            return liveFileTypeService.DeleteLiveFileType(liveFileType);
+            return liveResponseFactory.CreateLiveControllerResponse(liveFileTypeService.DeleteLiveFileType(liveFileType));
         }
     }
 }
