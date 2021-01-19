@@ -12,6 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
+using MagmaPlayground_BackEnd.MagmaDB.MagmaLive.MagmaDbContext;
+using MagmaPlayground_BackEnd.MagmaDB.MagmaGeneric;
 
 namespace MagmaPlayground_BackEnd
 {
@@ -32,6 +34,12 @@ namespace MagmaPlayground_BackEnd
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
             services.AddDbContext<MagmaDawDbContext>(
+                options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+            );
+            services.AddDbContext<MagmaLiveDbContext>(
+                options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+            );
+            services.AddDbContext<MagmaGenericDbContext>(
                 options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
             );
         }

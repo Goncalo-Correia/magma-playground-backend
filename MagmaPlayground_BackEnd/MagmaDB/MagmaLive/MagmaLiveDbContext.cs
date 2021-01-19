@@ -17,7 +17,8 @@ namespace MagmaPlayground_BackEnd.MagmaDB.MagmaLive.MagmaDbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.HasDefaultSchema("magma_live");
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Live> Lives { get; set; }

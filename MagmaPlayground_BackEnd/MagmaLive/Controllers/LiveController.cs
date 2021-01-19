@@ -15,16 +15,18 @@ namespace MagmaPlayground_BackEnd.MagmaLive.Controllers
     public class LiveController : ControllerBase
     {
         private LiveService liveService;
+        private LiveResponseSerializer liveResponseSerializer;
 
         public LiveController(MagmaLiveDbContext magmaLiveDbContext)
         {
             liveService = new LiveService(magmaLiveDbContext);
+            liveResponseSerializer = new LiveResponseSerializer();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LiveResponse> GetLiveById(int id)
+        public ActionResult<string> GetLiveById(int id)
         {
-            return liveService.GetLiveById(id);
+            return liveResponseSerializer.SerializeResponse(liveService.GetLiveById(id));
         }
 
         [HttpPost("create")]
