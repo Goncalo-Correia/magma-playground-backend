@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MagmaPlayground_BackEnd.Model.Configurations;
 using MagmaPlayground_BackEnd.Models.MagmaLive;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +18,6 @@ namespace MagmaPlayground_BackEnd.MagmaDB.MagmaLive.MagmaDbContext
         {
             modelBuilder.HasDefaultSchema("magma_live");
             base.OnModelCreating(modelBuilder);
-
         }
 
         public DbSet<Live> Lives { get; set; }
