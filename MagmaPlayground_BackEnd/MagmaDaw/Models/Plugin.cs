@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Converters;
+﻿using MagmaPlayground_BackEnd.MagmaDaw.Models;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,8 +18,8 @@ namespace MagmaPlayground_BackEnd.Model
         public int id { get; set; }
 
         [Required(ErrorMessage = "Plugin name is required")]
-        [Column("plugin_name")]
-        public string pluginName { get; set; }
+        [Column("name")]
+        public string name { get; set; }
 
         [Required(ErrorMessage = "Order is required")]
         [Column("order")]
@@ -26,6 +27,7 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Required(ErrorMessage = "Plugin type is required")]
         [Column("plugin_type_id")]
+        public int pluginTypeId { get; set; }
         public PluginType pluginType { get; set; }
 
         [Required(ErrorMessage = "Rack is required")]

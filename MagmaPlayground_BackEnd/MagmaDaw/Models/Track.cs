@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MagmaPlayground_BackEnd.MagmaDaw.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,6 +31,7 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Required(ErrorMessage = "Tracktype is required")]
         [Column("track_type_id")]
+        public int trackTypeId { get; set; }
         public TrackType trackType { get; set; }
 
         [Required(ErrorMessage = "Project id is required")]
@@ -37,6 +39,9 @@ namespace MagmaPlayground_BackEnd.Model
         public int projectId { get; set; }
         public Project Project { get; set; }
 
+        [Required(ErrorMessage = "Rack id is required")]
+        [Column("rack_id")]
+        public int rackId { get; set; }
         public Rack rack { get; set; }
 
         public Track()

@@ -15,7 +15,6 @@ namespace MagmaPlayground_BackEnd.Model
         public int id { get; set; }
 
         [Required(ErrorMessage = "Project name is required")]
-        [MaxLength(30)]
         [Column("name")]
         public string name { get; set; }
 
@@ -24,10 +23,6 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Column("updated_on")]
         public DateTime updatedOn { get; set; }
-
-        [Column("user_id")]
-        public int userId { get; set; }
-        public User user { get; set; }
 
         [Column("is_template")]
         public bool isTemplate { get; set; }

@@ -62,13 +62,13 @@ namespace MagmaPlayground_BackEnd.Daos
                                 {
                                     switch (plugin.pluginType)
                                     {
-                                        case PluginType.SAMPLER:
+                                        case Enum_PluginType.SAMPLER:
                                             plugin.sampler = samplerDao.GetSamplerByPluginId(plugin.id).sampler;
                                             break;
-                                        case PluginType.SYNTHESIZER:
+                                        case Enum_PluginType.SYNTHESIZER:
                                             plugin.synthesizer = synthesizerDao.GetSynthesizerByPluginId(plugin.id).synthesizer;
                                             break;
-                                        case PluginType.AUDIOEFFECT:
+                                        case Enum_PluginType.AUDIOEFFECT:
                                             plugin.audioEffect = audioEffectDao.GetAudioEffectByPluginId(plugin.id).audioEffect;
                                             break;
                                     }
@@ -103,15 +103,15 @@ namespace MagmaPlayground_BackEnd.Daos
 
                     switch (plugin.pluginType)
                     {
-                        case PluginType.SAMPLER:
+                        case Enum_PluginType.SAMPLER:
                             plugin.sampler.pluginId = plugin.id;
                             plugin.sampler.id = samplerDao.CreateSampler(plugin.sampler).sampler.id;
                             break;
-                        case PluginType.SYNTHESIZER:
+                        case Enum_PluginType.SYNTHESIZER:
                             plugin.synthesizer.pluginId = plugin.id;
                             plugin.synthesizer.id = synthesizerDao.CreateSynthesizer(plugin.synthesizer).synthesizer.id;
                             break;
-                        case PluginType.AUDIOEFFECT:
+                        case Enum_PluginType.AUDIOEFFECT:
                             plugin.audioEffect.pluginId = plugin.id;
                             plugin.audioEffect.id = audioEffectDao.CreateAudioEffect(plugin.audioEffect).audioEffect.id;
                             break;
@@ -159,7 +159,7 @@ namespace MagmaPlayground_BackEnd.Daos
 
                     switch (plugin.pluginType)
                     {
-                        case PluginType.SAMPLER:
+                        case Enum_PluginType.SAMPLER:
                             if (plugin.sampler.id == 0)
                             {
                                 plugin.sampler.pluginId = plugin.id;
@@ -170,7 +170,7 @@ namespace MagmaPlayground_BackEnd.Daos
                                 samplerDao.UpdateSampler(plugin.sampler);
                             }
                             break;
-                        case PluginType.SYNTHESIZER:
+                        case Enum_PluginType.SYNTHESIZER:
                             if (plugin.synthesizer.id == 0)
                             {
                                 plugin.synthesizer.pluginId = plugin.id;
@@ -181,7 +181,7 @@ namespace MagmaPlayground_BackEnd.Daos
                                 synthesizerDao.UpdateSynthesizer(plugin.synthesizer);
                             }
                             break;
-                        case PluginType.AUDIOEFFECT:
+                        case Enum_PluginType.AUDIOEFFECT:
                             if (plugin.audioEffect.id == 0)
                             {
                                 plugin.audioEffect.pluginId = plugin.id;

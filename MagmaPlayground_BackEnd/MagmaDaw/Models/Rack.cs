@@ -14,11 +14,6 @@ namespace MagmaPlayground_BackEnd.Model
         [Column("id")]
         public int id { get; set; }
 
-        [Required(ErrorMessage = "Track id is required")]
-        [Column("track_id")]
-        public int trackId { get; set; }
-        public Track track { get; set; }
-
         public List<Plugin> plugins { get; set; }
 
         public Rack()

@@ -1,4 +1,5 @@
-﻿using MagmaPlayground_BackEnd.Model.Enum;
+﻿using MagmaPlayground_BackEnd.MagmaDaw.Models;
+using MagmaPlayground_BackEnd.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,7 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Required(ErrorMessage = "Synthesizer type is required")]
         [Column("synthesizer_type_id")]
+        public int synthesizerTypeId { get; set; }
         public SynthesizerType synthesizerType { get; set; }
 
         [Required(ErrorMessage = "Plugin is required")]

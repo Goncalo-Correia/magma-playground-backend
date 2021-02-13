@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Model.Enum
 {
-    public enum AudioEffectType
+    public enum Enum_AudioEffectType
     {
         AUTOFILTER,
         PINGPONGDELAY,

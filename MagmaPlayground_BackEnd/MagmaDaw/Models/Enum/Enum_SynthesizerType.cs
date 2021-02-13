@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Model.Enum
 {
-    public enum SynthesizerType
+    public enum Enum_SynthesizerType
     {
         AM,
         DUO,

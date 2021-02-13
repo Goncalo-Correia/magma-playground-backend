@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.Model
 {
-    public enum TrackType
+    public enum Enum_PluginType
     {
-        AUDIO,
-        MIDI,
-        EXTERNAL
+        SAMPLER,
+        SYNTHESIZER,
+        AUDIOEFFECT
     }
 }

@@ -1,4 +1,5 @@
-﻿using MagmaPlayground_BackEnd.Model.Enum;
+﻿using MagmaPlayground_BackEnd.MagmaDaw.Models;
+using MagmaPlayground_BackEnd.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,7 @@ namespace MagmaPlayground_BackEnd.Model
 
         [Required(ErrorMessage = "Audio effect type is required")]
         [Column("audioeffect_type_id")]
+        public int audioEffectTypeId { get; set; }
         public AudioEffectType audioEffectType { get; set; }
 
         [Required(ErrorMessage = "Plugin is required")]
