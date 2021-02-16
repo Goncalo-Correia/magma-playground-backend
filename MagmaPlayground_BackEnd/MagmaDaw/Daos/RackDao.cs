@@ -12,63 +12,40 @@ namespace MagmaPlayground_BackEnd.Daos
     public class RackDao
     {
         private MagmaDawDbContext magmaDbContext;
-        private ResponseFactory responseFactory;
-        private Response response;
 
         public RackDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            responseFactory = new ResponseFactory();
-            response = new Response();
         }
 
-        public Response GetRackById(int id)
+        public Rack GetRackById(int id)
         {
-            response = responseFactory.CreateRackResponse();
-
-            response.rack = magmaDbContext.Find<Rack>(id);
-
-            return responseFactory.UpdateResponse(response, "Success: found track", ResponseStatus.OK);
+            return magmaDbContext.Find<Rack>(id);
         }
 
-        public Response GetRackByTrackId(int trackId)
+        public Rack CreateRack(Rack rack)
         {
-            response = responseFactory.CreateRackResponse();
-
-            response.rack = magmaDbContext.Racks.Single<Rack>(prop => prop.trackId == trackId);
-
-            return responseFactory.UpdateResponse(response, "Success: rack found", ResponseStatus.OK);
-        }
-
-        public Response CreateRack(Rack rack)
-        {
-            response = responseFactory.CreateRackResponse();
-
-            response.rack.id = magmaDbContext.Add<Rack>(rack).Entity.id;
+            rack.id = magmaDbContext.Add<Rack>(rack).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: created rack", ResponseStatus.OK);
+            return rack;
         }
 
-        public Response UpdateRack(Rack rack)
+        public Rack UpdateRack(Rack rack)
         {
-            response = responseFactory.CreateRackResponse();
-
-            response.rack.id = magmaDbContext.Update<Rack>(rack).Entity.id;
+            rack.id = magmaDbContext.Update<Rack>(rack).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: updated rack", ResponseStatus.OK);
+            return rack;
         }
 
-        public Response DeleteRack(int id)
+        public void DeleteRack(Rack rack)
         {
-            magmaDbContext.Remove<Rack>(GetRackById(id).rack);
+            magmaDbContext.Remove<Rack>(rack);
 
             magmaDbContext.SaveChanges();
-
-            return responseFactory.CreateResponse("Success: removed rack", ResponseStatus.OK);
         }
     }
 }

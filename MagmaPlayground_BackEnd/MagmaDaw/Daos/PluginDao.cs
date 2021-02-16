@@ -4,69 +4,52 @@ using Microsoft.EntityFrameworkCore;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace MagmaPlayground_BackEnd.Daos
 {
     public class PluginDao
     {
         private MagmaDawDbContext magmaDbContext;
-        private ResponseFactory responseFactory;
-        private Response response;
 
         public PluginDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            responseFactory = new ResponseFactory();
-            response = new Response();
         }
 
-        public Response GetPluginById(int id)
+        public Plugin GetPluginById(int id)
         {
-            response = responseFactory.CreatePluginResponse();
-
-            response.plugin = magmaDbContext.Find<Plugin>(id);
-
-            return responseFactory.UpdateResponse(response, "Success: found plugin", ResponseStatus.OK);
+            return magmaDbContext.Find<Plugin>(id);
         }
 
-        public Response GetPluginsByRackId(int rackId)
+        public List<Plugin> GetPluginsByRackId(int rackId)
         {
-            response = responseFactory.CreatePluginResponse();
-
-            response.plugins = magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
-
-            return responseFactory.UpdateResponse(response, "Success: plugins found", ResponseStatus.OK);
+            return magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
         }
 
-        public Response CreatePlugin(Plugin plugin)
+        public Plugin CreatePlugin(Plugin plugin)
         {
-            response = responseFactory.CreatePluginResponse();
-
-            response.plugin.id = magmaDbContext.Add<Plugin>(plugin).Entity.id;
+            plugin.id = magmaDbContext.Add<Plugin>(plugin).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: created plugin", ResponseStatus.OK);
+            return plugin;
         }
 
-        public Response UpdatePlugin(Plugin plugin)
+        public Plugin UpdatePlugin(Plugin plugin)
         {
-            response = responseFactory.CreatePluginResponse();
-
-            response.plugin.id = magmaDbContext.Update<Plugin>(plugin).Entity.id;
+            plugin.id = magmaDbContext.Update<Plugin>(plugin).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: updated plugin", ResponseStatus.OK);
+            return plugin;
         }
 
-        public Response DeletePlugin(int id)
+        public void DeletePlugin(Plugin plugin)
         {
-            magmaDbContext.Remove<Plugin>(GetPluginById(id).plugin);
+            magmaDbContext.Remove<Plugin>(plugin);
 
             magmaDbContext.SaveChanges();
-
-            return responseFactory.CreateResponse("Success: deleted plugin", ResponseStatus.OK);
         }
     }
 }

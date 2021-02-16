@@ -12,63 +12,40 @@ namespace MagmaPlayground_BackEnd.Daos
     public class ProjectDao
     {
         private MagmaDawDbContext magmaDbContext;
-        private ResponseFactory responseFactory;
-        private Response response;
 
         public ProjectDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            this.responseFactory = new ResponseFactory();
-            response = new Response();
         }
 
-        public Response GetProjectById(int id)
+        public Project GetProjectById(int id)
         {
-            response = responseFactory.CreateProjectResponse();
-
-            response.project = magmaDbContext.Projects.Find(id);
-
-            return responseFactory.UpdateResponse(response, "Success: found project", ResponseStatus.OK);
+            return magmaDbContext.Projects.Find(id);
         }
 
-        public Response GetProjectsByUserId(int userId)
+        public Project CreateProject(Project project)
         {
-            response = responseFactory.CreateProjectResponse();
-
-            response.projects = magmaDbContext.Projects.Where<Project>(prop => prop.userId == userId).ToList<Project>();
-
-            return responseFactory.UpdateResponse(response, "Success: projects found", ResponseStatus.OK);
-        }
-
-        public Response CreateProject(Project project)
-        {
-            response = responseFactory.CreateProjectResponse();
-
-            response.project.id = magmaDbContext.Add<Project>(project).Entity.id;
+            project.id = magmaDbContext.Add<Project>(project).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: created project", ResponseStatus.OK);
+            return project;
         }
 
-        public Response UpdateProject(Project project)
+        public Project UpdateProject(Project project)
         {
-            response = responseFactory.CreateProjectResponse();
-
-            response.project.id = magmaDbContext.Update<Project>(project).Entity.id;
+            project.id = magmaDbContext.Update<Project>(project).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: updated project", ResponseStatus.OK);
+            return project;
         }
 
-        public Response DeleteProject(int id)
+        public void DeleteProject(Project project)
         {
-            magmaDbContext.Remove<Project>(GetProjectById(id).project);
+            magmaDbContext.Remove<Project>(project);
 
             magmaDbContext.SaveChanges();
-
-            return responseFactory.CreateResponse("Success: removed project", ResponseStatus.OK);
         }
     }
 }

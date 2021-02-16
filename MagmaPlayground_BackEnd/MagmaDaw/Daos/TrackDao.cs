@@ -12,63 +12,45 @@ namespace MagmaPlayground_BackEnd.Daos
     public class TrackDao
     {
         private MagmaDawDbContext magmaDbContext;
-        private ResponseFactory responseFactory;
-        private Response response;
 
         public TrackDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            responseFactory = new ResponseFactory();
-            response = new Response();
         }
 
-        public Response GetTrackById(int id)
+        public Track GetTrackById(int id)
         {
-            response = responseFactory.CreateTrackResponse();
-
-            response.track = magmaDbContext.Find<Track>(id);
-
-            return responseFactory.UpdateResponse(response, "Success: track found", ResponseStatus.OK);
+            return magmaDbContext.Find<Track>(id);
         }
 
-        public Response GetTracksByProjectId(int projectId)
+        public List<Track> GetTracksByProjectId(int projectId)
         {
-            response = responseFactory.CreateTrackResponse();
-
-            response.tracks = magmaDbContext.Tracks.Where<Track>(prop => prop.projectId == projectId).ToList();
-
-            return responseFactory.UpdateResponse(response, "Success: tracks found", ResponseStatus.OK);
+            return magmaDbContext.Tracks.Where<Track>(prop => prop.projectId == projectId).ToList();
         }
 
-        public Response CreateTrack(Track track)
+        public Track CreateTrack(Track track)
         {
-            response = responseFactory.CreateTrackResponse();
-
-            response.track.id = magmaDbContext.Add<Track>(track).Entity.id;
+            track.id = magmaDbContext.Add<Track>(track).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: created track", ResponseStatus.OK);
+            return track;
         }
 
-        public Response UpdateTrack(Track track)
+        public Track UpdateTrack(Track track)
         {
-            response = responseFactory.CreateTrackResponse();
-
-            response.track.id = magmaDbContext.Update<Track>(track).Entity.id;
+            track.id = magmaDbContext.Update<Track>(track).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: updated track", ResponseStatus.OK);
+            return track;
         }
 
-        public Response DeleteTrack(int id)
+        public void DeleteTrack(Track track)
         {
-            magmaDbContext.Remove<Track>(GetTrackById(id).track);
+            magmaDbContext.Remove<Track>(track);
 
             magmaDbContext.SaveChanges();
-
-            return responseFactory.CreateResponse("Success: removed track", ResponseStatus.OK);
         }
     }
 }

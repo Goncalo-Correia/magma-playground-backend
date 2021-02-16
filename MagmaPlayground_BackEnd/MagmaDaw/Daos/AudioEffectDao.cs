@@ -12,63 +12,45 @@ namespace MagmaPlayground_BackEnd.Daos
     public class AudioEffectDao
     {
         private MagmaDawDbContext magmaDbContext;
-        private ResponseFactory responseFactory;
-        private Response response;
 
         public AudioEffectDao(MagmaDawDbContext magmaDbContext)
         {
             this.magmaDbContext = magmaDbContext;
-            responseFactory = new ResponseFactory();
-            response = new Response();
         }
 
-        public Response GetAudioEffectById(int id)
+        public AudioEffect GetAudioEffectById(int id)
         {
-            response = responseFactory.CreateAudioEffectResponse();
-
-            response.audioEffect = magmaDbContext.Find<AudioEffect>(id);
-
-            return responseFactory.UpdateResponse(response, "Success: audio effect found", ResponseStatus.OK);
+            return magmaDbContext.Find<AudioEffect>(id);
         }
 
-        public Response GetAudioEffectByPluginId(int pluginId)
+        public AudioEffect GetAudioEffectByPluginId(int pluginId)
         {
-            response = responseFactory.CreateAudioEffectResponse();
-
-            response.audioEffect = magmaDbContext.AudioEffects.SingleOrDefault<AudioEffect>(prop => prop.pluginId == pluginId);
-
-            return responseFactory.UpdateResponse(response, "Success: audio effects found", ResponseStatus.OK);
+            return magmaDbContext.AudioEffects.SingleOrDefault<AudioEffect>(prop => prop.pluginId == pluginId);
         }
 
-        public Response CreateAudioEffect(AudioEffect audioEffect)
+        public AudioEffect CreateAudioEffect(AudioEffect audioEffect)
         {
-            response = responseFactory.CreateAudioEffectResponse();
-
-            response.audioEffect.id = magmaDbContext.Add<AudioEffect>(audioEffect).Entity.id;
+            audioEffect.id = magmaDbContext.Add<AudioEffect>(audioEffect).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: created audio effect", ResponseStatus.OK);
+            return audioEffect;
         }
 
-        public Response UpdateAudioEffect(AudioEffect audioEffect)
+        public AudioEffect UpdateAudioEffect(AudioEffect audioEffect)
         {
-            response = responseFactory.CreateAudioEffectResponse();
-
-            response.audioEffect.id = magmaDbContext.Update<AudioEffect>(audioEffect).Entity.id;
+            audioEffect.id = magmaDbContext.Update<AudioEffect>(audioEffect).Entity.id;
 
             magmaDbContext.SaveChanges();
 
-            return responseFactory.UpdateResponse(response, "Success: updated audio effect", ResponseStatus.OK);
+            return audioEffect;
         }
 
-        public Response DeleteAudioEffect(int id)
+        public void DeleteAudioEffect(AudioEffect audioEffect)
         {
-            magmaDbContext.Remove<AudioEffect>(GetAudioEffectById(id).audioEffect);
+            magmaDbContext.Remove<AudioEffect>(audioEffect);
 
             magmaDbContext.SaveChanges();
-
-            return responseFactory.CreateResponse("Success: removed audio effect", ResponseStatus.OK);
         } 
     }
 }
