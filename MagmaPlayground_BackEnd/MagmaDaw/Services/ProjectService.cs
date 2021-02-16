@@ -9,23 +9,23 @@ namespace MagmaPlayground_BackEnd.Services
     public class ProjectService
     {
         private ProjectDao projectDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public ProjectService(MagmaDawDbContext magmaDbContext)
         {
             projectDao = new ProjectDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
-        public Response GetProjectById(int id)
+        public DawResponse GetProjectById(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -44,14 +44,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetProjectByUserId(int userId)
+        public DawResponse GetProjectByUserId(int userId)
         {
             if (userId == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter userId is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -70,7 +70,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreateProject(Project project)
+        public DawResponse CreateProject(Project project)
         {
             if (project == null)
             {
@@ -82,7 +82,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: project already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -96,7 +96,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdateProject(Project project)
+        public DawResponse UpdateProject(Project project)
         {
             if (project == null)
             {
@@ -108,7 +108,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -122,14 +122,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteProject(int id)
+        public DawResponse DeleteProject(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

@@ -9,23 +9,23 @@ namespace MagmaPlayground_BackEnd.Services
     public class AudioEffectService
     {
         private AudioEffectDao audioEffectDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public AudioEffectService(MagmaDawDbContext magmaDbContext)
         {
             audioEffectDao = new AudioEffectDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
-        public Response GetAudioEffectById(int id)
+        public DawResponse GetAudioEffectById(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -44,14 +44,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetAudioEffectByPluginId(int pluginId)
+        public DawResponse GetAudioEffectByPluginId(int pluginId)
         {
             if (pluginId == 0)
             {
                 return responseFactory.CreateResponse("Error: id cannot be null", ResponseStatus.BADREQUEST);
             }
             
-            response = new Response();
+            response = new DawResponse();
             
             try
             {
@@ -70,7 +70,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreateAudioEffect(AudioEffect audioEffect)
+        public DawResponse CreateAudioEffect(AudioEffect audioEffect)
         {
 
             if (audioEffect == null)
@@ -82,7 +82,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: audio effect already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -96,7 +96,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdateAudioEffect(AudioEffect audioEffect)
+        public DawResponse UpdateAudioEffect(AudioEffect audioEffect)
         {
             if (audioEffect == null)
             {
@@ -107,7 +107,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -121,14 +121,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteAudioEffect(int id)
+        public DawResponse DeleteAudioEffect(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

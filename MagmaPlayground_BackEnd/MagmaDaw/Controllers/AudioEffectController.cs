@@ -11,19 +11,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class AudioEffectController : ControllerBase
     {
         private AudioEffectService audioEffectService;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public AudioEffectController(MagmaDawDbContext magmaDbContext)
         {
             audioEffectService = new AudioEffectService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetAudioEffectById(int id)
+        public ActionResult<DawResponse> GetAudioEffectById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = audioEffectService.GetAudioEffectById(id);
 
@@ -31,9 +31,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("plugin/{pluginId}")]
-        public ActionResult<Response> GetAudioEffectByPluginId(int pluginId)
+        public ActionResult<DawResponse> GetAudioEffectByPluginId(int pluginId)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = audioEffectService.GetAudioEffectByPluginId(pluginId);
 
@@ -41,9 +41,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Response> CreateAudioEffect(AudioEffect audioEffect)
+        public ActionResult<DawResponse> CreateAudioEffect(AudioEffect audioEffect)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = audioEffectService.CreateAudioEffect(audioEffect);
 
@@ -51,9 +51,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdateAudioEffect(AudioEffect audioEffect)
+        public ActionResult<DawResponse> UpdateAudioEffect(AudioEffect audioEffect)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = audioEffectService.UpdateAudioEffect(audioEffect);
 
@@ -61,9 +61,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteAudioEffect(int id)
+        public ActionResult<DawResponse> DeleteAudioEffect(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = audioEffectService.DeleteAudioEffect(id);
 

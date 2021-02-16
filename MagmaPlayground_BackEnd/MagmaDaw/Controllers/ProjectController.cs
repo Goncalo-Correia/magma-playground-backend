@@ -17,19 +17,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class ProjectController : ControllerBase
     {
         private ProjectService projectService;
-        private Response response;
-        private ResponseFactory responseFactory;
+        private DawResponse response;
+        private DawResponseFactory responseFactory;
 
         public ProjectController(MagmaDawDbContext magmaDbContext)
         {
             projectService = new ProjectService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetProjectById(int id)
+        public ActionResult<DawResponse> GetProjectById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = projectService.GetProjectById(id);
 
@@ -37,9 +37,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        public ActionResult<Response> GetProjectsByUserId(int userId)
+        public ActionResult<DawResponse> GetProjectsByUserId(int userId)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = projectService.GetProjectByUserId(userId);
 
@@ -47,9 +47,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Response> CreateProject(Project project)
+        public ActionResult<DawResponse> CreateProject(Project project)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = projectService.CreateProject(project);
 
@@ -57,9 +57,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdateProject(Project project)
+        public ActionResult<DawResponse> UpdateProject(Project project)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = projectService.UpdateProject(project);
 
@@ -67,9 +67,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteProject(int id)
+        public ActionResult<DawResponse> DeleteProject(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = projectService.DeleteProject(id);
 

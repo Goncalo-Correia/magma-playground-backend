@@ -16,20 +16,20 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class RackController : ControllerBase
     {
         private RackService rackService;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
 
         public RackController(MagmaDawDbContext magmaDbContext)
         {
             rackService = new RackService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
         
         [HttpGet("{id}")]
-        public ActionResult<Response> GetRackById(int id)
+        public ActionResult<DawResponse> GetRackById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = rackService.GetRackById(id);
 
@@ -37,9 +37,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("track/{trackId}")]
-        public ActionResult<Response> GetRackByTrackId(int trackId)
+        public ActionResult<DawResponse> GetRackByTrackId(int trackId)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = rackService.GetRackByTrackId(trackId);
 
@@ -47,9 +47,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Response> CreateRack(Rack rack)
+        public ActionResult<DawResponse> CreateRack(Rack rack)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = rackService.CreateRack(rack);
 
@@ -57,9 +57,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdateRack(Rack rack)
+        public ActionResult<DawResponse> UpdateRack(Rack rack)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = rackService.UpdateRack(rack);
 
@@ -67,9 +67,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteRack(int id)
+        public ActionResult<DawResponse> DeleteRack(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = rackService.DeleteRack(id);
 

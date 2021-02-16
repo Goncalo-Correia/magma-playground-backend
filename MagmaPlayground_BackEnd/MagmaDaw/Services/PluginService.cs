@@ -9,24 +9,24 @@ namespace MagmaPlayground_BackEnd.Services
     public class PluginService
     {
         private PluginDao pluginDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public PluginService(MagmaDawDbContext magmaDbContext)
         {
             pluginDao = new PluginDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
-            response = new Response();
+            responseFactory = new DawResponseFactory();
+            response = new DawResponse();
         }
 
-        public Response GetPluginById(int id)
+        public DawResponse GetPluginById(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -45,14 +45,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetPluginByRackId(int rackId)
+        public DawResponse GetPluginByRackId(int rackId)
         {
             if (rackId == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -71,7 +71,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreatePlugin(Plugin plugin)
+        public DawResponse CreatePlugin(Plugin plugin)
         {
             if (plugin == null)
             {
@@ -83,7 +83,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: plugin already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -97,7 +97,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdatePlugin(Plugin plugin)
+        public DawResponse UpdatePlugin(Plugin plugin)
         {
             if (plugin == null)
             {
@@ -109,7 +109,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: plugin id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -123,14 +123,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeletePlugin(int id)
+        public DawResponse DeletePlugin(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

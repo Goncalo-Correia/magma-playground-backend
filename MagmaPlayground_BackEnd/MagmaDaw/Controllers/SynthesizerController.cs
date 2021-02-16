@@ -16,19 +16,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class SynthesizerController : ControllerBase
     {
         private SynthesizerService synthesizerService;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public SynthesizerController(MagmaDawDbContext magmaDbContext)
         {
             synthesizerService = new SynthesizerService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetSynthesizerById(int id)
+        public ActionResult<DawResponse> GetSynthesizerById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = synthesizerService.GetSynthesizerById(id);
 
@@ -36,9 +36,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("plugin/{pluginId}")]
-        public ActionResult<Response> GetSynthesizerByPluginId(int pluginId)
+        public ActionResult<DawResponse> GetSynthesizerByPluginId(int pluginId)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = synthesizerService.GetSynthesizerByPluginId(pluginId);
 
@@ -46,9 +46,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Response> CreateSynthesizer(Synthesizer synthesizer)
+        public ActionResult<DawResponse> CreateSynthesizer(Synthesizer synthesizer)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = synthesizerService.CreateSynthesizer(synthesizer);
 
@@ -56,9 +56,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdateSynthesizer(Synthesizer synthesizer)
+        public ActionResult<DawResponse> UpdateSynthesizer(Synthesizer synthesizer)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = synthesizerService.UpdateSynthesizer(synthesizer);
 
@@ -66,9 +66,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteSynthesizer(int id)
+        public ActionResult<DawResponse> DeleteSynthesizer(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = synthesizerService.DeleteSynthesizer(id);
 

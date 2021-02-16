@@ -9,23 +9,23 @@ namespace MagmaPlayground_BackEnd.Services
     public class RackService
     {
         private RackDao rackDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public RackService(MagmaDawDbContext magmaDbContext)
         {
             rackDao = new RackDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
-        public Response GetRackById(int id)
+        public DawResponse GetRackById(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
             
             try
             {
@@ -44,14 +44,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetRackByTrackId(int trackId)
+        public DawResponse GetRackByTrackId(int trackId)
         {
             if (trackId == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -70,7 +70,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreateRack(Rack rack)
+        public DawResponse CreateRack(Rack rack)
         {
             if (rack == null)
             {
@@ -82,7 +82,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: rack already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -96,7 +96,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdateRack(Rack rack)
+        public DawResponse UpdateRack(Rack rack)
         {
             if (rack == null)
             {
@@ -108,7 +108,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -122,14 +122,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteRack(int id)
+        public DawResponse DeleteRack(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

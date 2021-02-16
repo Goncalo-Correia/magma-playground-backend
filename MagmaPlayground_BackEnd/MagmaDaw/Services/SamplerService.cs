@@ -9,23 +9,23 @@ namespace MagmaPlayground_BackEnd.Services
     public class SamplerService
     {
         private SamplerDao samplerDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public SamplerService(MagmaDawDbContext magmaDbContext)
         {
             samplerDao = new SamplerDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
-        public Response GetSamplerById(int id)
+        public DawResponse GetSamplerById(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
             
             try
             {
@@ -44,14 +44,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetSamplerByPluginId(int pluginId)
+        public DawResponse GetSamplerByPluginId(int pluginId)
         {
             if (pluginId == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -70,7 +70,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreateSampler(Sampler sampler)
+        public DawResponse CreateSampler(Sampler sampler)
         {
             if (sampler == null)
             {
@@ -82,7 +82,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: sampler already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -96,7 +96,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdateSampler(Sampler sampler)
+        public DawResponse UpdateSampler(Sampler sampler)
         {
             if (sampler == null)
             {
@@ -108,7 +108,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -122,14 +122,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteSampler(int id)
+        public DawResponse DeleteSampler(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: sampler id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
             
             try
             {

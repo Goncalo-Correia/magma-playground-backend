@@ -4,16 +4,13 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.ResponseUtilities
 {
-    public class Response
+    public class DawResponse
     {
-        public string message { get; set; }
-        public ResponseStatus responseStatus { get; set; }
-
-        public User user { get; set; }
         public Project project { get; set; }
         public Track track { get; set; }
         public Rack rack { get; set; }
@@ -22,7 +19,6 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
         public Synthesizer synthesizer { get; set; }
         public AudioEffect audioEffect { get; set; }
 
-        public List<User> users { get; set; }
         public List<Project> projects { get; set; }
         public List<Track> tracks { get; set; }
         public List<Rack> racks { get; set; }
@@ -31,7 +27,10 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
         public List<Synthesizer> synthesizers { get; set; }
         public List<AudioEffect> audioEffects { get; set; }
 
-        public Response()
+        public string errorMessage { get; set; }
+        public HttpStatusCode httpStatusCode { get; set; }
+
+        public DawResponse()
         {
         }
     }

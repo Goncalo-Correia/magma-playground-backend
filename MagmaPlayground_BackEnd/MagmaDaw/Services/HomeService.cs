@@ -8,24 +8,24 @@ namespace MagmaPlayground_BackEnd.Services
 {
     public class HomeService
     {
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
         private UserDao userDao;
 
         public HomeService(MagmaDawDbContext magmaDbContext)
         {
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
             userDao = new UserDao(magmaDbContext);
         }
 
-        public Response Login(string email, string password)
+        public DawResponse Login(string email, string password)
         {
             if (email == null || password == null)
             {
                 return responseFactory.CreateResponse("Error: invalid email or password", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -48,7 +48,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response Register(User user)
+        public DawResponse Register(User user)
         {
             if (user.id != 0)
             {
@@ -60,7 +60,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: missing data", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

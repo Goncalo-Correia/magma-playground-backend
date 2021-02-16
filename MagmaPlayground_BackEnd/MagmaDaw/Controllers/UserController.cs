@@ -16,19 +16,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class UserController : ControllerBase
     {
         private UserService userService;
-        private Response response;
-        private ResponseFactory responseFactory;
+        private DawResponse response;
+        private DawResponseFactory responseFactory;
 
         public UserController(MagmaDawDbContext magmaDbContext)
         {
             userService = new UserService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetUserById(int id)
+        public ActionResult<DawResponse> GetUserById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = userService.GetUserById(id);
 
@@ -36,9 +36,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("email/{email}")]
-        public ActionResult<Response> GetUserByEmail(string email)
+        public ActionResult<DawResponse> GetUserByEmail(string email)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = userService.GetUserByEmail(email);
 
@@ -46,9 +46,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Response> CreateUser(User user)
+        public ActionResult<DawResponse> CreateUser(User user)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = userService.CreateUser(user);
 
@@ -56,9 +56,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdateUser(User user)
+        public ActionResult<DawResponse> UpdateUser(User user)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = userService.UpdateUser(user);
 
@@ -66,9 +66,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteUser(int id)
+        public ActionResult<DawResponse> DeleteUser(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = userService.DeleteUser(id);
 

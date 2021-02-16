@@ -18,19 +18,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class TrackController : ControllerBase
     {
         private TrackService trackService;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public TrackController(MagmaDawDbContext magmaDbContext)
         {
             trackService = new TrackService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetTrackById(int id)
+        public ActionResult<DawResponse> GetTrackById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = trackService.GetTrackById(id);
 
@@ -38,18 +38,18 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("project/{projectId}")]
-        public ActionResult<Response> GetTracksByProjectId(int projectId)
+        public ActionResult<DawResponse> GetTracksByProjectId(int projectId)
         {
-            response = new Response();
+            response = new DawResponse();
             response = trackService.GetTracksByProjectId(projectId);
 
             return responseFactory.CreateControllerResponse(response);
         }
 
         [HttpPost]
-        public ActionResult<Response> CreateTrack(Track track)
+        public ActionResult<DawResponse> CreateTrack(Track track)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = trackService.CreateTrack(track);
 
@@ -57,9 +57,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdateTrack(Track track)
+        public ActionResult<DawResponse> UpdateTrack(Track track)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = trackService.UpdateTrack(track);
 
@@ -67,9 +67,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteTrack(int id)
+        public ActionResult<DawResponse> DeleteTrack(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = trackService.DeleteTrack(id);
 

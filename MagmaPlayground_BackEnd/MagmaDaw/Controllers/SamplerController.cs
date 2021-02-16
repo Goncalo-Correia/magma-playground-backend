@@ -16,19 +16,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class SamplerController : ControllerBase
     {
         private SamplerService samplerService;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public SamplerController(MagmaDawDbContext magmaDbContext)
         {
             samplerService = new SamplerService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetSamplerById(int id)
+        public ActionResult<DawResponse> GetSamplerById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = samplerService.GetSamplerById(id);
 
@@ -36,9 +36,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("plugin/{pluginId}")]
-        public ActionResult<Response> GetSamplerByPluginId(int pluginId)
+        public ActionResult<DawResponse> GetSamplerByPluginId(int pluginId)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = samplerService.GetSamplerByPluginId(pluginId);
 
@@ -46,9 +46,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Response> CreateSampler(Sampler sampler)
+        public ActionResult<DawResponse> CreateSampler(Sampler sampler)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = samplerService.CreateSampler(sampler);
 
@@ -56,9 +56,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdateSampler(Sampler sampler)
+        public ActionResult<DawResponse> UpdateSampler(Sampler sampler)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = samplerService.UpdateSampler(sampler);
 
@@ -66,9 +66,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeleteSampler(int id)
+        public ActionResult<DawResponse> DeleteSampler(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = samplerService.DeleteSampler(id);
 

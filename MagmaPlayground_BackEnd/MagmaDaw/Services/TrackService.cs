@@ -9,23 +9,23 @@ namespace MagmaPlayground_BackEnd.Services
     public class TrackService
     {
         private TrackDao trackDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public TrackService(MagmaDawDbContext magmaDbContext)
         {
             trackDao = new TrackDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
-        public Response GetTrackById(int id)
+        public DawResponse GetTrackById(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -44,14 +44,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetTracksByProjectId(int projectId)
+        public DawResponse GetTracksByProjectId(int projectId)
         {
             if (projectId == 0)
             {
                 return responseFactory.CreateResponse("Error: input paramenter projectId is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
             
             try
             {
@@ -70,7 +70,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreateTrack(Track track)
+        public DawResponse CreateTrack(Track track)
         {
             if (track == null)
             {
@@ -82,7 +82,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: track already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -96,7 +96,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdateTrack(Track track)
+        public DawResponse UpdateTrack(Track track)
         {
             if (track == null)
             {
@@ -108,7 +108,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -122,14 +122,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteTrack(int id)
+        public DawResponse DeleteTrack(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

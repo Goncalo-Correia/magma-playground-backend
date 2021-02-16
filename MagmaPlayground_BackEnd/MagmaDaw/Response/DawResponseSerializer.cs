@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.ResponseUtilities
 {
-    public class ResponseSerializer
+    public class DawResponseSerializer
     {
         private string json;
 
-        public ResponseSerializer()
+        public DawResponseSerializer()
         {
         }
 
-        public string SerializeResponse(Response response)
+        public string SerializeResponse(DawResponse response)
         {
             json = JsonConvert.SerializeObject(
                                     response, 

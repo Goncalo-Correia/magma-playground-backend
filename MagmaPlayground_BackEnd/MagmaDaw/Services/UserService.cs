@@ -9,23 +9,23 @@ namespace MagmaPlayground_BackEnd.Services
     public class UserService
     {
         private UserDao userDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public UserService(MagmaDawDbContext magmaDbContext)
         {
             userDao = new UserDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
-        public Response GetUserById(int userId)
+        public DawResponse GetUserById(int userId)
         {
             if (userId == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -44,14 +44,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetUserByEmail(string email)
+        public DawResponse GetUserByEmail(string email)
         {
             if (email == null)
             {
                 return responseFactory.CreateResponse("Error: input parameter email is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -70,7 +70,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreateUser(User user)
+        public DawResponse CreateUser(User user)
         {
             if (user == null)
             {
@@ -82,7 +82,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: user already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -96,7 +96,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdateUser(User user)
+        public DawResponse UpdateUser(User user)
         {
             if (user == null)
             {
@@ -108,7 +108,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: user id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -122,14 +122,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteUser(int id)
+        public DawResponse DeleteUser(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: user id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

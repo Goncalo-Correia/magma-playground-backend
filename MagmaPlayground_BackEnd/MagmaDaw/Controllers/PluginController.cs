@@ -16,19 +16,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class PluginController : ControllerBase
     {
         private PluginService pluginService;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public PluginController(MagmaDawDbContext magmaDbContext)
         {
             pluginService = new PluginService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetPluginById(int id)
+        public ActionResult<DawResponse> GetPluginById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = pluginService.GetPluginById(id);
 
@@ -36,9 +36,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpGet("rack/{rackId}")]
-        public ActionResult<Response> GetPluginsByRackId(int rackId)
+        public ActionResult<DawResponse> GetPluginsByRackId(int rackId)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = pluginService.GetPluginByRackId(rackId);
 
@@ -46,9 +46,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Response> CreatePlugin(Plugin plugin)
+        public ActionResult<DawResponse> CreatePlugin(Plugin plugin)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = pluginService.CreatePlugin(plugin);
 
@@ -56,9 +56,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> UpdatePlugin(Plugin plugin)
+        public ActionResult<DawResponse> UpdatePlugin(Plugin plugin)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = pluginService.UpdatePlugin(plugin);
 
@@ -66,9 +66,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Response> DeletePlugin(int id)
+        public ActionResult<DawResponse> DeletePlugin(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = pluginService.DeletePlugin(id);
 

@@ -15,19 +15,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class PlaygroundController : ControllerBase
     {
         private PlaygroundService playgroundService;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public PlaygroundController(MagmaDawDbContext magmaDbContext)
         {
             playgroundService = new PlaygroundService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Response> GetProjectById(int id)
+        public ActionResult<DawResponse> GetProjectById(int id)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = playgroundService.GetProjectById(id);
 
@@ -35,9 +35,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("create")]
-        public ActionResult<Response> SaveNewProject(Project project)
+        public ActionResult<DawResponse> SaveNewProject(Project project)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = playgroundService.SaveNewProject(project);
 
@@ -45,9 +45,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
 
         [HttpPost("update")]
-        public ActionResult<Response> SaveProject(Project project)
+        public ActionResult<DawResponse> SaveProject(Project project)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = playgroundService.SaveProject(project);
 

@@ -9,23 +9,23 @@ namespace MagmaPlayground_BackEnd.Services
     public class SynthesizerService
     {
         private SynthesizerDao synthesizerDao;
-        private ResponseFactory responseFactory;
-        private Response response;
+        private DawResponseFactory responseFactory;
+        private DawResponse response;
 
         public SynthesizerService(MagmaDawDbContext magmaDbContext)
         {
             synthesizerDao = new SynthesizerDao(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
 
-        public Response GetSynthesizerById(int id)
+        public DawResponse GetSynthesizerById(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -44,14 +44,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response GetSynthesizerByPluginId(int pluginId)
+        public DawResponse GetSynthesizerByPluginId(int pluginId)
         {
             if (pluginId == 0)
             {
                 return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
             
             try
             {
@@ -70,7 +70,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response CreateSynthesizer(Synthesizer synthesizer)
+        public DawResponse CreateSynthesizer(Synthesizer synthesizer)
         {
             if (synthesizer == null)
             {
@@ -82,7 +82,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: synthesizer already exists, id must be null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -96,7 +96,7 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response UpdateSynthesizer(Synthesizer synthesizer)
+        public DawResponse UpdateSynthesizer(Synthesizer synthesizer)
         {
             if (synthesizer == null)
             {
@@ -108,7 +108,7 @@ namespace MagmaPlayground_BackEnd.Services
                 return responseFactory.CreateResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {
@@ -122,14 +122,14 @@ namespace MagmaPlayground_BackEnd.Services
             return response;
         }
 
-        public Response DeleteSynthesizer(int id)
+        public DawResponse DeleteSynthesizer(int id)
         {
             if (id == 0)
             {
                 return responseFactory.CreateResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
             }
 
-            response = new Response();
+            response = new DawResponse();
 
             try
             {

@@ -13,19 +13,19 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class HomeController : ControllerBase
     {
         private HomeService homeService;
-        private Response response;
-        public ResponseFactory responseFactory;
+        private DawResponse response;
+        public DawResponseFactory responseFactory;
 
         public HomeController(MagmaDawDbContext magmaDbContext)
         {
             homeService = new HomeService(magmaDbContext);
-            responseFactory = new ResponseFactory();
+            responseFactory = new DawResponseFactory();
         }
         
         [HttpPost("/login")]
-        public ActionResult<Response> Login(User user)
+        public ActionResult<DawResponse> Login(User user)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = homeService.Login(user.email, user.password);
 
@@ -33,9 +33,9 @@ namespace MagmaPlayground_BackEnd.Controllers
         }
         
         [HttpPost("/register")]
-        public ActionResult<Response> Register(User registerUser)
+        public ActionResult<DawResponse> Register(User registerUser)
         {
-            response = new Response();
+            response = new DawResponse();
 
             response = homeService.Register(registerUser);
 
