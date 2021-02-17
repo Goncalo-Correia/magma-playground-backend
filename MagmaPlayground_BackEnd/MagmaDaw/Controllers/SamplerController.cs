@@ -16,63 +16,42 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class SamplerController : ControllerBase
     {
         private SamplerService samplerService;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
 
         public SamplerController(MagmaDawDbContext magmaDbContext)
         {
             samplerService = new SamplerService(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
         public ActionResult<DawResponse> GetSamplerById(int id)
         {
-            response = new DawResponse();
-
-            response = samplerService.GetSamplerById(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(samplerService.GetSamplerById(id));
         }
 
         [HttpGet("plugin/{pluginId}")]
         public ActionResult<DawResponse> GetSamplerByPluginId(int pluginId)
         {
-            response = new DawResponse();
-
-            response = samplerService.GetSamplerByPluginId(pluginId);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(samplerService.GetSamplerByPluginId(pluginId));
         }
 
         [HttpPost]
         public ActionResult<DawResponse> CreateSampler(Sampler sampler)
         {
-            response = new DawResponse();
-
-            response = samplerService.CreateSampler(sampler);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(samplerService.CreateSampler(sampler));
         }
 
         [HttpPost("update")]
         public ActionResult<DawResponse> UpdateSampler(Sampler sampler)
         {
-            response = new DawResponse();
-
-            response = samplerService.UpdateSampler(sampler);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(samplerService.UpdateSampler(sampler));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<DawResponse> DeleteSampler(int id)
         {
-            response = new DawResponse();
-
-            response = samplerService.DeleteSampler(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(samplerService.DeleteSampler(id));
         }
     }
 }

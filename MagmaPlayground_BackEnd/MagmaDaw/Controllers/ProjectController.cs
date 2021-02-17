@@ -17,63 +17,36 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class ProjectController : ControllerBase
     {
         private ProjectService projectService;
-        private DawResponse response;
-        private DawResponseFactory responseFactory;
+        private DawResponseFactory dawResponseFactory;
 
         public ProjectController(MagmaDawDbContext magmaDbContext)
         {
             projectService = new ProjectService(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
         public ActionResult<DawResponse> GetProjectById(int id)
         {
-            response = new DawResponse();
-
-            response = projectService.GetProjectById(id);
-
-            return responseFactory.CreateControllerResponse(response);
-        }
-
-        [HttpGet("user/{userId}")]
-        public ActionResult<DawResponse> GetProjectsByUserId(int userId)
-        {
-            response = new DawResponse();
-
-            response = projectService.GetProjectByUserId(userId);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(projectService.GetProjectById(id));
         }
 
         [HttpPost]
         public ActionResult<DawResponse> CreateProject(Project project)
         {
-            response = new DawResponse();
-
-            response = projectService.CreateProject(project);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(projectService.CreateProject(project));
         }
 
         [HttpPost("update")]
         public ActionResult<DawResponse> UpdateProject(Project project)
         {
-            response = new DawResponse();
-
-            response = projectService.UpdateProject(project);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(projectService.UpdateProject(project));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<DawResponse> DeleteProject(int id)
         {
-            response = new DawResponse();
-
-            response = projectService.DeleteProject(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(projectService.DeleteProject(id));
         }
     }
 }

@@ -123,18 +123,18 @@ namespace MagmaPlayground_BackEnd.Services
             return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteTrack(Track track)
+        public DawResponse DeleteTrack(int id)
         {
             dawResponse = new DawResponse();
 
-            if (track.id == 0)
+            if (id == 0)
             {
                 return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                trackDao.DeleteTrack(track);
+                trackDao.DeleteTrack(GetTrackById(id).track);
             }
             catch (Exception exception)
             {

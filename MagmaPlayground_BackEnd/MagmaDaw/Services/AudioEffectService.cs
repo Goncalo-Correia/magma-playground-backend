@@ -122,18 +122,18 @@ namespace MagmaPlayground_BackEnd.Services
             return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteAudioEffect(AudioEffect audioEffect)
+        public DawResponse DeleteAudioEffect(int id)
         {
             dawResponse = new DawResponse();
 
-            if (audioEffect.id == 0)
+            if (id == 0)
             {
                 return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                audioEffectDao.DeleteAudioEffect(audioEffect);
+                audioEffectDao.DeleteAudioEffect(GetAudioEffectById(id).audioEffect);
             }
             catch (Exception exception)
             {

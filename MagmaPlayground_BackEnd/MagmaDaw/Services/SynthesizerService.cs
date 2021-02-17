@@ -123,18 +123,18 @@ namespace MagmaPlayground_BackEnd.Services
             return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteSynthesizer(Synthesizer synthesizer)
+        public DawResponse DeleteSynthesizer(int id)
         {
             dawResponse = new DawResponse();
 
-            if (synthesizer.id == 0)
+            if (id == 0)
             {
                 return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                synthesizerDao.DeleteSynthesizer(synthesizer);
+                synthesizerDao.DeleteSynthesizer(GetSynthesizerById(id).synthesizer);
             }
             catch (Exception exception)
             {

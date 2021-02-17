@@ -97,18 +97,18 @@ namespace MagmaPlayground_BackEnd.Services
             return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteProject(Project project)
+        public DawResponse DeleteProject(int id)
         {
             dawResponse = new DawResponse();
 
-            if (project.id == 0)
+            if (id == 0)
             {
                 return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                projectDao.DeleteProject(project);
+                projectDao.DeleteProject(GetProjectById(id).project);
             }
             catch (Exception exception)
             {

@@ -16,64 +16,37 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class RackController : ControllerBase
     {
         private RackService rackService;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
 
 
         public RackController(MagmaDawDbContext magmaDbContext)
         {
             rackService = new RackService(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
         
         [HttpGet("{id}")]
         public ActionResult<DawResponse> GetRackById(int id)
         {
-            response = new DawResponse();
-
-            response = rackService.GetRackById(id);
-
-            return responseFactory.CreateControllerResponse(response);
-        }
-
-        [HttpGet("track/{trackId}")]
-        public ActionResult<DawResponse> GetRackByTrackId(int trackId)
-        {
-            response = new DawResponse();
-
-            response = rackService.GetRackByTrackId(trackId);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(rackService.GetRackById(id));
         }
 
         [HttpPost]
         public ActionResult<DawResponse> CreateRack(Rack rack)
         {
-            response = new DawResponse();
-
-            response = rackService.CreateRack(rack);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(rackService.CreateRack(rack));
         }
 
         [HttpPost("update")]
         public ActionResult<DawResponse> UpdateRack(Rack rack)
         {
-            response = new DawResponse();
-
-            response = rackService.UpdateRack(rack);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(rackService.UpdateRack(rack));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<DawResponse> DeleteRack(int id)
         {
-            response = new DawResponse();
-
-            response = rackService.DeleteRack(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(rackService.DeleteRack(id));
         }
     }
 }

@@ -124,18 +124,18 @@ namespace MagmaPlayground_BackEnd.Services
             return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeletePlugin(Plugin plugin)
+        public DawResponse DeletePlugin(int id)
         {
             dawResponse = new DawResponse();
 
-            if (plugin.id == 0)
+            if (id == 0)
             {
                 return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                pluginDao.DeletePlugin(plugin);
+                pluginDao.DeletePlugin(GetPluginById(id).plugin);
             }
             catch (Exception exception)
             {

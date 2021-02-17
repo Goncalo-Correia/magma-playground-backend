@@ -18,62 +18,42 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class TrackController : ControllerBase
     {
         private TrackService trackService;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
 
         public TrackController(MagmaDawDbContext magmaDbContext)
         {
             trackService = new TrackService(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
         public ActionResult<DawResponse> GetTrackById(int id)
         {
-            response = new DawResponse();
-
-            response = trackService.GetTrackById(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(trackService.GetTrackById(id));
         }
 
         [HttpGet("project/{projectId}")]
         public ActionResult<DawResponse> GetTracksByProjectId(int projectId)
         {
-            response = new DawResponse();
-            response = trackService.GetTracksByProjectId(projectId);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(trackService.GetTracksByProjectId(projectId));
         }
 
         [HttpPost]
         public ActionResult<DawResponse> CreateTrack(Track track)
         {
-            response = new DawResponse();
-
-            response = trackService.CreateTrack(track);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(trackService.CreateTrack(track));
         }
 
         [HttpPost("update")]
         public ActionResult<DawResponse> UpdateTrack(Track track)
         {
-            response = new DawResponse();
-
-            response = trackService.UpdateTrack(track);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(trackService.UpdateTrack(track));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<DawResponse> DeleteTrack(int id)
         {
-            response = new DawResponse();
-
-            response = trackService.DeleteTrack(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(trackService.DeleteTrack(id));
         }
     }
 }

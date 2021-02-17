@@ -16,63 +16,42 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class PluginController : ControllerBase
     {
         private PluginService pluginService;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
 
         public PluginController(MagmaDawDbContext magmaDbContext)
         {
             pluginService = new PluginService(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
         public ActionResult<DawResponse> GetPluginById(int id)
         {
-            response = new DawResponse();
-
-            response = pluginService.GetPluginById(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(pluginService.GetPluginById(id));
         }
 
         [HttpGet("rack/{rackId}")]
         public ActionResult<DawResponse> GetPluginsByRackId(int rackId)
         {
-            response = new DawResponse();
-
-            response = pluginService.GetPluginByRackId(rackId);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(pluginService.GetPluginByRackId(rackId));
         }
 
         [HttpPost]
         public ActionResult<DawResponse> CreatePlugin(Plugin plugin)
         {
-            response = new DawResponse();
-
-            response = pluginService.CreatePlugin(plugin);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(pluginService.CreatePlugin(plugin));
         }
 
         [HttpPost("update")]
         public ActionResult<DawResponse> UpdatePlugin(Plugin plugin)
         {
-            response = new DawResponse();
-
-            response = pluginService.UpdatePlugin(plugin);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(pluginService.UpdatePlugin(plugin));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<DawResponse> DeletePlugin(int id)
         {
-            response = new DawResponse();
-
-            response = pluginService.DeletePlugin(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(pluginService.DeletePlugin(id));
         }
     }
 }

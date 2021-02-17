@@ -11,63 +11,42 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class AudioEffectController : ControllerBase
     {
         private AudioEffectService audioEffectService;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
 
         public AudioEffectController(MagmaDawDbContext magmaDbContext)
         {
             audioEffectService = new AudioEffectService(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
         public ActionResult<DawResponse> GetAudioEffectById(int id)
         {
-            response = new DawResponse();
-
-            response = audioEffectService.GetAudioEffectById(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(audioEffectService.GetAudioEffectById(id));
         }
 
         [HttpGet("plugin/{pluginId}")]
         public ActionResult<DawResponse> GetAudioEffectByPluginId(int pluginId)
         {
-            response = new DawResponse();
-
-            response = audioEffectService.GetAudioEffectByPluginId(pluginId);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(audioEffectService.GetAudioEffectByPluginId(pluginId));
         }
 
         [HttpPost]
         public ActionResult<DawResponse> CreateAudioEffect(AudioEffect audioEffect)
         {
-            response = new DawResponse();
-
-            response = audioEffectService.CreateAudioEffect(audioEffect);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(audioEffectService.CreateAudioEffect(audioEffect));
         }
 
         [HttpPost("update")]
         public ActionResult<DawResponse> UpdateAudioEffect(AudioEffect audioEffect)
         {
-            response = new DawResponse();
-
-            response = audioEffectService.UpdateAudioEffect(audioEffect);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(audioEffectService.UpdateAudioEffect(audioEffect));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<DawResponse> DeleteAudioEffect(int id)
         {
-            response = new DawResponse();
-
-            response = audioEffectService.DeleteAudioEffect(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(audioEffectService.DeleteAudioEffect(id));
         }
     }
 }

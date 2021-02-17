@@ -123,18 +123,18 @@ namespace MagmaPlayground_BackEnd.Services
             return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteSampler(Sampler sampler)
+        public DawResponse DeleteSampler(int id)
         {
             dawResponse = new DawResponse();
 
-            if (sampler.id == 0)
+            if (id == 0)
             {
                 return dawResponseFactory.CreateDawResponse(dawResponse, "Error: sampler.id is null", HttpStatusCode.BadRequest);
             }
             
             try
             {
-                samplerDao.DeleteSampler(sampler);
+                samplerDao.DeleteSampler(GetSamplerById(id).sampler);
             }
             catch (Exception exception)
             {

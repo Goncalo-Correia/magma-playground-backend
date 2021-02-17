@@ -16,63 +16,42 @@ namespace MagmaPlayground_BackEnd.Controllers
     public class SynthesizerController : ControllerBase
     {
         private SynthesizerService synthesizerService;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
 
         public SynthesizerController(MagmaDawDbContext magmaDbContext)
         {
             synthesizerService = new SynthesizerService(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         [HttpGet("{id}")]
         public ActionResult<DawResponse> GetSynthesizerById(int id)
         {
-            response = new DawResponse();
-
-            response = synthesizerService.GetSynthesizerById(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(synthesizerService.GetSynthesizerById(id));
         }
 
         [HttpGet("plugin/{pluginId}")]
         public ActionResult<DawResponse> GetSynthesizerByPluginId(int pluginId)
         {
-            response = new DawResponse();
-
-            response = synthesizerService.GetSynthesizerByPluginId(pluginId);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(synthesizerService.GetSynthesizerByPluginId(pluginId));
         }
 
         [HttpPost]
         public ActionResult<DawResponse> CreateSynthesizer(Synthesizer synthesizer)
         {
-            response = new DawResponse();
-
-            response = synthesizerService.CreateSynthesizer(synthesizer);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(synthesizerService.CreateSynthesizer(synthesizer));
         }
 
         [HttpPost("update")]
         public ActionResult<DawResponse> UpdateSynthesizer(Synthesizer synthesizer)
         {
-            response = new DawResponse();
-
-            response = synthesizerService.UpdateSynthesizer(synthesizer);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(synthesizerService.UpdateSynthesizer(synthesizer));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<DawResponse> DeleteSynthesizer(int id)
         {
-            response = new DawResponse();
-
-            response = synthesizerService.DeleteSynthesizer(id);
-
-            return responseFactory.CreateControllerResponse(response);
+            return dawResponseFactory.CreateDawControllerResponse(synthesizerService.DeleteSynthesizer(id));
         }
     }
 }

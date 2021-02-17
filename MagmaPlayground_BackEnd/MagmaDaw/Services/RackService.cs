@@ -97,18 +97,18 @@ namespace MagmaPlayground_BackEnd.Services
             return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteRack(Rack rack)
+        public DawResponse DeleteRack(int id)
         {
             dawResponse = new DawResponse();
 
-            if (rack.id == 0)
+            if (id == 0)
             {
                 return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rack.id is null", HttpStatusCode.BadRequest);
             }
 
             try
             {
-                rackDao.DeleteRack(rack);
+                rackDao.DeleteRack(GetRackById(id).rack);
             }
             catch (Exception exception)
             {
