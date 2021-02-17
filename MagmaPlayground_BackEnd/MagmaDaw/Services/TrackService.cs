@@ -3,144 +3,145 @@ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
+using System.Net;
 
 namespace MagmaPlayground_BackEnd.Services
 {
     public class TrackService
     {
         private TrackDao trackDao;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
+        private DawResponse dawResponse;
 
         public TrackService(MagmaDawDbContext magmaDbContext)
         {
             trackDao = new TrackDao(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         public DawResponse GetTrackById(int id)
         {
+            dawResponse = new DawResponse();
+
             if (id == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = trackDao.GetTrackById(id);
+                dawResponse.track = trackDao.GetTrackById(id);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.track == null)
+            if (dawResponse.track == null)
             {
-                return responseFactory.CreateResponse("Error: track not found", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse GetTracksByProjectId(int projectId)
         {
+            dawResponse = new DawResponse();
+
             if (projectId == 0)
             {
-                return responseFactory.CreateResponse("Error: input paramenter projectId is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: projectId is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
             
             try
             {
-                response = trackDao.GetTracksByProjectId(projectId);
+                dawResponse.tracks = trackDao.GetTracksByProjectId(projectId);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.tracks == null)
+            if (dawResponse.tracks == null)
             {
-                return responseFactory.CreateResponse("Error: tracks not found for this project", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: tracks not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse CreateTrack(Track track)
         {
+            dawResponse = new DawResponse();
+
             if (track == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track is null", HttpStatusCode.BadRequest);
             }
 
             if (track.id != 0)
             {
-                return responseFactory.CreateResponse("Error: track already exists, id must be null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track.id must be null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = trackDao.CreateTrack(track);
+                dawResponse.track = trackDao.CreateTrack(track);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse UpdateTrack(Track track)
         {
+            dawResponse = new DawResponse();
+
             if (track == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track is null", HttpStatusCode.BadRequest);
             }
 
             if (track.id == 0)
             {
-                return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = trackDao.UpdateTrack(track);
+                dawResponse.track = trackDao.UpdateTrack(track);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteTrack(int id)
+        public DawResponse DeleteTrack(Track track)
         {
-            if (id == 0)
-            {
-                return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
-            }
+            dawResponse = new DawResponse();
 
-            response = new DawResponse();
+            if (track.id == 0)
+            {
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: track.id is null", HttpStatusCode.BadRequest);
+            }
 
             try
             {
-                response = trackDao.DeleteTrack(id);
+                trackDao.DeleteTrack(track);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
     }
 }

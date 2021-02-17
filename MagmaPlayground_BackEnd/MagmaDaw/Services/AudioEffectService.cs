@@ -3,143 +3,144 @@ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
+using System.Net;
 
 namespace MagmaPlayground_BackEnd.Services
 {
     public class AudioEffectService
     {
         private AudioEffectDao audioEffectDao;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
+        private DawResponse dawResponse;
 
         public AudioEffectService(MagmaDawDbContext magmaDbContext)
         {
             audioEffectDao = new AudioEffectDao(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
+
 
         public DawResponse GetAudioEffectById(int id)
         {
+            dawResponse = new DawResponse();
+
             if (id == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect.id", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = audioEffectDao.GetAudioEffectById(id);
+                dawResponse.audioEffect = audioEffectDao.GetAudioEffectById(id);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.audioEffect == null)
+            if (dawResponse.audioEffect == null)
             {
-                return responseFactory.CreateResponse("Error: audio effect not found", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse GetAudioEffectByPluginId(int pluginId)
         {
+            dawResponse = new DawResponse();
+
             if (pluginId == 0)
             {
-                return responseFactory.CreateResponse("Error: id cannot be null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: pluginId cannot be null", HttpStatusCode.BadRequest);
             }
-            
-            response = new DawResponse();
             
             try
             {
-                response = audioEffectDao.GetAudioEffectByPluginId(pluginId);
+                dawResponse.audioEffect = audioEffectDao.GetAudioEffectByPluginId(pluginId);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.audioEffects == null)
+            if (dawResponse.audioEffect == null)
             {
-                return responseFactory.CreateResponse("Error: audio effects not found for this plugin", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse CreateAudioEffect(AudioEffect audioEffect)
         {
+            dawResponse = new DawResponse();
 
             if (audioEffect == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect is null", HttpStatusCode.BadRequest);
             }
             if (audioEffect.id != 0)
             {
-                return responseFactory.CreateResponse("Error: audio effect already exists, id must be null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect.id is not null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = audioEffectDao.CreateAudioEffect(audioEffect);
+                dawResponse.audioEffect = audioEffectDao.CreateAudioEffect(audioEffect);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse UpdateAudioEffect(AudioEffect audioEffect)
         {
+            dawResponse = new DawResponse();
+
             if (audioEffect == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect is nulll", HttpStatusCode.BadRequest);
             }
             if (audioEffect.id == 0)
             {
-                return responseFactory.CreateResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = audioEffectDao.UpdateAudioEffect(audioEffect);
+                dawResponse.audioEffect = audioEffectDao.UpdateAudioEffect(audioEffect);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteAudioEffect(int id)
+        public DawResponse DeleteAudioEffect(AudioEffect audioEffect)
         {
-            if (id == 0)
-            {
-                return responseFactory.CreateResponse("Error: audio effect id is null", ResponseStatus.BADREQUEST);
-            }
+            dawResponse = new DawResponse();
 
-            response = new DawResponse();
+            if (audioEffect.id == 0)
+            {
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: audioEffect.id is null", HttpStatusCode.BadRequest);
+            }
 
             try
             {
-                response = audioEffectDao.DeleteAudioEffect(id);
+                audioEffectDao.DeleteAudioEffect(audioEffect);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
     }
 }

@@ -3,144 +3,119 @@ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
+using System.Net;
 
 namespace MagmaPlayground_BackEnd.Services
 {
     public class RackService
     {
         private RackDao rackDao;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
+        private DawResponse dawResponse;
 
         public RackService(MagmaDawDbContext magmaDbContext)
         {
             rackDao = new RackDao(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         public DawResponse GetRackById(int id)
         {
+            dawResponse = new DawResponse();
+
             if (id == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rack.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
             
             try
             {
-                response = rackDao.GetRackById(id);
+                dawResponse.rack = rackDao.GetRackById(id);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.rack == null)
+            if (dawResponse.rack == null)
             {
-                return responseFactory.CreateResponse("Error: rack not found", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rack not found", HttpStatusCode.NotFound);
             }
 
-            return response;
-        }
-
-        public DawResponse GetRackByTrackId(int trackId)
-        {
-            if (trackId == 0)
-            {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
-            }
-
-            response = new DawResponse();
-
-            try
-            {
-                response = rackDao.GetRackByTrackId(trackId);
-            }
-            catch (Exception exception)
-            {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
-            }
-
-            if (response.rack == null)
-            {
-                return responseFactory.CreateResponse("Error: rack not found for this track", ResponseStatus.NOTFOUND);
-            }
-
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse CreateRack(Rack rack)
         {
+            dawResponse = new DawResponse();
+
             if (rack == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: input parameter is null", HttpStatusCode.BadRequest);
             }
 
             if (rack.id != 0)
             {
-                return responseFactory.CreateResponse("Error: rack already exists, id must be null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rack.id must be null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = rackDao.CreateRack(rack);
+                dawResponse.rack = rackDao.CreateRack(rack);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse UpdateRack(Rack rack)
         {
+            dawResponse = new DawResponse();
+
             if (rack == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rack is null", HttpStatusCode.BadRequest);
             }
 
             if (rack.id == 0)
             {
-                return responseFactory.CreateResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rack.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = rackDao.UpdateRack(rack);
+                dawResponse.rack = rackDao.UpdateRack(rack);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteRack(int id)
+        public DawResponse DeleteRack(Rack rack)
         {
-            if (id == 0)
-            {
-                return responseFactory.CreateResponse("Error: rack id is null", ResponseStatus.BADREQUEST);
-            }
+            dawResponse = new DawResponse();
 
-            response = new DawResponse();
+            if (rack.id == 0)
+            {
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rack.id is null", HttpStatusCode.BadRequest);
+            }
 
             try
             {
-                response = rackDao.DeleteRack(id);
+                rackDao.DeleteRack(rack);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
     }
 }

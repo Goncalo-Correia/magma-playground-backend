@@ -3,145 +3,146 @@ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
+using System.Net;
 
 namespace MagmaPlayground_BackEnd.Services
 {
     public class PluginService
     {
         private PluginDao pluginDao;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
+        private DawResponse dawResponse;
 
         public PluginService(MagmaDawDbContext magmaDbContext)
         {
             pluginDao = new PluginDao(magmaDbContext);
-            responseFactory = new DawResponseFactory();
-            response = new DawResponse();
+            dawResponseFactory = new DawResponseFactory();
+            dawResponse = new DawResponse();
         }
 
         public DawResponse GetPluginById(int id)
         {
+            dawResponse = new DawResponse();
+
             if (id == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin.Id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = pluginDao.GetPluginById(id);
+                dawResponse.plugin = pluginDao.GetPluginById(id);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.plugin == null)
+            if (dawResponse.plugin == null)
             {
-                return responseFactory.CreateResponse("Error: plugin not found", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse GetPluginByRackId(int rackId)
         {
+            dawResponse = new DawResponse();
+
             if (rackId == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: rackId is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = pluginDao.GetPluginsByRackId(rackId);
+                dawResponse.plugins = pluginDao.GetPluginsByRackId(rackId);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.plugins == null)
+            if (dawResponse.plugins == null)
             {
-                return responseFactory.CreateResponse("Error: plugins not found for this rack", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugins not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse CreatePlugin(Plugin plugin)
         {
+            dawResponse = new DawResponse();
+
             if (plugin == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin is null", HttpStatusCode.BadRequest);
             }
 
             if (plugin.id != 0)
             {
-                return responseFactory.CreateResponse("Error: plugin already exists, id must be null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin.id is not null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = pluginDao.CreatePlugin(plugin);
+                dawResponse.plugin = pluginDao.CreatePlugin(plugin);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse UpdatePlugin(Plugin plugin)
         {
+            dawResponse = new DawResponse();
+
             if (plugin == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin is null", HttpStatusCode.BadRequest);
             }
 
             if (plugin.id == 0)
             {
-                return responseFactory.CreateResponse("Error: plugin id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = pluginDao.UpdatePlugin(plugin);
+                dawResponse.plugin = pluginDao.UpdatePlugin(plugin);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeletePlugin(int id)
+        public DawResponse DeletePlugin(Plugin plugin)
         {
-            if (id == 0)
-            {
-                return responseFactory.CreateResponse("Error: track id is null", ResponseStatus.BADREQUEST);
-            }
+            dawResponse = new DawResponse();
 
-            response = new DawResponse();
+            if (plugin.id == 0)
+            {
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: plugin.id is null", HttpStatusCode.BadRequest);
+            }
 
             try
             {
-                response = pluginDao.DeletePlugin(id);
+                pluginDao.DeletePlugin(plugin);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
     }
 }

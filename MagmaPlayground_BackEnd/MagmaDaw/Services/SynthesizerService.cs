@@ -3,144 +3,145 @@ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
+using System.Net;
 
 namespace MagmaPlayground_BackEnd.Services
 {
     public class SynthesizerService
     {
         private SynthesizerDao synthesizerDao;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
+        private DawResponse dawResponse;
 
         public SynthesizerService(MagmaDawDbContext magmaDbContext)
         {
             synthesizerDao = new SynthesizerDao(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         public DawResponse GetSynthesizerById(int id)
         {
+            dawResponse = new DawResponse();
+
             if (id == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = synthesizerDao.GetSynthesizerById(id);
+                dawResponse.synthesizer = synthesizerDao.GetSynthesizerById(id);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.synthesizer == null)
+            if (dawResponse.synthesizer == null)
             {
-                return responseFactory.CreateResponse("Error: synthesizer not found", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse GetSynthesizerByPluginId(int pluginId)
         {
+            dawResponse = new DawResponse();
+
             if (pluginId == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: pluginId is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
             
             try
             {
-                response = synthesizerDao.GetSynthesizerByPluginId(pluginId);
+                dawResponse.synthesizer = synthesizerDao.GetSynthesizerByPluginId(pluginId);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.synthesizer == null)
+            if (dawResponse.synthesizer == null)
             {
-                return responseFactory.CreateResponse("Error: synthesizer not found for this plugin", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer not found", HttpStatusCode.NotFound);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse CreateSynthesizer(Synthesizer synthesizer)
         {
+            dawResponse = new DawResponse();
+
             if (synthesizer == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer is null", HttpStatusCode.BadRequest);
             }
 
             if (synthesizer.id != 0)
             {
-                return responseFactory.CreateResponse("Error: synthesizer already exists, id must be null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer.id must be null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = synthesizerDao.CreateSynthesizer(synthesizer);
+                dawResponse.synthesizer = synthesizerDao.CreateSynthesizer(synthesizer);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse UpdateSynthesizer(Synthesizer synthesizer)
         {
+            dawResponse = new DawResponse();
+
             if (synthesizer == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer is null", HttpStatusCode.BadRequest);
             }
 
             if (synthesizer.id == 0)
             {
-                return responseFactory.CreateResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = synthesizerDao.UpdateSynthesizer(synthesizer);
+                dawResponse.synthesizer = synthesizerDao.UpdateSynthesizer(synthesizer);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteSynthesizer(int id)
+        public DawResponse DeleteSynthesizer(Synthesizer synthesizer)
         {
-            if (id == 0)
-            {
-                return responseFactory.CreateResponse("Error: synthesizer id is null", ResponseStatus.BADREQUEST);
-            }
+            dawResponse = new DawResponse();
 
-            response = new DawResponse();
+            if (synthesizer.id == 0)
+            {
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: synthesizer.id is null", HttpStatusCode.BadRequest);
+            }
 
             try
             {
-                response = synthesizerDao.DeleteSynthesizer(id);
+                synthesizerDao.DeleteSynthesizer(synthesizer);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
             return dawResponse;
         }
 
-        public ActionResult<DawResponse> CreateDAwControllerResponse(DawResponse dawResponse)
+        public ActionResult<DawResponse> CreateDawControllerResponse(DawResponse dawResponse)
         {
             string json = dawResponseSerializer.SerializeResponse(dawResponse);
 

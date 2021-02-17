@@ -3,144 +3,119 @@ using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.Model.MagmaDbContext;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using System;
+using System.Net;
 
 namespace MagmaPlayground_BackEnd.Services
 {
     public class ProjectService
     {
         private ProjectDao projectDao;
-        private DawResponseFactory responseFactory;
-        private DawResponse response;
+        private DawResponseFactory dawResponseFactory;
+        private DawResponse dawResponse;
 
         public ProjectService(MagmaDawDbContext magmaDbContext)
         {
             projectDao = new ProjectDao(magmaDbContext);
-            responseFactory = new DawResponseFactory();
+            dawResponseFactory = new DawResponseFactory();
         }
 
         public DawResponse GetProjectById(int id)
         {
+            dawResponse = new DawResponse();
+
             if (id == 0)
             {
-                return responseFactory.CreateResponse("Error: input parameter id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project.id id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = projectDao.GetProjectById(id);
+                dawResponse.project = projectDao.GetProjectById(id);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            if (response.project == null)
+            if (dawResponse.project == null)
             {
-                return responseFactory.CreateResponse("Error: project not found", ResponseStatus.NOTFOUND);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project not found", HttpStatusCode.NotFound);
             }
 
-            return response;
-        }
-
-        public DawResponse GetProjectByUserId(int userId)
-        {
-            if (userId == 0)
-            {
-                return responseFactory.CreateResponse("Error: input parameter userId is null", ResponseStatus.BADREQUEST);
-            }
-
-            response = new DawResponse();
-
-            try
-            {
-                response = projectDao.GetProjectsByUserId(userId);
-            }
-            catch (Exception exception)
-            {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
-            }
-
-            if (response.projects == null)
-            {
-                return responseFactory.CreateResponse("Error: projects not found for this user", ResponseStatus.NOTFOUND);
-            }
-
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse CreateProject(Project project)
         {
+            dawResponse = new DawResponse();
+
             if (project == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project.id is null", HttpStatusCode.BadRequest);
             }
 
             if (project.id != 0)
             {
-                return responseFactory.CreateResponse("Error: project already exists, id must be null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project.id is not null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = projectDao.CreateProject(project);
+                dawResponse.project = projectDao.CreateProject(project);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
         public DawResponse UpdateProject(Project project)
         {
+            dawResponse = new DawResponse();
+
             if (project == null)
             {
-                return responseFactory.CreateResponse("Error: input parameter is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project.id is null", HttpStatusCode.BadRequest);
             }
 
             if (project.id == 0)
             {
-                return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project.id is null", HttpStatusCode.BadRequest);
             }
-
-            response = new DawResponse();
 
             try
             {
-                response = projectDao.UpdateProject(project);
+                dawResponse.project = projectDao.UpdateProject(project);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
 
-        public DawResponse DeleteProject(int id)
+        public DawResponse DeleteProject(Project project)
         {
-            if (id == 0)
-            {
-                return responseFactory.CreateResponse("Error: project id is null", ResponseStatus.BADREQUEST);
-            }
+            dawResponse = new DawResponse();
 
-            response = new DawResponse();
+            if (project.id == 0)
+            {
+                return dawResponseFactory.CreateDawResponse(dawResponse, "Error: project.id is null", HttpStatusCode.BadRequest);
+            }
 
             try
             {
-                response = projectDao.DeleteProject(id);
+                projectDao.DeleteProject(project);
             }
             catch (Exception exception)
             {
-                return responseFactory.CreateResponse(exception.Message, ResponseStatus.EXCEPTION);
+                return dawResponseFactory.CreateDawResponse(dawResponse, exception.Message, HttpStatusCode.BadRequest);
             }
 
-            return response;
+            return dawResponseFactory.CreateDawResponse(dawResponse, "", HttpStatusCode.OK);
         }
     }
 }
