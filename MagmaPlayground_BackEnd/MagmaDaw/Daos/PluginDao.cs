@@ -10,46 +10,46 @@ namespace MagmaPlayground_BackEnd.Daos
 {
     public class PluginDao
     {
-        private MagmaDawDbContext magmaDbContext;
+        private MagmaDawDbContext magmaDawDbContext;
 
-        public PluginDao(MagmaDawDbContext magmaDbContext)
+        public PluginDao(MagmaDawDbContext magmaDawDbContext)
         {
-            this.magmaDbContext = magmaDbContext;
+            this.magmaDawDbContext = magmaDawDbContext;
         }
 
         public Plugin GetPluginById(int id)
         {
-            return magmaDbContext.Find<Plugin>(id);
+            return magmaDawDbContext.Find<Plugin>(id);
         }
 
         public List<Plugin> GetPluginsByRackId(int rackId)
         {
-            return magmaDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
+            return magmaDawDbContext.Plugins.Where<Plugin>(prop => prop.rack.id == rackId).ToList();
         }
 
         public Plugin CreatePlugin(Plugin plugin)
         {
-            plugin.id = magmaDbContext.Add<Plugin>(plugin).Entity.id;
+            plugin.id = magmaDawDbContext.Add<Plugin>(plugin).Entity.id;
 
-            magmaDbContext.SaveChanges();
+            magmaDawDbContext.SaveChanges();
 
             return plugin;
         }
 
         public Plugin UpdatePlugin(Plugin plugin)
         {
-            plugin.id = magmaDbContext.Update<Plugin>(plugin).Entity.id;
+            plugin.id = magmaDawDbContext.Update<Plugin>(plugin).Entity.id;
 
-            magmaDbContext.SaveChanges();
+            magmaDawDbContext.SaveChanges();
 
             return plugin;
         }
 
         public void DeletePlugin(Plugin plugin)
         {
-            magmaDbContext.Remove<Plugin>(plugin);
+            magmaDawDbContext.Remove<Plugin>(plugin);
 
-            magmaDbContext.SaveChanges();
+            magmaDawDbContext.SaveChanges();
         }
     }
 }

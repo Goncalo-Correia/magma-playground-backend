@@ -7,23 +7,20 @@ using System.Threading.Tasks;
 
 namespace MagmaPlayground_BackEnd.MagmaDaw.Models
 {
+    [Table("audioeffect_type")]
     public class AudioEffectType
     {
-        [Table("audioeffect_type")]
-        public class LiveFileType
-        {
-            [Key]
-            [Column("id")]
-            public int id { get; set; }
+        [Key]
+        [Column("id")]
+        public int id { get; set; }
 
-            [Column("name")]
-            [DataType(DataType.Text)]
-            [Required(ErrorMessage = "Name is required")]
-            public string name { get; set; }
+        [Column("name")]
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "Name is required")]
+        public string name { get; set; }
 
-            [Column("description")]
-            [DataType(DataType.Text)]
-            public string description { get; set; }
-        }
+        [Column("description")]
+        [DataType(DataType.Text)]
+        public string description { get; set; }
     }
 }

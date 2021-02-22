@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MagmaPlayground_BackEnd.MagmaDaw.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
@@ -26,5 +27,9 @@ namespace MagmaPlayground_BackEnd.Model.MagmaDbContext
         public DbSet<Sampler> Samplers { get; set; }
         public DbSet<Synthesizer> Synthesizers { get; set; }
         public DbSet<AudioEffect> AudioEffects { get; set; }
+        public DbSet<TrackType> TrackTypes { get; set; }
+        public DbSet<PluginType> PluginTypes { get; set; }
+        public DbSet<SynthesizerType> SynthesizerTypes { get; set; }
+        public DbSet<AudioEffectType> AudioEffectTypes { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MagmaPlayground_BackEnd.Model;
+﻿using MagmaPlayground_BackEnd.MagmaDaw.Models;
+using MagmaPlayground_BackEnd.Model;
 using MagmaPlayground_BackEnd.ResponseUtilities;
 using Microsoft.Win32;
 using System;
@@ -18,6 +19,10 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
         public Sampler sampler { get; set; }
         public Synthesizer synthesizer { get; set; }
         public AudioEffect audioEffect { get; set; }
+        public TrackType trackType { get; set; }
+        public PluginType pluginType { get; set; }
+        public SynthesizerType synthesizerType { get; set; }
+        public AudioEffectType audioEffectType { get; set; }
 
         public List<Project> projects { get; set; }
         public List<Track> tracks { get; set; }
@@ -26,6 +31,10 @@ namespace MagmaPlayground_BackEnd.ResponseUtilities
         public List<Sampler> samplers { get; set; }
         public List<Synthesizer> synthesizers { get; set; }
         public List<AudioEffect> audioEffects { get; set; }
+        public List<TrackType> trackTypes { get; set; }
+        public List<PluginType> pluginTypes { get; set; }
+        public List<SynthesizerType> synthesizerTypes { get; set; }
+        public List<AudioEffectType> audioEffectTypes { get; set; }
 
         public string errorMessage { get; set; }
         public HttpStatusCode httpStatusCode { get; set; }
